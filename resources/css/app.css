@@ -371,8 +371,693 @@ th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
 .prime-slide figcaption { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 16px 18px; background: rgba(245, 239, 229, .72); color: #1b1b1b; font-size: 18px; line-height: 1; text-align: left; }
 .prime-slider-arrow { position: absolute; top: 50%; z-index: 2; width: 54px; height: 70px; transform: translateY(-50%); border: 0; background: transparent; color: rgba(255,255,255,.88); font-size: 78px; line-height: 1; font-family: Arial, sans-serif; cursor: pointer; text-shadow: 0 1px 7px rgba(0,0,0,.35); }
 .prime-slider-arrow.is-prev { left: 18px; }
-.prime-slider-arrow.is-next { right: 18px; }
-.page-general-4 .prime-contact { margin-top: 0; }
+    .prime-slider-arrow.is-next { right: 18px; }
+    .page-general-4 .prime-contact { margin-top: 0; }
+
+/* Modern public frontend */
+.site,
+.prime-site {
+    --front-ink: #172421;
+    --front-muted: #68736f;
+    --front-line: rgba(23, 36, 33, .12);
+    --front-paper: #f7faf8;
+    --front-card: rgba(255, 255, 255, .86);
+    --front-teal: #0c6f63;
+    --front-teal-dark: #0d3430;
+    --front-blue: #2f86d8;
+    --front-gold: #d6a63e;
+    background:
+        radial-gradient(circle at 9% 4%, rgba(47, 134, 216, .12), transparent 31vw),
+        radial-gradient(circle at 86% 2%, rgba(214, 166, 62, .16), transparent 28vw),
+        var(--front-paper);
+    color: var(--front-ink);
+}
+
+.site-header,
+.prime-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    width: min(100% - 32px, 1480px);
+    margin: 16px auto;
+    padding: 14px 18px;
+    border: 1px solid rgba(255,255,255,.72);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .9);
+    box-shadow: 0 18px 50px rgba(13, 52, 48, .1);
+    backdrop-filter: blur(18px);
+}
+
+.prime-tools {
+    justify-content: flex-end;
+    min-height: 0;
+    margin-bottom: 10px;
+    color: var(--front-teal);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.site-header nav,
+.prime-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.site-header nav a,
+.prime-nav a {
+    min-height: 40px;
+    padding: 0 13px;
+    border-radius: 999px;
+    color: var(--front-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0;
+    transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+
+.site-header nav a:hover,
+.prime-nav a:hover,
+.site-header nav a.active,
+.prime-nav a.active {
+    justify-content: center;
+    background: rgba(12, 111, 99, .1);
+    color: var(--front-teal);
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.prime-brand-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.prime-brand-row img {
+    width: 52px;
+    height: 52px;
+    border-radius: 8px;
+    box-shadow: 0 10px 26px rgba(23, 36, 33, .12);
+}
+
+.prime-brand-row strong,
+.site-brand {
+    color: #1937e8;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+.prime-actions {
+    margin-left: auto;
+    gap: 10px;
+}
+
+.language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px;
+    border: 1px solid var(--front-line);
+    border-radius: 999px;
+    background: rgba(255,255,255,.72);
+}
+
+.language-switcher a,
+.prime-header .language-switcher a,
+.page-category-tourist-rental-service .prime-header .language-switcher a {
+    display: grid;
+    place-items: center;
+    min-width: 40px;
+    min-height: 34px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--front-muted);
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.language-switcher .active,
+.prime-header .language-switcher .active {
+    background: var(--front-teal);
+    color: white;
+}
+
+.cart-icon {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--front-teal);
+    border-radius: 999px;
+    color: var(--front-teal);
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.cart-icon::before { display: none; }
+
+.prime-main,
+.page-home-rental .prime-main,
+.page-blog .prime-main,
+.page-contact .prime-main,
+.page-about-3 .prime-main,
+.page-category-tourist-rental-service .prime-main {
+    width: min(100% - 32px, 1480px);
+    margin: 0 auto;
+    padding: clamp(22px, 4vw, 56px);
+    border: 0;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .55);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.72);
+}
+
+.hero,
+.prime-hero {
+    min-height: clamp(440px, 58vh, 680px);
+    align-content: end;
+    justify-items: start;
+    overflow: hidden;
+    border-radius: 8px;
+    padding: clamp(34px, 7vw, 82px);
+    background:
+        linear-gradient(90deg, rgba(13, 52, 48, .82), rgba(13, 52, 48, .3)),
+        var(--hero-image, url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=82')) center/cover no-repeat;
+    color: white;
+    text-align: left;
+}
+
+.prime-hero h1,
+.hero h1 {
+    order: 1;
+    max-width: 940px;
+    margin: 0 0 14px;
+    color: white;
+    font-size: clamp(38px, 6vw, 82px);
+    line-height: 1.02;
+    font-weight: 850;
+}
+
+.prime-hero p,
+.hero div {
+    order: 2;
+    max-width: 760px;
+    margin: 0;
+    color: rgba(255,255,255,.9);
+    font-size: clamp(18px, 2.2vw, 28px);
+    line-height: 1.35;
+}
+
+.hero p {
+    color: #f4ca70;
+    font-size: 13px;
+    letter-spacing: .14em;
+}
+
+.prime-panel,
+.prime-open-section,
+.prime-rental-unit,
+.content-section,
+.about-intro,
+.contact-live-card {
+    border: 1px solid var(--front-line);
+    border-radius: 8px;
+    background: var(--front-card);
+    box-shadow: 0 18px 50px rgba(23, 36, 33, .08);
+}
+
+.prime-open-section,
+.prime-rental-unit {
+    width: min(100%, 1120px);
+    margin: 28px auto;
+    padding: clamp(28px, 5vw, 64px);
+    text-align: left;
+}
+
+.prime-panel {
+    width: min(100%, 1180px);
+    padding: clamp(28px, 5vw, 64px);
+    border-radius: 8px;
+    box-shadow: 0 18px 50px rgba(23, 36, 33, .08);
+    text-align: left;
+}
+
+.prime-open-section h1,
+.prime-open-section h2,
+.prime-panel h2,
+.prime-rental-unit h2 {
+    max-width: 900px;
+    margin: 0 0 22px;
+    color: var(--front-teal-dark);
+    font-size: clamp(28px, 4vw, 54px);
+    line-height: 1.06;
+    font-weight: 850;
+}
+
+.prime-open-copy,
+.prime-copy,
+.prime-rental-unit .prime-open-copy,
+.prime-footer-copy,
+.prime-open-footer {
+    max-width: 920px;
+    margin: 0;
+    color: var(--front-muted);
+    font-size: clamp(17px, 1.5vw, 22px);
+    line-height: 1.65;
+}
+
+.prime-open-copy br,
+.about-intro br,
+.about-feature br { margin-bottom: 16px; }
+
+.prime-open-footer,
+.prime-footer-copy {
+    margin-top: 24px;
+    color: var(--front-teal);
+    font-weight: 800;
+}
+
+.prime-gallery,
+.prime-service-images,
+.prime-rental-gallery,
+.page-general-4 .prime-gallery,
+.page-projects-6 .prime-gallery,
+.page-home-rental .prime-gallery,
+.page-home-rental .prime-rental-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+    margin: 26px auto;
+    padding: 0;
+    background: transparent;
+}
+
+.prime-gallery img,
+.prime-service-images img,
+.prime-rental-gallery img,
+.prime-wide-image img,
+.about-feature img,
+.blog-card-image {
+    border-radius: 8px;
+    box-shadow: 0 14px 34px rgba(23, 36, 33, .12);
+}
+
+.prime-gallery img,
+.prime-service-images img,
+.prime-rental-gallery img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.prime-button,
+.site-button,
+.prime-product-card button,
+.contact-live-form button {
+    min-height: 46px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--front-teal);
+    color: white;
+    box-shadow: 0 12px 24px rgba(12, 111, 99, .18);
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 0;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.prime-button:hover,
+.site-button:hover,
+.prime-product-card button:hover,
+.contact-live-form button:hover {
+    background: var(--front-teal-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px rgba(12, 111, 99, .22);
+}
+
+.prime-products {
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.prime-product-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 18px;
+    border: 1px solid var(--front-line);
+    border-radius: 8px;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 16px 42px rgba(23, 36, 33, .09);
+}
+
+.prime-product-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+}
+
+.prime-product-image img {
+    height: 100%;
+    border-radius: 8px;
+}
+
+.prime-product-card h2,
+.prime-product-card:nth-child(1) h2,
+.prime-product-card:nth-child(3) h2,
+.prime-product-card:nth-child(4) h2,
+.prime-product-card:nth-child(9) h2 {
+    min-height: 0;
+    margin: 16px 0 10px;
+    color: var(--front-ink);
+    font-size: 19px;
+    line-height: 1.25;
+    text-align: left;
+}
+
+.prime-product-price {
+    justify-content: flex-start;
+    margin-bottom: 18px;
+    color: var(--front-teal);
+    font-size: 18px;
+}
+
+.prime-price-old,
+.prime-product-price span:not(.prime-price-old) { color: var(--front-teal); }
+
+.prime-product-card button {
+    margin-top: auto;
+    width: 100%;
+    border: 0;
+}
+
+.prime-contact {
+    width: min(100%, 1280px);
+    margin: 48px auto 0;
+    grid-template-columns: minmax(180px, .6fr) minmax(0, 1.4fr) minmax(180px, .6fr);
+    gap: 16px;
+}
+
+.prime-contact .prime-panel {
+    margin: 0;
+    text-align: center;
+}
+
+.prime-contact > img {
+    min-height: 420px;
+    border-radius: 8px;
+    box-shadow: 0 18px 50px rgba(23, 36, 33, .12);
+}
+
+.contact-grid {
+    font-size: 16px;
+    line-height: 1.45;
+}
+
+.blog-shell {
+    border-radius: 8px;
+    background: transparent;
+}
+
+.blog-shell::before,
+.blog-shell::after { display: none; }
+
+.blog-content {
+    width: min(100%, 1100px);
+    padding: 0;
+    background: transparent;
+}
+
+.blog-filter,
+.blog-content h1 { margin-left: 0; }
+
+.blog-card {
+    overflow: hidden;
+    border: 1px solid var(--front-line);
+    border-radius: 8px;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 18px 50px rgba(23,36,33,.08);
+}
+
+.about-feature {
+    overflow: hidden;
+    border-radius: 8px;
+    background: rgba(255,255,255,.86);
+}
+
+.about-feature h2 {
+    color: var(--front-teal-dark);
+    font-weight: 850;
+}
+
+.contact-page {
+    padding: 0;
+}
+
+.contact-hero-copy {
+    padding: clamp(28px, 5vw, 60px);
+    border-radius: 8px;
+    background: rgba(255,255,255,.8);
+}
+
+.contact-live-card {
+    grid-template-columns: minmax(220px, .8fr) minmax(280px, 1fr);
+    width: min(100%, 980px);
+    padding: 20px;
+    gap: 20px;
+}
+
+.contact-live-form {
+    border-radius: 8px;
+    padding: 22px;
+    background: rgba(238,247,244,.96);
+}
+
+.contact-live-form h2,
+.contact-live-form p {
+    margin: 0 0 12px;
+    border: 0;
+    font-size: 20px;
+    line-height: 1.3;
+}
+
+.contact-live-form input,
+.contact-live-form textarea {
+    min-height: 44px;
+    border: 1px solid var(--front-line);
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.contact-map {
+    border-radius: 8px;
+}
+
+.prime-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: min(100% - 32px, 1480px);
+    margin: 18px auto 32px;
+    padding: 26px clamp(20px, 4vw, 46px);
+    border-radius: 8px;
+    background: #102b28;
+    color: white;
+}
+
+.prime-footer div {
+    display: grid;
+    gap: 6px;
+}
+
+.prime-footer strong {
+    color: white;
+    font-size: 22px;
+}
+
+.prime-footer span,
+.prime-footer a {
+    color: rgba(255,255,255,.78);
+    text-decoration: none;
+}
+
+.page-category-tourist-rental-service.prime-site,
+.page-category-tourist-rental-service .prime-main {
+    background:
+        radial-gradient(circle at 8% 0%, rgba(12, 111, 99, .16), transparent 30vw),
+        var(--front-paper);
+}
+
+.page-category-tourist-rental-service .prime-header {
+    width: min(100% - 32px, 1480px);
+    padding: 14px 18px;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 18px 50px rgba(13, 52, 48, .1);
+}
+
+.page-category-tourist-rental-service .prime-nav {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.page-category-tourist-rental-service .prime-nav a {
+    min-height: 40px;
+    padding: 0 13px;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--front-muted);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.page-category-tourist-rental-service .prime-nav a:hover,
+.page-category-tourist-rental-service .prime-nav a.active {
+    background: rgba(12, 111, 99, .1);
+    color: var(--front-teal);
+}
+
+.page-category-tourist-rental-service .prime-brand-row {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.page-category-tourist-rental-service .prime-brand-row img {
+    width: 52px;
+    height: 52px;
+}
+
+.page-category-tourist-rental-service .prime-brand-row strong {
+    font-size: clamp(28px, 3vw, 42px);
+}
+
+.page-category-tourist-rental-service .prime-actions {
+    margin-left: auto;
+}
+
+.page-category-tourist-rental-service .prime-header .language-switcher a {
+    min-width: 40px;
+    min-height: 34px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+@media (max-width: 900px) {
+    .site-header,
+    .prime-header,
+    .page-category-tourist-rental-service .prime-header {
+        width: calc(100% - 20px);
+        margin: 10px auto;
+        border-radius: 8px;
+    }
+
+    .prime-brand-row {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .prime-actions {
+        width: 100%;
+        margin-left: 0;
+        justify-content: space-between;
+    }
+
+    .site-header nav,
+    .prime-nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+    }
+
+    .site-header nav a,
+    .prime-nav a {
+        flex: 0 0 auto;
+    }
+
+    .prime-main,
+    .page-home-rental .prime-main,
+    .page-blog .prime-main,
+    .page-contact .prime-main,
+    .page-about-3 .prime-main,
+    .page-category-tourist-rental-service .prime-main {
+        width: calc(100% - 20px);
+        padding: 18px;
+        border-radius: 8px;
+    }
+
+    .prime-contact,
+    .contact-live-card,
+    .about-feature,
+    .blog-card {
+        grid-template-columns: 1fr;
+    }
+
+    .prime-contact > img {
+        min-height: 260px;
+    }
+
+    .prime-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        width: calc(100% - 20px);
+        border-radius: 8px;
+    }
+}
+
+@media (max-width: 560px) {
+    .prime-hero,
+    .hero {
+        min-height: 420px;
+        padding: 26px;
+    }
+
+    .prime-hero h1,
+    .hero h1 {
+        font-size: clamp(34px, 13vw, 54px);
+    }
+
+    .prime-products,
+    .prime-gallery,
+    .prime-service-images,
+    .prime-rental-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .language-switcher {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .prime-open-section,
+    .prime-panel,
+    .prime-rental-unit {
+        padding: 24px;
+    }
+}
 
 @media (max-width: 900px) {
     .admin-shell { grid-template-columns: 1fr; }

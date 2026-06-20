@@ -17,7 +17,7 @@
             </div>
             <nav class="prime-nav">
                 @foreach ($menuItems as $item)
-                    <a href="{{ $item->href($locale) }}" target="{{ $item->target }}">{{ $item->localizedLabel($locale) }}</a>
+                    <a @class(['active' => $item->page?->slug === $page->slug]) href="{{ $item->href($locale) }}" target="{{ $item->target }}">{{ $item->localizedLabel($locale) }}</a>
                 @endforeach
             </nav>
             <div class="prime-brand-row">
@@ -326,12 +326,22 @@
                 @endif
             @endforeach
         </main>
+        <footer class="prime-footer">
+            <div>
+                <strong>Santana Prime</strong>
+                <span>Home care and holiday rental management in Torrevieja.</span>
+            </div>
+            <div>
+                <a href="mailto:info@holasantana.com">info@holasantana.com</a>
+                <a href="tel:+34624229511">+34 624 229 511</a>
+            </div>
+        </footer>
     @else
         <header class="site-header">
             <a class="site-brand" href="{{ route('pages.show', ['locale' => $locale, 'slug' => 'home']) }}">Hola Santana</a>
             <nav>
                 @foreach ($menuItems as $item)
-                    <a href="{{ $item->href($locale) }}" target="{{ $item->target }}">{{ $item->localizedLabel($locale) }}</a>
+                    <a @class(['active' => $item->page?->slug === $page->slug]) href="{{ $item->href($locale) }}" target="{{ $item->target }}">{{ $item->localizedLabel($locale) }}</a>
                 @endforeach
             </nav>
             <div class="language-switcher">
