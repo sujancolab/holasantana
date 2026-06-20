@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,8 @@ Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.log
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::post('/media/upload-image', [PageController::class, 'uploadImage'])->name('media.upload-image');
+    Route::resource('languages', LanguageController::class)->except(['show', 'create']);
     Route::resource('pages', PageController::class)->except(['show']);
 });
 

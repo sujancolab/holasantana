@@ -25,8 +25,9 @@
                 <strong>Santana Prime</strong>
                 <div class="prime-actions">
                     <div class="language-switcher">
-                        <a @class(['active' => $locale === 'en']) href="{{ route('pages.show', ['locale' => 'en', 'slug' => $page->slug]) }}">EN</a>
-                        <a @class(['active' => $locale === 'es']) href="{{ route('pages.show', ['locale' => 'es', 'slug' => $page->slug]) }}">ES</a>
+                        @foreach (($availableLocales ?? ['en', 'es']) as $availableLocale)
+                            <a @class(['active' => $locale === $availableLocale]) href="{{ route('pages.show', ['locale' => $availableLocale, 'slug' => $page->slug]) }}">{{ strtoupper($availableLocale) }}</a>
+                        @endforeach
                     </div>
                     <span class="cart-icon">0</span>
                 </div>
@@ -334,8 +335,9 @@
                 @endforeach
             </nav>
             <div class="language-switcher">
-                <a @class(['active' => $locale === 'en']) href="{{ route('pages.show', ['locale' => 'en', 'slug' => $page->slug]) }}">EN</a>
-                <a @class(['active' => $locale === 'es']) href="{{ route('pages.show', ['locale' => 'es', 'slug' => $page->slug]) }}">ES</a>
+                @foreach (($availableLocales ?? ['en', 'es']) as $availableLocale)
+                    <a @class(['active' => $locale === $availableLocale]) href="{{ route('pages.show', ['locale' => $availableLocale, 'slug' => $page->slug]) }}">{{ strtoupper($availableLocale) }}</a>
+                @endforeach
             </div>
         </header>
         <main>

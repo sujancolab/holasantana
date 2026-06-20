@@ -12,6 +12,7 @@
         <nav>
             <a href="{{ route('admin.dashboard') }}" @class(['active' => request()->routeIs('admin.dashboard')])>Dashboard</a>
             <a href="{{ route('admin.pages.index') }}" @class(['active' => request()->routeIs('admin.pages.*')])>Page Management</a>
+            <a href="{{ route('admin.languages.index') }}" @class(['active' => request()->routeIs('admin.languages.*')])>Languages</a>
             <a href="{{ route('home') }}" target="_blank">View Site</a>
         </nav>
     </aside>

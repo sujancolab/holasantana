@@ -3,7 +3,5 @@
 @section('title', 'Add Page')
 
 @section('content')
-    <section class="panel">
-        @include('admin.pages.partials.form', ['action' => route('admin.pages.store'), 'method' => 'post'])
-    </section>
+    @include('admin.pages.partials.form', ['action' => route('admin.pages.store'), 'method' => 'post'])
 @endsection

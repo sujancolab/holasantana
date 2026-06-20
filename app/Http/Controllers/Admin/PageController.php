@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
 use App\Models\MenuItem;
 use App\Models\Page;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class PageController extends Controller
 {
-    private array $locales = ['en' => 'English', 'es' => 'Spanish'];
-
     public function index(): View
     {
         return view('admin.pages.index', [
@@ -29,7 +30,7 @@ class PageController extends Controller
                 'show_in_menu' => true,
                 'menu_order' => Page::max('menu_order') + 1,
             ]),
-            'locales' => $this->locales,
+            'locales' => Language::activeOptions(),
             'blocks' => [],
         ]);
     }
@@ -46,7 +47,7 @@ class PageController extends Controller
     {
         return view('admin.pages.edit', [
             'page' => $page,
-            'locales' => $this->locales,
+            'locales' => $this->pageLocales($page),
             'blocks' => $page->content_blocks ?? [],
         ]);
     }
@@ -66,6 +67,19 @@ class PageController extends Controller
         return redirect()->route('admin.pages.index')->with('status', 'Page deleted.');
     }
 
+    public function uploadImage(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'image' => ['required', 'image', 'max:5120'],
+        ]);
+
+        $path = $validated['image']->store('cms-images', 'public');
+
+        return response()->json([
+            'url' => Storage::disk('public')->url($path),
+        ]);
+    }
+
     private function payload(Request $request, ?Page $page = null): array
     {
         $validated = $request->validate([
@@ -74,18 +88,20 @@ class PageController extends Controller
             'status' => ['required', Rule::in(['draft', 'published'])],
             'menu_order' => ['required', 'integer', 'min:0'],
             'show_in_menu' => ['nullable', 'boolean'],
+            'title' => ['required', 'array'],
             'title.en' => ['required', 'string', 'max:255'],
-            'title.es' => ['nullable', 'string', 'max:255'],
-            'menu_label.en' => ['nullable', 'string', 'max:255'],
-            'menu_label.es' => ['nullable', 'string', 'max:255'],
-            'meta_description.en' => ['nullable', 'string', 'max:500'],
-            'meta_description.es' => ['nullable', 'string', 'max:500'],
-            'hero_eyebrow.en' => ['nullable', 'string', 'max:255'],
-            'hero_eyebrow.es' => ['nullable', 'string', 'max:255'],
+            'title.*' => ['nullable', 'string', 'max:255'],
+            'menu_label' => ['nullable', 'array'],
+            'menu_label.*' => ['nullable', 'string', 'max:255'],
+            'meta_description' => ['nullable', 'array'],
+            'meta_description.*' => ['nullable', 'string', 'max:500'],
+            'hero_eyebrow' => ['nullable', 'array'],
+            'hero_eyebrow.*' => ['nullable', 'string', 'max:255'],
+            'hero_title' => ['required', 'array'],
             'hero_title.en' => ['required', 'string', 'max:255'],
-            'hero_title.es' => ['nullable', 'string', 'max:255'],
-            'hero_subtitle.en' => ['nullable', 'string'],
-            'hero_subtitle.es' => ['nullable', 'string'],
+            'hero_title.*' => ['nullable', 'string', 'max:255'],
+            'hero_subtitle' => ['nullable', 'array'],
+            'hero_subtitle.*' => ['nullable', 'string'],
             'blocks' => ['nullable', 'array'],
             'blocks.*.heading.en' => ['nullable', 'string', 'max:255'],
             'blocks.*.heading.es' => ['nullable', 'string', 'max:255'],
@@ -139,5 +155,41 @@ class PageController extends Controller
                 'is_active' => $page->status === 'published',
             ],
         );
+    }
+
+    private function pageLocales(Page $page): array
+    {
+        $moduleLocales = Language::activeOptions();
+        $codes = array_keys($moduleLocales);
+
+        foreach (['title', 'menu_label', 'meta_description', 'hero_eyebrow', 'hero_title', 'hero_subtitle'] as $field) {
+            $value = $page->{$field};
+
+            if (is_array($value)) {
+                $codes = array_merge($codes, array_keys($value));
+            }
+        }
+
+        $this->collectLocaleCodes($page->content_blocks ?? [], $codes);
+        $codes = array_values(array_unique(array_filter($codes, fn (string $code) => preg_match('/^[a-z]{2,3}(?:-[a-z]{2})?$/i', $code))));
+
+        return collect($codes)
+            ->mapWithKeys(fn (string $code) => [$code => $moduleLocales[$code] ?? strtoupper($code)])
+            ->all();
+    }
+
+    private function collectLocaleCodes(mixed $value, array &$codes): void
+    {
+        if (! is_array($value)) {
+            return;
+        }
+
+        foreach ($value as $key => $child) {
+            if (is_string($key) && preg_match('/^[a-z]{2,3}(?:-[a-z]{2})?$/i', $key)) {
+                $codes[] = $key;
+            }
+
+            $this->collectLocaleCodes($child, $codes);
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\MenuItem;
+use App\Models\Language;
 use App\Models\Page;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -26,6 +27,23 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('Admin@12345'),
             ],
         );
+
+        foreach ([
+            ['code' => 'en', 'name' => 'English', 'is_default' => true, 'sort_order' => 1],
+            ['code' => 'es', 'name' => 'Spanish', 'is_default' => false, 'sort_order' => 2],
+            ['code' => 'de', 'name' => 'German', 'is_default' => false, 'sort_order' => 3],
+            ['code' => 'fi', 'name' => 'Finnish', 'is_default' => false, 'sort_order' => 4],
+        ] as $language) {
+            Language::updateOrCreate(
+                ['code' => $language['code']],
+                [
+                    'name' => $language['name'],
+                    'is_default' => $language['is_default'],
+                    'is_active' => true,
+                    'sort_order' => $language['sort_order'],
+                ],
+            );
+        }
 
         $pages = [
             ['home', 'Welcome', 'Inicio', 'Real estate and holiday rental management in Gran Canaria', 'Property care, guest services, and holiday homes managed with local attention.', '/'],
