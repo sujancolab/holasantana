@@ -5,22 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\MenuItem;
 use App\Models\Page;
 use App\Models\Language;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\View\View;
 
 class PublicPageController extends Controller
 {
-    public function home(): View
+    public function home(Request $request): RedirectResponse
     {
-        return $this->show(Language::defaultCode(), 'home');
+        return redirect()->route('pages.show', [
+            'locale' => $this->preferredLocale($request),
+            'slug' => 'home',
+        ]);
     }
 
-    public function show(string $locale, string $slug = 'home'): View
+    public function show(Request $request, string $locale, string $slug = 'home'): View
     {
         abort_unless((bool) preg_match('/^[a-z]{2,3}(?:-[a-z]{2})?$/i', $locale), 404);
         abort_unless(array_key_exists($locale, Language::activeOptions()), 404);
 
         App::setLocale($locale);
+        $request->session()->put('site_locale', $locale);
+        Cookie::queue(cookie('site_locale', $locale, 60 * 24 * 365, null, null, false, false, false, 'lax'));
 
         $page = Page::where('slug', $slug)
             ->where('status', 'published')
@@ -39,33 +47,19 @@ class PublicPageController extends Controller
 
     private function pageLocales(Page $page): array
     {
-        $codes = array_keys(Language::activeOptions());
-
-        foreach (['title', 'menu_label', 'meta_description', 'hero_eyebrow', 'hero_title', 'hero_subtitle'] as $field) {
-            $value = $page->{$field};
-
-            if (is_array($value)) {
-                $codes = array_merge($codes, array_keys($value));
-            }
-        }
-
-        $this->collectLocaleCodes($page->content_blocks ?? [], $codes);
-
-        return array_values(array_unique(array_filter($codes, fn (string $code) => preg_match('/^[a-z]{2,3}(?:-[a-z]{2})?$/i', $code))));
+        return array_keys(Language::activeOptions());
     }
 
-    private function collectLocaleCodes(mixed $value, array &$codes): void
+    private function preferredLocale(Request $request): string
     {
-        if (! is_array($value)) {
-            return;
-        }
+        $activeLocales = Language::activeOptions();
 
-        foreach ($value as $key => $child) {
-            if (is_string($key) && preg_match('/^[a-z]{2,3}(?:-[a-z]{2})?$/i', $key)) {
-                $codes[] = $key;
+        foreach ([$request->session()->get('site_locale'), $request->cookie('site_locale')] as $locale) {
+            if (is_string($locale) && array_key_exists($locale, $activeLocales)) {
+                return $locale;
             }
-
-            $this->collectLocaleCodes($child, $codes);
         }
+
+        return Language::defaultCode();
     }
 }

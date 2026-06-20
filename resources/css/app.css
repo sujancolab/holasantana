@@ -1138,3 +1138,254 @@ th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
     .prime-slider-arrow.is-prev { left: 8px; }
     .prime-slider-arrow.is-next { right: 8px; }
 }
+
+/* Premium modern refresh */
+.prime-site,
+.site {
+    --front-paper: #f3f7f4;
+    --front-card: rgba(255, 255, 255, .92);
+    --front-teal: #087b6e;
+    --front-teal-dark: #073b35;
+    --front-muted: #64726f;
+    --front-line: rgba(7, 59, 53, .11);
+    background:
+        linear-gradient(120deg, rgba(225, 242, 246, .92), rgba(250, 248, 238, .92)),
+        var(--front-paper);
+}
+
+.prime-header,
+.site-header,
+.page-category-tourist-rental-service .prime-header {
+    display: grid;
+    gap: 12px;
+    width: min(100% - 40px, 1500px);
+    padding: 16px 18px;
+    border-radius: 8px;
+    background: rgba(255,255,255,.82);
+    box-shadow: 0 22px 70px rgba(7, 59, 53, .12);
+}
+
+.prime-tools {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0 4px;
+    font-size: 13px;
+}
+
+.prime-mini-brand {
+    color: var(--front-teal-dark);
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.prime-brand-row,
+.page-category-tourist-rental-service .prime-brand-row {
+    display: grid;
+    grid-template-columns: auto minmax(180px, 1fr) auto;
+    align-items: center;
+    justify-content: stretch;
+    gap: 14px;
+    margin: 0;
+}
+
+.prime-brand-row img,
+.page-category-tourist-rental-service .prime-brand-row img {
+    width: 46px;
+    height: 46px;
+}
+
+.prime-brand-row strong,
+.page-category-tourist-rental-service .prime-brand-row strong {
+    color: #1737f2;
+    font-size: clamp(25px, 2.4vw, 38px);
+    white-space: nowrap;
+}
+
+.prime-nav,
+.page-category-tourist-rental-service .prime-nav {
+    grid-column: 1 / -1;
+    order: 3;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+    overflow: visible;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(7, 59, 53, .08);
+    scrollbar-width: auto;
+}
+
+.prime-nav a,
+.page-category-tourist-rental-service .prime-nav a,
+.site-header nav a {
+    flex: 0 0 auto;
+    min-height: 36px;
+    padding: 0 13px;
+    color: #66736f;
+    font-size: 12px;
+    line-height: 1.15;
+    border: 1px solid transparent;
+}
+
+.prime-nav a.active,
+.prime-nav a:hover,
+.page-category-tourist-rental-service .prime-nav a.active,
+.page-category-tourist-rental-service .prime-nav a:hover,
+.site-header nav a.active,
+.site-header nav a:hover {
+    border-color: rgba(8, 123, 110, .16);
+    background: #e9f5f2;
+    color: var(--front-teal);
+    transform: none;
+}
+
+.prime-actions {
+    margin-left: 0;
+    justify-self: end;
+}
+
+.language-switcher {
+    background: white;
+    box-shadow: inset 0 0 0 1px rgba(7, 59, 53, .08);
+}
+
+.cart-icon {
+    background: white;
+    box-shadow: inset 0 0 0 1px rgba(7, 59, 53, .08);
+}
+
+.prime-main,
+.page-home-rental .prime-main,
+.page-blog .prime-main,
+.page-contact .prime-main,
+.page-about-3 .prime-main,
+.page-category-tourist-rental-service .prime-main {
+    width: min(100% - 40px, 1500px);
+    border-radius: 8px;
+    background: rgba(255,255,255,.42);
+    box-shadow: 0 28px 90px rgba(7, 59, 53, .08), inset 0 0 0 1px rgba(255,255,255,.7);
+}
+
+.prime-gallery img,
+.prime-service-images img,
+.prime-rental-gallery img,
+.prime-product-image,
+.blog-card,
+.about-feature,
+.contact-live-card {
+    border-radius: 8px;
+}
+
+.prime-open-section,
+.prime-panel,
+.prime-rental-unit,
+.content-section,
+.about-intro {
+    border-radius: 8px;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 22px 70px rgba(7,59,53,.09);
+}
+
+.prime-open-section h1,
+.prime-open-section h2,
+.prime-panel h2,
+.prime-rental-unit h2 {
+    color: #073b35;
+    letter-spacing: 0;
+}
+
+.prime-products {
+    gap: 22px;
+}
+
+.prime-product-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(7, 59, 53, .09);
+    border-radius: 8px;
+    background: rgba(255,255,255,.94);
+    box-shadow: 0 20px 58px rgba(7,59,53,.11);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.prime-product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 28px 74px rgba(7,59,53,.16);
+}
+
+.prime-product-card::after {
+    content: "";
+    position: absolute;
+    inset: auto 18px 0;
+    height: 3px;
+    border-radius: 999px 999px 0 0;
+    background: linear-gradient(90deg, var(--front-teal), #d6a63e);
+    opacity: .75;
+}
+
+.prime-product-card h2 {
+    font-size: 18px;
+    font-weight: 850;
+}
+
+.prime-product-price {
+    color: var(--front-teal);
+    font-size: 18px;
+    font-weight: 950;
+}
+
+.prime-button,
+.site-button,
+.prime-product-card button,
+.contact-live-form button {
+    background: linear-gradient(135deg, #087b6e, #064941);
+}
+
+.prime-footer {
+    border-radius: 8px;
+    background:
+        linear-gradient(135deg, rgba(7, 59, 53, .98), rgba(11, 87, 78, .96)),
+        #073b35;
+}
+
+@media (max-width: 1100px) {
+    .prime-brand-row,
+    .page-category-tourist-rental-service .prime-brand-row {
+        grid-template-columns: auto 1fr auto;
+    }
+
+    .prime-nav,
+    .page-category-tourist-rental-service .prime-nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        order: 3;
+    }
+}
+
+@media (max-width: 640px) {
+    .prime-header,
+    .site-header,
+    .page-category-tourist-rental-service .prime-header,
+    .prime-main,
+    .page-home-rental .prime-main,
+    .page-blog .prime-main,
+    .page-contact .prime-main,
+    .page-about-3 .prime-main,
+    .page-category-tourist-rental-service .prime-main,
+    .prime-footer {
+        width: calc(100% - 20px);
+    }
+
+    .prime-brand-row,
+    .page-category-tourist-rental-service .prime-brand-row {
+        grid-template-columns: auto 1fr;
+    }
+
+    .prime-actions {
+        grid-column: 1 / -1;
+        justify-self: stretch;
+        justify-content: space-between;
+    }
+}

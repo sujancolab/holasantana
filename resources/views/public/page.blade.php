@@ -12,17 +12,17 @@
     @if ($isPrimeTemplate)
         <header class="prime-header">
             <div class="prime-tools">
-                <span></span>
+                <a class="prime-mini-brand" href="{{ route('pages.show', ['locale' => $locale, 'slug' => 'home']) }}">Santana Prime</a>
                 <a href="{{ route('admin.login') }}">Clients Login</a>
             </div>
-            <nav class="prime-nav">
-                @foreach ($menuItems as $item)
-                    <a @class(['active' => $item->page?->slug === $page->slug]) href="{{ $item->href($locale) }}" target="{{ $item->target }}">{{ $item->localizedLabel($locale) }}</a>
-                @endforeach
-            </nav>
             <div class="prime-brand-row">
                 <img src="https://static.wixstatic.com/media/c50f24_80b75f48949d41deaf57c5edaedaae72~mv2.png/v1/fill/w_112,h_108,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Prime_logo_pdf%20(1)_pdf%20(1).png" alt="Santana Prime logo">
                 <strong>Santana Prime</strong>
+                <nav class="prime-nav">
+                    @foreach ($menuItems as $item)
+                        <a @class(['active' => $item->page?->slug === $page->slug]) href="{{ $item->href($locale) }}" target="{{ $item->target }}">{{ $item->localizedLabel($locale) }}</a>
+                    @endforeach
+                </nav>
                 <div class="prime-actions">
                     <div class="language-switcher">
                         @foreach (($availableLocales ?? ['en', 'es']) as $availableLocale)
