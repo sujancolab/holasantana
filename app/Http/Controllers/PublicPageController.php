@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class PublicPageController extends Controller
@@ -43,6 +44,35 @@ class PublicPageController extends Controller
                 ->orderBy('sort_order')
                 ->get(),
         ]);
+    }
+
+    public function storeServiceEnquiry(Request $request): RedirectResponse
+    {
+        $data = $request->validateWithBag('serviceEnquiry', [
+            'service_name' => ['required', 'string', 'max:255'],
+            'enquiry_date' => ['nullable', 'date'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'telephone' => ['required', 'string', 'max:50'],
+        ]);
+
+        $message = implode(PHP_EOL, [
+            'New service enquiry from Hola Santana',
+            '',
+            'Service Name: ' . $data['service_name'],
+            'Enquiry Date: ' . ($data['enquiry_date'] ?? now()->toDateString()),
+            'Name: ' . $data['name'],
+            'Email Address: ' . $data['email'],
+            'Telephone Number: ' . $data['telephone'],
+        ]);
+
+        Mail::raw($message, function ($mail) use ($data) {
+            $mail->to('spm3182@gmail.com')
+                ->replyTo($data['email'], $data['name'])
+                ->subject('Hola Santana Service Enquiry: ' . $data['service_name']);
+        });
+
+        return back()->with('service_enquiry_status', 'Your service enquiry has been sent.');
     }
 
     private function pageLocales(Page $page): array

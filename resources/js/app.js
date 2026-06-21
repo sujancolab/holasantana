@@ -42,6 +42,39 @@ document.addEventListener('click', () => {
     });
 });
 
+document.querySelectorAll('[data-service-order-modal]').forEach((modal) => {
+    const serviceInput = modal.querySelector('[data-service-order-name]');
+
+    const openModal = (serviceName = '') => {
+        if (serviceInput && serviceName) {
+            serviceInput.value = serviceName;
+        }
+
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        modal.querySelector('input[name="name"]')?.focus();
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+    };
+
+    document.querySelectorAll('[data-order-service]').forEach((button) => {
+        button.addEventListener('click', () => openModal(button.dataset.orderService || ''));
+    });
+
+    modal.querySelectorAll('[data-service-order-close]').forEach((button) => {
+        button.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+            closeModal();
+        }
+    });
+});
+
 document.querySelectorAll('[data-slider]').forEach((slider) => {
     const slides = [...slider.querySelectorAll('[data-slide]')];
     const previous = slider.querySelector('[data-slider-prev]');

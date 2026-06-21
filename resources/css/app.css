@@ -2287,6 +2287,179 @@ th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
     }
 }
 
+/* Service enquiry flow */
+.prime-product-card {
+    grid-template-rows: none;
+}
+
+.prime-product-card .prime-product-price,
+.prime-price-old {
+    display: none;
+}
+
+.prime-product-card button {
+    margin-top: auto;
+}
+
+.service-order-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 220;
+    display: none;
+    place-items: center;
+    padding: 20px;
+}
+
+.service-order-modal.is-open {
+    display: grid;
+}
+
+.service-order-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 30, 27, .54);
+    backdrop-filter: blur(6px);
+}
+
+.service-order-dialog {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 14px;
+    width: min(100%, 520px);
+    max-height: min(760px, calc(100vh - 40px));
+    overflow-y: auto;
+    padding: 22px;
+    border: 1px solid rgba(255,255,255,.72);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 28px 90px rgba(7, 59, 53, .32);
+}
+
+.service-order-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 4px;
+}
+
+.service-order-head span {
+    color: var(--front-teal);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.service-order-head h2 {
+    margin: 4px 0 0;
+    color: var(--front-teal-dark);
+    font-size: 30px;
+    line-height: 1;
+}
+
+.service-order-head button {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 999px;
+    background: #eef7f5;
+    color: var(--front-teal);
+    font-size: 25px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.service-order-dialog label {
+    gap: 7px;
+    margin: 0;
+}
+
+.service-order-dialog input {
+    min-height: 44px;
+    border-radius: 8px;
+}
+
+.service-order-dialog input[readonly] {
+    background: #eef7f5;
+    color: var(--front-teal-dark);
+    font-weight: 800;
+}
+
+.service-order-dialog small {
+    color: #a33b2c;
+    font-weight: 800;
+}
+
+.service-order-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.service-order-actions button {
+    min-height: 46px;
+    border: 0;
+    border-radius: 999px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.service-order-actions button[type="submit"] {
+    background: linear-gradient(135deg, #087b6e, #064941);
+    color: #fff;
+}
+
+.service-order-actions button[type="button"] {
+    background: #eef2f0;
+    color: var(--front-teal-dark);
+}
+
+.service-enquiry-toast {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    z-index: 240;
+    width: min(calc(100% - 28px), 520px);
+    padding: 13px 16px;
+    transform: translateX(-50%);
+    border-radius: 8px;
+    background: #e8f7f4;
+    color: var(--front-teal-dark);
+    box-shadow: 0 16px 40px rgba(7,59,53,.16);
+    font-weight: 900;
+    text-align: center;
+}
+
+.service-enquiry-toast.is-error {
+    background: #fff0ed;
+    color: #8a2f23;
+}
+
+@media (max-width: 640px) {
+    .prime-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .service-order-modal {
+        align-items: end;
+        padding: 10px;
+    }
+
+    .service-order-dialog {
+        width: 100%;
+        max-height: calc(100vh - 20px);
+        padding: 18px;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .service-order-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 640px) {
     .language-switcher,
     .prime-header .language-switcher,

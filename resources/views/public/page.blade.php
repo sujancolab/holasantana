@@ -16,7 +16,7 @@
         <header class="prime-header">
             <div class="prime-tools">
                 <a class="prime-mini-brand" href="{{ route('pages.show', ['locale' => $locale, 'slug' => 'home']) }}">Santana Prime</a>
-                <a href="{{ route('admin.login') }}">Clients Login</a>
+                <a href="{{ route('owner.login') }}">Clients Login</a>
             </div>
             <div class="prime-brand-row">
                 <img src="https://static.wixstatic.com/media/c50f24_80b75f48949d41deaf57c5edaedaae72~mv2.png/v1/fill/w_112,h_108,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Prime_logo_pdf%20(1)_pdf%20(1).png" alt="Santana Prime logo" decoding="async">
@@ -49,10 +49,15 @@
                         @endforeach
                         </div>
                     </div>
-                    <span class="cart-icon">0</span>
                 </div>
             </div>
         </header>
+        @if (session('service_enquiry_status'))
+            <div class="service-enquiry-toast" role="status">{{ session('service_enquiry_status') }}</div>
+        @endif
+        @if ($errors->serviceEnquiry->any())
+            <div class="service-enquiry-toast is-error" role="alert">Please check the order enquiry form and try again.</div>
+        @endif
         <main class="prime-main">
             @foreach (($page->content_blocks ?? []) as $block)
                 @php($type = data_get($block, 'type', 'panel'))
@@ -83,20 +88,11 @@
                         <div class="prime-products">
                             @foreach (data_get($block, 'products', []) as $product)
                                 <article class="prime-product-card">
-                                    <a class="prime-product-image" href="#" aria-label="Vista rapida">
+                                    <div class="prime-product-image">
                                         <img src="{{ data_get($product, 'image') }}" alt="{{ data_get($product, 'name') }}" loading="lazy" decoding="async">
-                                        <span>Vista rapida</span>
-                                    </a>
-                                    <h2>{{ data_get($product, 'name') }}</h2>
-                                    <div class="prime-product-price">
-                                        @if (filled(data_get($product, 'sale_price')))
-                                            <span class="prime-price-old">{{ data_get($product, 'price') }}</span>
-                                            <span>{{ data_get($product, 'sale_price') }}</span>
-                                        @else
-                                            <span>{{ data_get($product, 'price') }}</span>
-                                        @endif
                                     </div>
-                                    <button type="button">Add to Cart</button>
+                                    <h2>{{ data_get($product, 'name') }}</h2>
+                                    <button type="button" data-order-service="{{ data_get($product, 'name') }}">Order It</button>
                                 </article>
                             @endforeach
                         </div>
@@ -356,6 +352,48 @@
                 <a href="tel:+34624229511">+34 624 229 511</a>
             </div>
         </footer>
+        <div class="service-order-modal @if ($errors->serviceEnquiry->any()) is-open @endif" data-service-order-modal aria-hidden="{{ $errors->serviceEnquiry->any() ? 'false' : 'true' }}">
+            <div class="service-order-backdrop" data-service-order-close></div>
+            <form class="service-order-dialog" method="post" action="{{ route('service-enquiries.store') }}">
+                @csrf
+                <div class="service-order-head">
+                    <div>
+                        <span>Service enquiry</span>
+                        <h2>Order It</h2>
+                    </div>
+                    <button type="button" aria-label="Close form" data-service-order-close>×</button>
+                </div>
+                <label>
+                    Service Name
+                    <input type="text" name="service_name" value="{{ old('service_name') }}" readonly data-service-order-name>
+                    @error('service_name', 'serviceEnquiry')<small>{{ $message }}</small>@enderror
+                </label>
+                <label>
+                    Enquiry Date
+                    <input type="date" name="enquiry_date" value="{{ old('enquiry_date', now()->toDateString()) }}">
+                    @error('enquiry_date', 'serviceEnquiry')<small>{{ $message }}</small>@enderror
+                </label>
+                <label>
+                    Name *
+                    <input type="text" name="name" value="{{ old('name') }}" required>
+                    @error('name', 'serviceEnquiry')<small>{{ $message }}</small>@enderror
+                </label>
+                <label>
+                    Email Address *
+                    <input type="email" name="email" value="{{ old('email') }}" required>
+                    @error('email', 'serviceEnquiry')<small>{{ $message }}</small>@enderror
+                </label>
+                <label>
+                    Telephone Number *
+                    <input type="tel" name="telephone" value="{{ old('telephone') }}" required>
+                    @error('telephone', 'serviceEnquiry')<small>{{ $message }}</small>@enderror
+                </label>
+                <div class="service-order-actions">
+                    <button type="submit">Send</button>
+                    <button type="button" data-service-order-close>Exit</button>
+                </div>
+            </form>
+        </div>
     @else
         <header class="site-header">
             <a class="site-brand" href="{{ route('pages.show', ['locale' => $locale, 'slug' => 'home']) }}">Hola Santana</a>
