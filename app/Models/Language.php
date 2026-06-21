@@ -27,7 +27,13 @@ class Language extends Model
             ->orderBy('sort_order')
             ->orderBy('name')
             ->pluck('name', 'code')
-            ->all() ?: ['en' => 'English', 'es' => 'Spanish'];
+            ->all() ?: [
+                'en' => 'English',
+                'es' => 'Spanish',
+                'de' => 'German',
+                'sv' => 'Swedish',
+                'fi' => 'Finnish',
+            ];
     }
 
     public static function defaultCode(): string
