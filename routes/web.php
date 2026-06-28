@@ -14,6 +14,8 @@ use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/health', fn () => response('ok'));
+
 Route::get('/', [PublicPageController::class, 'home'])->name('home');
 Route::post('/service-enquiries', [PublicPageController::class, 'storeServiceEnquiry'])->name('service-enquiries.store');
 
