@@ -10,6 +10,10 @@ services:
         value: production
       - key: APP_DEBUG
         value: false
+      - key: APP_URL
+        value: https://holasantana.onrender.com
+      - key: ASSET_URL
+        value: https://holasantana.onrender.com
       - key: APP_KEY
         sync: false
       - key: LOG_CHANNEL

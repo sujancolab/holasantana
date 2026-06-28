@@ -10,6 +10,13 @@ php artisan key:generate --show
 
 The default blueprint uses SQLite and runs migrations on startup with `RUN_MIGRATIONS=true`. To load the initial admin user, languages, menu, and pages, temporarily set `RUN_SEEDERS=true` for the first deploy, then set it back to `false`.
 
+Set `APP_URL` and `ASSET_URL` to your HTTPS Render URL:
+
+```text
+APP_URL=https://holasantana.onrender.com
+ASSET_URL=https://holasantana.onrender.com
+```
+
 For persistent production data, attach a Render disk for the SQLite database or switch the Render env vars to a managed database connection.
 
 If the deployed page appears unstyled, open this URL in your browser:
