@@ -19,6 +19,8 @@ fi
 
 chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/database
 
+rm -f /var/www/public/hot
+
 php artisan storage:link || true
 
 if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
