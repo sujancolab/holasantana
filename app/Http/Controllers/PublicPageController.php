@@ -5,22 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\MenuItem;
 use App\Models\Page;
 use App\Models\Language;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class PublicPageController extends Controller
 {
-    public function home(): View
+    public function home(Request $request): RedirectResponse
     {
-        return $this->show(Language::defaultCode(), 'home');
+        return redirect()->route('pages.show', [
+            'locale' => $this->preferredLocale($request),
+            'slug' => 'home',
+        ]);
     }
 
-    public function show(string $locale, string $slug = 'home'): View
+    public function show(Request $request, string $locale, string $slug = 'home'): View
     {
         abort_unless((bool) preg_match('/^[a-z]{2,3}(?:-[a-z]{2})?$/i', $locale), 404);
         abort_unless(array_key_exists($locale, Language::activeOptions()), 404);
 
         App::setLocale($locale);
+        $request->session()->put('site_locale', $locale);
+        Cookie::queue(cookie('site_locale', $locale, 60 * 24 * 365, null, null, false, false, false, 'lax'));
 
         $page = Page::where('slug', $slug)
             ->where('status', 'published')
@@ -37,35 +46,50 @@ class PublicPageController extends Controller
         ]);
     }
 
-    private function pageLocales(Page $page): array
+    public function storeServiceEnquiry(Request $request): RedirectResponse
     {
-        $codes = array_keys(Language::activeOptions());
+        $data = $request->validateWithBag('serviceEnquiry', [
+            'service_name' => ['required', 'string', 'max:255'],
+            'enquiry_date' => ['nullable', 'date'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'telephone' => ['required', 'string', 'max:50'],
+        ]);
 
-        foreach (['title', 'menu_label', 'meta_description', 'hero_eyebrow', 'hero_title', 'hero_subtitle'] as $field) {
-            $value = $page->{$field};
+        $message = implode(PHP_EOL, [
+            'New service enquiry from Hola Santana',
+            '',
+            'Service Name: ' . $data['service_name'],
+            'Enquiry Date: ' . ($data['enquiry_date'] ?? now()->toDateString()),
+            'Name: ' . $data['name'],
+            'Email Address: ' . $data['email'],
+            'Telephone Number: ' . $data['telephone'],
+        ]);
 
-            if (is_array($value)) {
-                $codes = array_merge($codes, array_keys($value));
-            }
-        }
+        Mail::raw($message, function ($mail) use ($data) {
+            $mail->to('spm3182@gmail.com')
+                ->replyTo($data['email'], $data['name'])
+                ->subject('Hola Santana Service Enquiry: ' . $data['service_name']);
+        });
 
-        $this->collectLocaleCodes($page->content_blocks ?? [], $codes);
-
-        return array_values(array_unique(array_filter($codes, fn (string $code) => preg_match('/^[a-z]{2,3}(?:-[a-z]{2})?$/i', $code))));
+        return back()->with('service_enquiry_status', 'Your service enquiry has been sent.');
     }
 
-    private function collectLocaleCodes(mixed $value, array &$codes): void
+    private function pageLocales(Page $page): array
     {
-        if (! is_array($value)) {
-            return;
-        }
+        return array_keys(Language::activeOptions());
+    }
 
-        foreach ($value as $key => $child) {
-            if (is_string($key) && preg_match('/^[a-z]{2,3}(?:-[a-z]{2})?$/i', $key)) {
-                $codes[] = $key;
+    private function preferredLocale(Request $request): string
+    {
+        $activeLocales = Language::activeOptions();
+
+        foreach ([$request->session()->get('site_locale'), $request->cookie('site_locale')] as $locale) {
+            if (is_string($locale) && array_key_exists($locale, $activeLocales)) {
+                return $locale;
             }
-
-            $this->collectLocaleCodes($child, $codes);
         }
+
+        return Language::defaultCode();
     }
 }

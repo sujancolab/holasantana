@@ -13,6 +13,11 @@
             <a href="{{ route('admin.dashboard') }}" @class(['active' => request()->routeIs('admin.dashboard')])>Dashboard</a>
             <a href="{{ route('admin.pages.index') }}" @class(['active' => request()->routeIs('admin.pages.*')])>Page Management</a>
             <a href="{{ route('admin.languages.index') }}" @class(['active' => request()->routeIs('admin.languages.*')])>Languages</a>
+            <a href="{{ route('admin.owners.index') }}" @class(['active' => request()->routeIs('admin.owners.*')])>Owners</a>
+            <a href="{{ route('admin.properties.index') }}" @class(['active' => request()->routeIs('admin.properties.*')])>Properties</a>
+            <a href="{{ route('admin.reservations.index') }}" @class(['active' => request()->routeIs('admin.reservations.*')])>Reservations</a>
+            <a href="{{ route('admin.activities.index') }}" @class(['active' => request()->routeIs('admin.activities.*')])>Activities</a>
+            <a href="{{ route('admin.holiday-homes.index') }}" @class(['active' => request()->routeIs('admin.holiday-homes.*')])>Holiday Homes</a>
             <a href="{{ route('home') }}" target="_blank">View Site</a>
         </nav>
     </aside>

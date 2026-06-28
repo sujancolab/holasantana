@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
             ['code' => 'en', 'name' => 'English', 'is_default' => true, 'sort_order' => 1],
             ['code' => 'es', 'name' => 'Spanish', 'is_default' => false, 'sort_order' => 2],
             ['code' => 'de', 'name' => 'German', 'is_default' => false, 'sort_order' => 3],
-            ['code' => 'fi', 'name' => 'Finnish', 'is_default' => false, 'sort_order' => 4],
+            ['code' => 'sv', 'name' => 'Swedish', 'is_default' => false, 'sort_order' => 4],
+            ['code' => 'fi', 'name' => 'Finnish', 'is_default' => false, 'sort_order' => 5],
         ] as $language) {
             Language::updateOrCreate(
                 ['code' => $language['code']],
