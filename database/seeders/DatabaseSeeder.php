@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\MenuItem;
 use App\Models\Language;
+use App\Models\HolidayHome;
 use App\Models\Page;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -54,6 +55,7 @@ class DatabaseSeeder extends Seeder
             ['home-rental', 'Rent our holiday home', 'Alquila nuestra casa vacacional', 'Rent our holiday home', 'Explore available holiday homes and plan a comfortable stay in the islands.', '/home'],
             ['about-3', 'About', 'Sobre nosotros', 'About Hola Santana', 'A local team helping homeowners and travelers with practical, personal service.', '/about-3'],
             ['contact', 'Contact', 'Contacto', 'Contact Hola Santana', 'Send an enquiry and the team will help with the right next step.', '/contact'],
+            ['faq', 'FAQ', 'FAQ', 'Submit your order / query', 'Send your Santana Prime service request with your preferred date, time, and contact method.', '/faq'],
             ['blog', 'Blog', 'Blog', 'Blog', 'Guides, updates, and notes for holiday rentals, property owners, and guests.', '/blog'],
         ];
 
@@ -65,6 +67,7 @@ class DatabaseSeeder extends Seeder
             $isHolidayRental = $slug === 'home-rental';
             $isAbout = $slug === 'about-3';
             $isContact = $slug === 'contact';
+            $isFaq = $slug === 'faq';
             $isBlog = $slug === 'blog';
 
             $heroTitleEn = match (true) {
@@ -75,6 +78,7 @@ class DatabaseSeeder extends Seeder
                 $isHolidayRental => 'Welcome to the Holiday Home Santana',
                 $isAbout => 'About Santana Prime - Home Care and Tourist Rental Management Service',
                 $isContact => 'Santana Prime - Home care and Tourist rental management services',
+                $isFaq => 'Submit your order / query',
                 $isBlog => 'All Posts',
                 default => $hero,
             };
@@ -87,6 +91,7 @@ class DatabaseSeeder extends Seeder
                 $isHolidayRental => 'Your ideal retreat on the Costa Blanca in Torrevieja',
                 $isAbout => 'Santana Prime provides professional home management and holiday rental services in Torrevieja.',
                 $isContact => 'Experience in short-term rental management and Airbnb services',
+                $isFaq => 'Tell us what you need and our team will contact you.',
                 $isBlog => 'All Posts',
                 default => $subtitle,
             };
@@ -99,11 +104,12 @@ class DatabaseSeeder extends Seeder
                 $isHolidayRental => $this->holidayRentalBlocks(),
                 $isAbout => $this->aboutBlocks(),
                 $isContact => $this->contactBlocks(),
+                $isFaq => $this->faqBlocks(),
                 $isBlog => $this->blogBlocks(),
                 default => $this->defaultBlocks($slug),
             };
 
-            $template = $isHome ? 'home' : (($isTouristRental || $isPrivateHome || $isTouristRentalCategory || $isHolidayRental || $isAbout || $isContact || $isBlog) ? 'prime' : 'default');
+            $template = $isHome ? 'home' : (($isTouristRental || $isPrivateHome || $isTouristRentalCategory || $isHolidayRental || $isAbout || $isContact || $isFaq || $isBlog) ? 'prime' : 'default');
 
             $page = Page::updateOrCreate(
                 ['slug' => $slug],
@@ -129,6 +135,61 @@ class DatabaseSeeder extends Seeder
                     'sort_order' => $page->menu_order,
                     'is_active' => true,
                 ],
+            );
+        }
+
+        $this->seedHolidayHomes();
+    }
+
+    private function seedHolidayHomes(): void
+    {
+        $homes = [
+            [
+                'area_name' => 'Torrevieja',
+                'name' => 'Apartment Santana 2-19',
+                'image_url' => 'https://static.wixstatic.com/media/c50f24_54f3b656a6454182b532d999f8cbd0f0~mv2.jpg/v1/fill/w_464,h_388,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240112-WA0007.jpg',
+                'description' => 'Stylish one-bedroom rental with pool views, private parking, elevator access and a fully equipped kitchen.',
+                'number_of_bedrooms' => 1,
+                'maximum_number_of_guests' => 4,
+                'online_booking_link' => 'https://www.holasantana.com/home',
+                'sort_order' => 10,
+            ],
+            [
+                'area_name' => 'Torrevieja',
+                'name' => 'Studio Apartment Santana 2-18',
+                'image_url' => 'https://static.wixstatic.com/media/c50f24_08df06e85d024d738e89466c01ff46ec~mv2.jpg/v1/fill/w_456,h_276,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/1.jpg',
+                'description' => 'Bright studio with balcony, compact pool, private parking and modern amenities for a comfortable stay.',
+                'number_of_bedrooms' => 0,
+                'maximum_number_of_guests' => 2,
+                'online_booking_link' => 'https://www.holasantana.com/home',
+                'sort_order' => 20,
+            ],
+            [
+                'area_name' => 'Torrevieja',
+                'name' => 'Studio Apartment Santana 3-05',
+                'image_url' => 'https://static.wixstatic.com/media/c50f24_4fd97b5f913d4634874317d6801c9530~mv2.jpg/v1/fill/w_412,h_372,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/14.jpg',
+                'description' => 'Chic studio with pool views, elevator access, furnished kitchen, air conditioning and heating.',
+                'number_of_bedrooms' => 0,
+                'maximum_number_of_guests' => 2,
+                'online_booking_link' => 'https://www.holasantana.com/home',
+                'sort_order' => 30,
+            ],
+            [
+                'area_name' => 'Salinas',
+                'name' => 'Apartment Santana Salinas',
+                'image_url' => 'https://static.wixstatic.com/media/c50f24_2ca06924b7fa41f3ad973523fb9e1b42~mv2.jpeg/v1/fill/w_538,h_396,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/WhatsApp%20Image%202026-04-29%20at%2012_40_11.jpeg',
+                'description' => 'Two-bedroom apartment with Mediterranean Sea view, balcony, lift access and a modern open kitchen.',
+                'number_of_bedrooms' => 2,
+                'maximum_number_of_guests' => 4,
+                'online_booking_link' => 'https://api.whatsapp.com/send?phone=34624229511',
+                'sort_order' => 40,
+            ],
+        ];
+
+        foreach ($homes as $home) {
+            HolidayHome::updateOrCreate(
+                ['name' => $home['name']],
+                $home + ['is_active' => true],
             );
         }
     }
@@ -605,6 +666,32 @@ class DatabaseSeeder extends Seeder
                 'address' => ['Calle Ulpiano 71, Ground floor', '03182 Torrevieja, Spain', 'Tel. +34 601 55 86 27', 'Email: spm3182@gmail.com'],
                 'map_url' => 'https://www.google.com/maps/search/?api=1&query=Calle+Ulpiano+71+Torrevieja+Spain',
                 'map_label' => ['en' => 'Map'],
+            ],
+            [
+                'type' => 'contact',
+                'heading' => ['en' => "Cleanliness isn't just what we do-it's who we are.\nPassion, precision, and professionalism in every detail.", 'es' => 'La limpieza no es solo lo que hacemos: es lo que somos.'],
+                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
+                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+            ],
+        ];
+    }
+
+    private function faqBlocks(): array
+    {
+        return [
+            [
+                'type' => 'faq_order_form',
+                'heading' => ['en' => 'Submit your order / query', 'es' => 'Envia tu pedido / consulta'],
+                'services' => [
+                    'Holiday rental cleaning',
+                    'Private home cleaning',
+                    'Key holding',
+                    'Laundry service',
+                    'Property inspection',
+                    'Airport transfer',
+                    'Other',
+                ],
+                'contact_methods' => ['Email', 'WhatsApp', 'Telephone'],
             ],
             [
                 'type' => 'contact',

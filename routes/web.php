@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/health', fn () => response('ok'));
 
 Route::get('/', [PublicPageController::class, 'home'])->name('home');
+Route::get('/faq', [PublicPageController::class, 'faq'])->name('faq');
 Route::post('/service-enquiries', [PublicPageController::class, 'storeServiceEnquiry'])->name('service-enquiries.store');
 
 Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.login');

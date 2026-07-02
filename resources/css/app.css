@@ -61,6 +61,8 @@ textarea { resize: vertical; }
 table { width: 100%; border-collapse: collapse; min-width: 680px; }
 th, td { padding: 13px 10px; border-bottom: 1px solid var(--line); text-align: left; }
 th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
+.admin-table-thumb { width: 72px; height: 54px; border-radius: 6px; object-fit: cover; display: block; }
+.holiday-home-preview img { width: min(260px, 100%); aspect-ratio: 4 / 3; border-radius: 8px; object-fit: cover; display: block; }
 .cms-form { display: grid; gap: 22px; }
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .wide { grid-column: 1 / -1; }
@@ -252,6 +254,37 @@ th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
 .page-home-rental .prime-media-text > img { max-height: 560px; object-fit: contain; }
 .page-home-rental .prime-media-text > div { padding: 34px 28px; background: #bdd1ed; border: 1px solid #333; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,.35); }
 .page-home-rental .prime-media-text h2 { color: #111; font-size: clamp(28px, 2.2vw, 36px); }
+.holiday-home-listing { width: min(100%, 1180px); margin: 28px auto 54px; padding: clamp(24px, 4vw, 42px); border: 1px solid var(--front-line, #d9e0dc); border-radius: 8px; background: rgba(255,255,255,.94); box-shadow: 0 22px 70px rgba(7,59,53,.09); }
+.holiday-home-listing-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 420px); gap: 20px; align-items: end; margin-bottom: 24px; }
+.holiday-home-listing-head p { margin: 0 0 6px; color: var(--front-teal, #11645b); font-size: 13px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+.holiday-home-listing-head h2 { margin: 0; color: var(--front-teal-dark, #073b35); font-size: clamp(28px, 3.4vw, 48px); line-height: 1.08; }
+.holiday-home-search { margin: 0; gap: 8px; color: var(--front-teal-dark, #073b35); font-size: 14px; }
+.holiday-home-search input { min-height: 48px; border: 1px solid var(--front-line, #d9e0dc); border-radius: 999px; padding: 0 18px; background: #fff; }
+.holiday-home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+.holiday-home-card { overflow: hidden; display: flex; flex-direction: column; min-height: 100%; border: 1px solid rgba(7, 59, 53, .1); border-radius: 8px; background: white; box-shadow: 0 18px 46px rgba(7,59,53,.1); transition: transform .18s ease, box-shadow .18s ease; }
+.holiday-home-card:hover { transform: translateY(-3px); box-shadow: 0 24px 62px rgba(7,59,53,.15); }
+.holiday-home-card[hidden] { display: none; }
+.holiday-home-card img, .holiday-home-placeholder { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: grid; place-items: center; background: linear-gradient(135deg, #dfece8, #f7efe6); color: var(--front-teal-dark, #073b35); font-size: 44px; font-weight: 900; }
+.holiday-home-card-body { display: flex; flex: 1; flex-direction: column; padding: 18px; }
+.holiday-home-card-body > span { color: var(--front-teal, #11645b); font-size: 13px; font-weight: 900; text-transform: uppercase; }
+.holiday-home-card h3 { margin: 7px 0 14px; color: var(--front-ink, #14201f); font-size: 22px; line-height: 1.2; }
+.holiday-home-card dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 0 14px; }
+.holiday-home-card dl div { padding: 10px; border-radius: 8px; background: #eef7f4; }
+.holiday-home-card dt { color: var(--front-muted, #66706d); font-size: 12px; font-weight: 800; text-transform: uppercase; }
+.holiday-home-card dd { margin: 2px 0 0; color: var(--front-teal-dark, #073b35); font-size: 20px; font-weight: 900; }
+.holiday-home-card p { margin: 0 0 18px; color: var(--front-muted, #66706d); font-size: 15px; line-height: 1.55; }
+.holiday-home-description { position: relative; margin: 0 0 14px; }
+.holiday-home-description p { margin-bottom: 0; }
+.holiday-home-description.is-collapsible { max-height: 188px; overflow: hidden; }
+.holiday-home-description.is-collapsible::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 62px; background: linear-gradient(180deg, rgba(255,255,255,0), #fff 76%); pointer-events: none; }
+.holiday-home-card.is-description-expanded .holiday-home-description.is-collapsible { max-height: none; }
+.holiday-home-card.is-description-expanded .holiday-home-description.is-collapsible::after { display: none; }
+.holiday-home-more { display: inline-flex; align-items: center; justify-content: center; align-self: flex-start; min-height: 40px; margin: -2px 0 16px; padding: 0 16px; border: 1px solid rgba(8, 123, 110, .24); border-radius: 999px; background: #eef8f5; color: var(--front-teal, #087b6e); font-size: 13px; font-weight: 900; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.8); }
+.holiday-home-more:hover, .holiday-home-more:focus-visible { background: var(--front-teal, #087b6e); color: #fff; }
+.holiday-home-card.is-description-expanded .holiday-home-more,
+.holiday-home-more[aria-expanded="true"] { border-color: var(--front-teal, #087b6e); background: linear-gradient(135deg, #087b6e, #064c44); color: #fff; box-shadow: 0 10px 22px rgba(8, 123, 110, .22); }
+.holiday-home-card .prime-button { justify-content: center; width: 100%; margin-top: 8px; text-decoration: none; }
+.holiday-home-empty { margin: 16px 0 0; padding: 18px; border-radius: 8px; background: #eef7f4; color: var(--front-teal-dark, #073b35); font-weight: 800; text-align: center; }
 .page-blog .prime-main { width: 100%; padding: 0; border: 0; background: #ccd3e3; }
 .blog-shell { position: relative; overflow: hidden; min-height: 700px; padding: 48px 0 28px; background: #fff8f1; }
 .blog-shell::before, .blog-shell::after { content: ""; position: absolute; top: 0; bottom: 0; width: max(330px, calc((100% - 1360px) / 2 + 330px)); background: linear-gradient(rgba(20,20,20,.5), rgba(20,20,20,.5)), var(--blog-side-image) center/cover no-repeat; z-index: 0; }
@@ -1742,6 +1775,141 @@ th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
     }
 }
 
+/* Home rental mobile overflow fix */
+@media (max-width: 640px) {
+    html,
+    body,
+    .prime-site,
+    .page-home-rental.prime-site {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .page-home-rental .prime-header,
+    .page-home-rental .prime-main,
+    .page-home-rental .prime-footer {
+        width: auto;
+        max-width: none;
+    }
+
+    .page-home-rental .prime-brand-row,
+    .page-home-rental .page-category-tourist-rental-service .prime-brand-row {
+        grid-template-columns: 42px minmax(0, 1fr) 42px;
+        width: 100%;
+    }
+
+    .page-home-rental .prime-brand-row strong {
+        min-width: 0;
+        overflow: hidden;
+        padding-right: 0;
+        font-size: clamp(24px, 6.8vw, 30px);
+        text-overflow: clip;
+        white-space: nowrap;
+    }
+
+    .page-home-rental .prime-brand-row img,
+    .page-home-rental .mobile-menu-toggle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .page-home-rental .prime-actions,
+    .page-home-rental .language-switcher,
+    .page-home-rental .language-current {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .page-home-rental .prime-main {
+        margin: 0 auto;
+        padding: 10px;
+        background: linear-gradient(180deg, #e8f6f5 0%, #f7fbfb 100%);
+    }
+
+    .page-home-rental .prime-hero,
+    .page-home-rental .prime-wide-image,
+    .page-home-rental .prime-gallery,
+    .page-home-rental .prime-text-section,
+    .page-home-rental .prime-rental-unit,
+    .page-home-rental .prime-rental-gallery,
+    .page-home-rental .prime-service-images,
+    .page-home-rental .prime-media-text,
+    .page-home-rental .holiday-home-listing {
+        width: 100%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .page-home-rental .prime-hero {
+        min-height: 220px;
+        overflow: hidden;
+        border-radius: 8px;
+        background-position: center;
+    }
+
+    .page-home-rental .prime-hero h1,
+    .page-home-rental .prime-hero p {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 14px;
+        padding-right: 14px;
+        overflow-wrap: anywhere;
+    }
+
+    .page-home-rental .prime-text-section,
+    .page-home-rental .prime-text-section.is-holiday-intro,
+    .page-home-rental .prime-text-section.is-city-tour,
+    .page-home-rental .prime-rental-unit,
+    .page-home-rental .prime-rental-unit .prime-open-copy,
+    .page-home-rental .prime-rental-unit h2,
+    .page-home-rental .prime-media-text > div {
+        padding: 18px;
+        border-radius: 8px;
+    }
+
+    .page-home-rental .prime-text-section h2,
+    .page-home-rental .prime-rental-unit h2,
+    .page-home-rental .prime-media-text h2 {
+        font-size: clamp(24px, 7vw, 32px);
+        line-height: 1.12;
+        overflow-wrap: anywhere;
+    }
+
+    .page-home-rental .prime-text-section .prime-open-copy,
+    .page-home-rental .prime-rental-unit .prime-open-copy,
+    .page-home-rental .prime-media-text .prime-copy {
+        width: 100%;
+        max-width: 100%;
+        min-height: 0;
+        font-size: clamp(17px, 4.8vw, 21px);
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+    }
+
+    .page-home-rental .prime-gallery,
+    .page-home-rental .prime-rental-gallery,
+    .page-home-rental .prime-service-images.is-count-4,
+    .page-home-rental .holiday-home-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .page-home-rental .prime-media-text,
+    .page-home-rental .prime-media-text.is-reverse,
+    .page-home-rental .holiday-home-listing-head {
+        grid-template-columns: 1fr;
+    }
+
+    .page-home-rental img,
+    .page-home-rental video {
+        max-width: 100%;
+    }
+}
+
 .sr-only {
     position: absolute;
     width: 1px;
@@ -2046,6 +2214,652 @@ th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
     .prime-header .language-switcher a,
     .page-category-tourist-rental-service .prime-header .language-switcher a {
         font-size: 11px;
+    }
+}
+
+/* Unified public modernization */
+.site,
+.prime-site,
+.page-category-tourist-rental-service.prime-site,
+.page-faq.prime-site {
+    --front-paper: #f4f7f3;
+    --front-surface: rgba(255, 255, 255, .9);
+    --front-surface-strong: #ffffff;
+    --front-ink: #172421;
+    --front-muted: #65736f;
+    --front-line: rgba(23, 36, 33, .12);
+    --front-teal: #087b6e;
+    --front-teal-dark: #073b35;
+    --front-blue: #255fe8;
+    --front-gold: #d6a63e;
+    --front-coral: #d8613c;
+    min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(234, 245, 241, .96), rgba(249, 247, 239, .96) 54%, rgba(232, 241, 247, .96)),
+        var(--front-paper);
+    color: var(--front-ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.prime-header,
+.site-header,
+.page-category-tourist-rental-service .prime-header {
+    position: sticky;
+    top: 14px;
+    z-index: 80;
+    width: min(100% - 36px, 1440px);
+    margin: 14px auto 18px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, .74);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .9);
+    box-shadow: 0 18px 48px rgba(7, 59, 53, .12);
+    backdrop-filter: blur(18px);
+}
+
+.prime-tools {
+    margin: 0;
+    color: var(--front-teal);
+    font-size: 12px;
+    font-weight: 850;
+}
+
+.prime-mini-brand,
+.prime-tools a {
+    color: var(--front-teal-dark);
+    text-decoration: none;
+}
+
+.prime-brand-row,
+.page-category-tourist-rental-service .prime-brand-row {
+    display: grid;
+    grid-template-columns: 48px minmax(170px, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0 0;
+}
+
+.prime-brand-row img,
+.page-category-tourist-rental-service .prime-brand-row img {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    box-shadow: 0 10px 24px rgba(23, 36, 33, .12);
+}
+
+.prime-brand-row strong,
+.page-category-tourist-rental-service .prime-brand-row strong,
+.site-brand {
+    color: var(--front-blue);
+    font-size: clamp(26px, 2.4vw, 38px);
+    font-weight: 850;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.prime-nav,
+.site-header nav,
+.page-category-tourist-rental-service .prime-nav {
+    grid-column: 1 / -1;
+    order: 3;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 10px 0 0;
+    padding: 12px 0 0;
+    border-top: 1px solid var(--front-line);
+    background: transparent;
+}
+
+.prime-nav a,
+.site-header nav a,
+.page-category-tourist-rental-service .prime-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--front-muted);
+    font-size: 13px;
+    font-weight: 850;
+    line-height: 1.15;
+    text-decoration: none;
+    transition: background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
+}
+
+.prime-nav a:hover,
+.prime-nav a.active,
+.site-header nav a:hover,
+.site-header nav a.active,
+.page-category-tourist-rental-service .prime-nav a:hover,
+.page-category-tourist-rental-service .prime-nav a.active {
+    border-color: rgba(8, 123, 110, .18);
+    background: #e9f5f2;
+    color: var(--front-teal);
+    transform: translateY(-1px);
+}
+
+.prime-actions {
+    justify-self: end;
+    margin-left: 0;
+}
+
+.prime-main,
+.page-home-rental .prime-main,
+.page-blog .prime-main,
+.page-contact .prime-main,
+.page-about-3 .prime-main,
+.page-category-tourist-rental-service .prime-main,
+.page-faq .prime-main {
+    width: min(100% - 36px, 1440px);
+    margin: 0 auto;
+    padding: clamp(18px, 3vw, 42px);
+    border: 1px solid rgba(255, 255, 255, .7);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .5);
+    box-shadow: 0 26px 80px rgba(7, 59, 53, .08), inset 0 0 0 1px rgba(255,255,255,.64);
+}
+
+.prime-hero,
+.hero {
+    min-height: clamp(420px, 56vh, 660px);
+    align-content: end;
+    justify-items: start;
+    overflow: hidden;
+    margin: 0 0 clamp(18px, 3vw, 32px);
+    padding: clamp(30px, 6vw, 74px);
+    border-radius: 8px;
+    background:
+        linear-gradient(90deg, rgba(7, 59, 53, .84), rgba(7, 59, 53, .34)),
+        var(--hero-image, url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=82')) center/cover no-repeat;
+    color: #fff;
+    text-align: left;
+}
+
+.prime-hero h1,
+.hero h1 {
+    max-width: 940px;
+    margin: 0 0 14px;
+    color: #fff;
+    font-size: clamp(38px, 5.6vw, 78px);
+    font-weight: 900;
+    line-height: 1.02;
+}
+
+.prime-hero p,
+.hero div {
+    max-width: 760px;
+    margin: 0;
+    color: rgba(255,255,255,.9);
+    font-size: clamp(18px, 2vw, 27px);
+    line-height: 1.4;
+}
+
+.prime-panel,
+.prime-open-section,
+.prime-rental-unit,
+.content-section,
+.about-intro,
+.about-feature,
+.blog-card,
+.contact-live-card,
+.holiday-home-listing,
+.faq-order-section,
+.faq-order-form,
+.prime-product-card {
+    border: 1px solid var(--front-line);
+    border-radius: 8px;
+    background: var(--front-surface);
+    box-shadow: 0 18px 52px rgba(7, 59, 53, .09);
+}
+
+.prime-panel,
+.prime-open-section,
+.prime-rental-unit,
+.content-section,
+.about-intro,
+.faq-order-section {
+    width: min(100%, 1120px);
+    margin: clamp(16px, 3vw, 32px) auto;
+    padding: clamp(24px, 4.4vw, 58px);
+    text-align: left;
+}
+
+.prime-open-section h1,
+.prime-open-section h2,
+.prime-panel h2,
+.prime-rental-unit h2,
+.about-intro h1,
+.about-feature h2,
+.blog-content h1,
+.contact-hero-copy h1,
+.faq-order-section h1 {
+    max-width: 920px;
+    margin: 0 0 20px;
+    color: var(--front-teal-dark);
+    font-family: inherit;
+    font-size: clamp(28px, 4vw, 54px);
+    font-weight: 900;
+    line-height: 1.06;
+    letter-spacing: 0;
+}
+
+.prime-open-copy,
+.prime-copy,
+.prime-rental-unit .prime-open-copy,
+.prime-footer-copy,
+.prime-open-footer,
+.about-intro div,
+.about-feature div div,
+.blog-card p,
+.contact-hero-copy p {
+    max-width: 920px;
+    margin: 0;
+    color: var(--front-muted);
+    font-size: clamp(16px, 1.35vw, 20px);
+    line-height: 1.65;
+}
+
+.prime-gallery,
+.prime-service-images,
+.prime-rental-gallery,
+.page-general-4 .prime-gallery,
+.page-projects-6 .prime-gallery,
+.page-home-rental .prime-gallery,
+.page-home-rental .prime-rental-gallery,
+.page-home-rental .prime-service-images.is-count-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+    width: 100%;
+    margin: clamp(18px, 3vw, 34px) auto;
+    padding: 0;
+    background: transparent;
+}
+
+.prime-gallery img,
+.prime-service-images img,
+.prime-rental-gallery img,
+.prime-wide-image img,
+.about-feature img,
+.blog-card-image,
+.contact-office-photos img,
+.contact-poster,
+.prime-contact > img,
+.holiday-home-card img {
+    border-radius: 8px;
+    box-shadow: 0 14px 34px rgba(7, 59, 53, .12);
+}
+
+.prime-gallery img,
+.prime-service-images img,
+.prime-rental-gallery img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.prime-button,
+.site-button,
+.prime-product-card button,
+.contact-live-form button,
+.faq-order-form button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--front-teal), var(--front-teal-dark));
+    color: #fff;
+    box-shadow: 0 12px 24px rgba(8, 123, 110, .18);
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 0;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+
+.prime-button:hover,
+.site-button:hover,
+.prime-product-card button:hover,
+.contact-live-form button:hover,
+.faq-order-form button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 32px rgba(8, 123, 110, .24);
+}
+
+.prime-products,
+.holiday-home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.prime-product-card,
+.holiday-home-card {
+    overflow: hidden;
+    background: var(--front-surface-strong);
+    transition: transform .16s ease, box-shadow .16s ease;
+}
+
+.prime-product-card:hover,
+.holiday-home-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 70px rgba(7, 59, 53, .14);
+}
+
+.blog-shell,
+.contact-page {
+    padding: 0;
+    background: transparent;
+}
+
+.blog-content {
+    width: min(100%, 1080px);
+    padding: 0;
+    background: transparent;
+}
+
+.blog-card {
+    overflow: hidden;
+    background: var(--front-surface-strong);
+}
+
+.contact-hero-copy {
+    margin: 0 auto 24px;
+    padding: clamp(24px, 4vw, 50px);
+    border: 1px solid var(--front-line);
+    border-radius: 8px;
+    background: var(--front-surface);
+    box-shadow: 0 18px 52px rgba(7,59,53,.09);
+}
+
+.contact-live-card {
+    grid-template-columns: minmax(240px, .85fr) minmax(300px, 1.15fr);
+    width: min(100%, 980px);
+    padding: 22px;
+    gap: 20px;
+}
+
+.contact-live-form,
+.faq-order-form {
+    padding: 22px;
+    border-radius: 8px;
+    background: #f8fbf9;
+}
+
+.contact-live-form input,
+.contact-live-form textarea,
+.faq-order-form input,
+.faq-order-form select,
+.faq-order-form textarea {
+    min-height: 44px;
+    border: 1px solid var(--front-line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--front-ink);
+    font-size: 15px;
+}
+
+.faq-order-section {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(320px, 440px);
+    align-items: start;
+    justify-items: stretch;
+    gap: clamp(24px, 5vw, 64px);
+    min-height: 0;
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.94), rgba(239, 247, 244, .94)),
+        #fff;
+}
+
+.faq-order-section h1 {
+    align-self: center;
+    margin: 0;
+}
+
+.faq-order-section h1::after {
+    content: "Share the service details, preferred time, and best contact method. Santana Prime will follow up directly.";
+    display: block;
+    max-width: 560px;
+    margin-top: 16px;
+    color: var(--front-muted);
+    font-size: clamp(16px, 1.4vw, 20px);
+    font-weight: 500;
+    line-height: 1.55;
+}
+
+.faq-order-form {
+    width: 100%;
+    margin: 0;
+}
+
+.faq-order-form label,
+.faq-order-form fieldset {
+    color: var(--front-ink);
+    font-size: 13px;
+    font-weight: 850;
+}
+
+.faq-order-form fieldset label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.page-faq .prime-contact,
+.prime-contact {
+    display: grid;
+    grid-template-columns: minmax(220px, .72fr) minmax(0, 1.24fr) minmax(220px, .72fr);
+    gap: 16px;
+    width: min(100%, 1280px);
+    margin: clamp(18px, 3vw, 34px) auto 0;
+    padding: 0;
+    background: transparent;
+}
+
+.page-faq .prime-contact > img,
+.prime-contact > img {
+    width: 100%;
+    height: 100%;
+    min-height: 340px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.page-faq .prime-contact .prime-panel,
+.prime-contact .prime-panel {
+    display: grid;
+    align-content: center;
+    width: 100%;
+    min-height: 340px;
+    margin: 0;
+    padding: clamp(22px, 3vw, 36px);
+    border: 1px solid var(--front-line);
+    border-radius: 8px;
+    background: var(--front-surface);
+    box-shadow: 0 18px 52px rgba(7,59,53,.09);
+    text-align: left;
+}
+
+.page-faq .prime-contact .prime-panel h2,
+.prime-contact .prime-panel h2 {
+    min-height: 0;
+    margin: 0 0 20px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--front-blue);
+    font-size: clamp(22px, 2.3vw, 34px);
+    font-weight: 850;
+    text-align: left;
+}
+
+.page-faq .contact-grid,
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px 18px;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--front-ink);
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.page-faq .contact-grid a,
+.contact-grid a {
+    color: var(--front-teal);
+    font-size: 14px;
+    font-weight: 850;
+}
+
+.page-faq .prime-footer {
+    display: flex;
+}
+
+.prime-footer,
+.site-footer {
+    width: min(100% - 36px, 1440px);
+    margin: 18px auto 30px;
+    padding: 26px clamp(20px, 4vw, 46px);
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--front-teal-dark), #0a5850);
+    color: #fff;
+    box-shadow: 0 18px 52px rgba(7,59,53,.16);
+}
+
+.prime-footer span,
+.prime-footer a,
+.site-footer span {
+    color: rgba(255,255,255,.78);
+}
+
+@media (max-width: 900px) {
+    .prime-header,
+    .site-header,
+    .page-category-tourist-rental-service .prime-header,
+    .prime-main,
+    .page-home-rental .prime-main,
+    .page-blog .prime-main,
+    .page-contact .prime-main,
+    .page-about-3 .prime-main,
+    .page-category-tourist-rental-service .prime-main,
+    .page-faq .prime-main,
+    .prime-footer,
+    .site-footer {
+        width: calc(100% - 22px);
+    }
+
+    .faq-order-section,
+    .contact-live-card,
+    .page-faq .prime-contact,
+    .prime-contact {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-order-section h1::after {
+        max-width: none;
+    }
+
+    .page-faq .prime-contact > img,
+    .prime-contact > img {
+        min-height: 260px;
+        height: 260px;
+    }
+}
+
+@media (max-width: 640px) {
+    .prime-site,
+    .site {
+        padding-top: 154px;
+    }
+
+    .prime-header,
+    .site-header,
+    .page-category-tourist-rental-service .prime-header {
+        position: fixed;
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        width: auto;
+        margin: 0;
+    }
+
+    .prime-main,
+    .page-home-rental .prime-main,
+    .page-blog .prime-main,
+    .page-contact .prime-main,
+    .page-about-3 .prime-main,
+    .page-category-tourist-rental-service .prime-main,
+    .page-faq .prime-main {
+        padding: 14px;
+    }
+
+    .prime-hero,
+    .hero {
+        min-height: 400px;
+        padding: 24px;
+    }
+
+    .prime-hero h1,
+    .hero h1,
+    .prime-open-section h1,
+    .prime-open-section h2,
+    .prime-panel h2,
+    .prime-rental-unit h2,
+    .about-intro h1,
+    .about-feature h2,
+    .blog-content h1,
+    .contact-hero-copy h1,
+    .faq-order-section h1 {
+        font-size: clamp(28px, 10vw, 42px);
+    }
+
+    .prime-panel,
+    .prime-open-section,
+    .prime-rental-unit,
+    .content-section,
+    .about-intro,
+    .faq-order-section,
+    .contact-hero-copy,
+    .contact-live-card,
+    .page-faq .prime-contact .prime-panel,
+    .prime-contact .prime-panel {
+        padding: 20px;
+    }
+
+    .prime-gallery,
+    .prime-service-images,
+    .prime-rental-gallery,
+    .page-general-4 .prime-gallery,
+    .page-projects-6 .prime-gallery,
+    .page-home-rental .prime-gallery,
+    .page-home-rental .prime-rental-gallery,
+    .page-home-rental .prime-service-images.is-count-4,
+    .prime-products,
+    .holiday-home-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid,
+    .page-faq .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prime-button,
+    .site-button,
+    .prime-product-card button,
+    .contact-live-form button,
+    .faq-order-form button {
+        width: 100%;
     }
 }
 
@@ -2504,5 +3318,1314 @@ th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
     .page-category-tourist-rental-service .prime-header .language-menu a {
         grid-template-columns: 32px 22px 1fr;
         gap: 8px;
+    }
+}
+
+/* FAQ service request polish */
+.page-faq .prime-header,
+.page-faq .prime-main,
+.page-faq .prime-footer {
+    width: min(100% - 36px, 1320px);
+}
+
+.page-faq .prime-main {
+    padding: clamp(20px, 3vw, 36px);
+    background: rgba(255, 255, 255, .62);
+}
+
+.page-faq .faq-order-section {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    grid-template-columns: minmax(280px, .78fr) minmax(520px, 1fr);
+    align-items: center;
+    gap: clamp(28px, 5vw, 78px);
+    margin: 0 auto clamp(22px, 3vw, 36px);
+    padding: clamp(34px, 5vw, 72px);
+    border: 1px solid rgba(8, 123, 110, .14);
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.97), rgba(238, 248, 245, .94)),
+        #fff;
+}
+
+.page-faq .faq-order-section::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 8px;
+    background: linear-gradient(180deg, var(--front-teal), var(--front-gold));
+}
+
+.page-faq .faq-order-section h1 {
+    max-width: 440px;
+    margin: 0;
+    color: var(--front-teal-dark);
+    font-size: clamp(42px, 4.8vw, 70px);
+    line-height: .96;
+}
+
+.page-faq .faq-order-section h1::before {
+    content: "Service request";
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    margin: 0 0 18px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: #e7f5f2;
+    color: var(--front-teal);
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.page-faq .faq-order-section h1::after {
+    max-width: 390px;
+    margin-top: 20px;
+    color: var(--front-muted);
+    font-size: clamp(16px, 1.3vw, 19px);
+    font-weight: 600;
+    line-height: 1.55;
+}
+
+.page-faq .faq-order-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+    width: 100%;
+    padding: clamp(20px, 3vw, 32px);
+    border: 1px solid rgba(7, 59, 53, .1);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 24px 70px rgba(7, 59, 53, .12);
+}
+
+.page-faq .faq-order-form label,
+.page-faq .faq-order-form fieldset {
+    display: grid;
+    gap: 7px;
+    margin: 0;
+    color: var(--front-ink);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.page-faq .faq-order-form label:nth-of-type(5),
+.page-faq .faq-order-form label:nth-of-type(7),
+.page-faq .faq-order-form fieldset,
+.page-faq .faq-order-form label:last-of-type {
+    grid-column: 1 / -1;
+}
+
+.page-faq .faq-order-form input,
+.page-faq .faq-order-form select,
+.page-faq .faq-order-form textarea {
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid rgba(7, 59, 53, .16);
+    border-radius: 8px;
+    background: #f9fbfa;
+    color: var(--front-ink);
+    font-size: 15px;
+    font-weight: 650;
+}
+
+.page-faq .faq-order-form input:focus,
+.page-faq .faq-order-form select:focus,
+.page-faq .faq-order-form textarea:focus {
+    outline: 0;
+    border-color: var(--front-teal);
+    box-shadow: 0 0 0 4px rgba(8, 123, 110, .12);
+    background: #fff;
+}
+
+.page-faq .faq-order-form textarea {
+    min-height: 112px;
+}
+
+.page-faq .faq-order-form fieldset {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    padding: 0;
+    border: 0;
+}
+
+.page-faq .faq-order-form legend {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 0;
+    color: var(--front-ink);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.page-faq .faq-order-form fieldset label {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    gap: 9px;
+    padding: 0 12px;
+    border: 1px solid rgba(7, 59, 53, .12);
+    border-radius: 8px;
+    background: #f4faf8;
+    color: var(--front-muted);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.page-faq .faq-order-form fieldset input {
+    width: 16px;
+    height: 16px;
+    min-height: 0;
+    padding: 0;
+    accent-color: var(--front-teal);
+}
+
+.page-faq .faq-order-form button {
+    width: fit-content;
+    min-width: 132px;
+    min-height: 46px;
+    padding: 0 24px;
+}
+
+.page-faq .prime-contact {
+    grid-template-columns: minmax(220px, .68fr) minmax(360px, 1.2fr) minmax(220px, .68fr);
+    align-items: stretch;
+    width: 100%;
+    gap: 18px;
+    margin: 0 auto;
+}
+
+.page-faq .prime-contact > img {
+    min-height: 320px;
+    height: 100%;
+}
+
+.page-faq .prime-contact .prime-panel {
+    min-height: 320px;
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.96), rgba(238,248,245,.94)),
+        #fff;
+}
+
+.page-faq .prime-contact .prime-panel h2 {
+    color: var(--front-blue);
+    font-size: clamp(26px, 3vw, 42px);
+    line-height: 1.05;
+}
+
+.page-faq .contact-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 22px;
+}
+
+@media (max-width: 980px) {
+    .page-faq .faq-order-section,
+    .page-faq .prime-contact {
+        grid-template-columns: 1fr;
+    }
+
+    .page-faq .faq-order-section h1 {
+        max-width: 720px;
+    }
+
+    .page-faq .faq-order-section h1::after {
+        max-width: 640px;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-faq .prime-header,
+    .page-faq .prime-main,
+    .page-faq .prime-footer {
+        width: calc(100% - 16px);
+    }
+
+    .page-faq .faq-order-section {
+        padding: 26px 20px;
+    }
+
+    .page-faq .faq-order-section h1 {
+        font-size: clamp(34px, 12vw, 48px);
+    }
+
+    .page-faq .faq-order-form,
+    .page-faq .faq-order-form fieldset,
+    .page-faq .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-faq .faq-order-form label:nth-of-type(5),
+    .page-faq .faq-order-form label:nth-of-type(7),
+    .page-faq .faq-order-form fieldset,
+    .page-faq .faq-order-form label:last-of-type {
+        grid-column: auto;
+    }
+
+    .page-faq .faq-order-form button {
+        width: 100%;
+    }
+}
+
+/* Consistent public block widths */
+.site,
+.prime-site {
+    --layout-shell: 1320px;
+    --layout-wide: 1180px;
+    --layout-content: 1040px;
+    --layout-readable: 860px;
+    --layout-gutter: clamp(16px, 3vw, 36px);
+    --layout-section-gap: clamp(22px, 3.2vw, 40px);
+    --layout-block-pad: clamp(24px, 4vw, 56px);
+}
+
+.prime-header,
+.site-header,
+.page-category-tourist-rental-service .prime-header,
+.prime-main,
+.page-home-rental .prime-main,
+.page-blog .prime-main,
+.page-contact .prime-main,
+.page-about-3 .prime-main,
+.page-category-tourist-rental-service .prime-main,
+.page-faq .prime-main,
+.prime-footer,
+.site-footer,
+.page-faq .prime-footer {
+    width: min(calc(100% - (var(--layout-gutter) * 2)), var(--layout-shell));
+}
+
+.prime-main,
+.page-home-rental .prime-main,
+.page-blog .prime-main,
+.page-contact .prime-main,
+.page-about-3 .prime-main,
+.page-category-tourist-rental-service .prime-main,
+.page-faq .prime-main {
+    display: grid;
+    gap: var(--layout-section-gap);
+    padding: var(--layout-gutter);
+}
+
+.prime-hero,
+.hero,
+.prime-wide-image,
+.prime-gallery,
+.prime-service-images,
+.prime-rental-gallery,
+.page-general-4 .prime-gallery,
+.page-projects-6 .prime-gallery,
+.page-home-rental .prime-gallery,
+.page-home-rental .prime-rental-gallery,
+.page-home-rental .prime-service-images.is-count-4,
+.prime-contact,
+.page-faq .prime-contact,
+.holiday-home-listing,
+.blog-content,
+.contact-page,
+.prime-category,
+.page-faq .faq-order-section {
+    width: min(100%, var(--layout-wide));
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.prime-panel,
+.prime-open-section,
+.prime-rental-unit,
+.content-section,
+.about-intro,
+.contact-hero-copy,
+.contact-live-card,
+.about-feature,
+.blog-card,
+.page-home-rental .prime-text-section,
+.page-home-rental .prime-rental-unit,
+.page-home-rental .prime-media-text {
+    width: min(100%, var(--layout-content));
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.prime-panel,
+.prime-open-section,
+.prime-rental-unit,
+.content-section,
+.about-intro,
+.contact-hero-copy,
+.contact-live-card,
+.holiday-home-listing,
+.page-faq .faq-order-section {
+    padding: var(--layout-block-pad);
+}
+
+.prime-panel,
+.prime-open-section,
+.prime-rental-unit,
+.content-section,
+.about-intro,
+.about-feature,
+.blog-card,
+.contact-live-card,
+.holiday-home-listing,
+.prime-product-card,
+.holiday-home-card,
+.page-faq .faq-order-section,
+.page-faq .faq-order-form,
+.prime-contact .prime-panel,
+.page-faq .prime-contact .prime-panel {
+    border-radius: 8px;
+}
+
+.prime-open-copy,
+.prime-copy,
+.prime-rental-unit .prime-open-copy,
+.prime-footer-copy,
+.prime-open-footer,
+.about-intro div,
+.about-feature div div,
+.contact-hero-copy p,
+.blog-card p {
+    max-width: var(--layout-readable);
+}
+
+.prime-panel h2,
+.prime-open-section h1,
+.prime-open-section h2,
+.prime-rental-unit h2,
+.about-intro h1,
+.about-feature h2,
+.contact-hero-copy h1,
+.blog-content h1 {
+    max-width: var(--layout-readable);
+}
+
+.prime-gallery,
+.prime-service-images,
+.prime-rental-gallery,
+.page-general-4 .prime-gallery,
+.page-projects-6 .prime-gallery,
+.page-home-rental .prime-gallery,
+.page-home-rental .prime-rental-gallery,
+.page-home-rental .prime-service-images.is-count-4 {
+    gap: clamp(14px, 2vw, 22px);
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.prime-wide-image {
+    padding: 0;
+}
+
+.prime-wide-image img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+}
+
+.prime-products,
+.holiday-home-grid,
+.blog-posts {
+    gap: clamp(16px, 2vw, 24px);
+}
+
+.prime-category {
+    padding: 0;
+}
+
+.contact-page {
+    display: grid;
+    gap: var(--layout-section-gap);
+}
+
+.prime-contact,
+.page-faq .prime-contact {
+    margin-top: 0;
+}
+
+.prime-contact .prime-panel,
+.page-faq .prime-contact .prime-panel {
+    width: 100%;
+}
+
+.page-faq .faq-order-section {
+    max-width: var(--layout-wide);
+}
+
+.page-faq .faq-order-form {
+    max-width: none;
+}
+
+@media (max-width: 900px) {
+    .site,
+    .prime-site {
+        --layout-gutter: 12px;
+        --layout-section-gap: 18px;
+        --layout-block-pad: 22px;
+    }
+
+    .prime-header,
+    .site-header,
+    .page-category-tourist-rental-service .prime-header,
+    .prime-main,
+    .page-home-rental .prime-main,
+    .page-blog .prime-main,
+    .page-contact .prime-main,
+    .page-about-3 .prime-main,
+    .page-category-tourist-rental-service .prime-main,
+    .page-faq .prime-main,
+    .prime-footer,
+    .site-footer,
+    .page-faq .prime-footer {
+        width: calc(100% - 24px);
+    }
+}
+
+@media (max-width: 640px) {
+    .site,
+    .prime-site {
+        --layout-gutter: 8px;
+        --layout-block-pad: 20px;
+    }
+
+    .prime-main,
+    .page-home-rental .prime-main,
+    .page-blog .prime-main,
+    .page-contact .prime-main,
+    .page-about-3 .prime-main,
+    .page-category-tourist-rental-service .prime-main,
+    .page-faq .prime-main {
+        padding: var(--layout-gutter);
+    }
+
+    .prime-header,
+    .site-header,
+    .page-category-tourist-rental-service .prime-header,
+    .prime-main,
+    .page-home-rental .prime-main,
+    .page-blog .prime-main,
+    .page-contact .prime-main,
+    .page-about-3 .prime-main,
+    .page-category-tourist-rental-service .prime-main,
+    .page-faq .prime-main,
+    .prime-footer,
+    .site-footer,
+    .page-faq .prime-footer {
+        width: calc(100% - 16px);
+    }
+}
+
+/* Equalize visible public block widths */
+.prime-panel,
+.prime-open-section,
+.prime-rental-unit,
+.content-section,
+.about-intro,
+.contact-hero-copy,
+.contact-live-card,
+.about-feature,
+.blog-card,
+.page-home-rental .prime-text-section,
+.page-home-rental .prime-rental-unit,
+.page-home-rental .prime-media-text,
+.prime-hero,
+.hero,
+.prime-wide-image,
+.prime-gallery,
+.prime-service-images,
+.prime-rental-gallery,
+.page-general-4 .prime-gallery,
+.page-projects-6 .prime-gallery,
+.page-home-rental .prime-gallery,
+.page-home-rental .prime-rental-gallery,
+.page-home-rental .prime-service-images.is-count-4,
+.prime-contact,
+.page-faq .prime-contact,
+.holiday-home-listing,
+.blog-content,
+.contact-page,
+.prime-category,
+.page-faq .faq-order-section {
+    width: min(100%, var(--layout-wide));
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-home-rental .prime-rental-unit .prime-open-copy,
+.page-home-rental .prime-rental-unit h2,
+.page-home-rental .prime-text-section .prime-open-copy,
+.page-home-rental .prime-text-section h2 {
+    max-width: var(--layout-readable);
+}
+
+/* Keep scrolled content from showing above/through the sticky header */
+@media (min-width: 641px) {
+    .prime-header,
+    .site-header,
+    .page-category-tourist-rental-service .prime-header,
+    .page-faq .prime-header {
+        top: 0;
+        margin-top: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        background: #fff;
+        box-shadow: 0 18px 48px rgba(7, 59, 53, .14);
+    }
+}
+
+/* Final mobile header/menu normalization */
+@media (max-width: 640px) {
+    .site,
+    .prime-site,
+    .page-faq.prime-site,
+    .page-category-tourist-rental-service.prime-site {
+        padding-top: 142px;
+        overflow-x: hidden;
+    }
+
+    .prime-header,
+    .site-header,
+    .page-category-tourist-rental-service .prime-header,
+    .page-faq .prime-header {
+        position: fixed;
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        z-index: 300;
+        width: auto;
+        margin: 0;
+        padding: 10px 12px 12px;
+        overflow: visible;
+        border: 1px solid rgba(8, 123, 110, .1);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 18px 46px rgba(7, 59, 53, .2);
+        backdrop-filter: none;
+    }
+
+    .prime-tools {
+        justify-content: flex-end;
+        min-height: 18px;
+        margin: 0 0 6px;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1;
+    }
+
+    .prime-mini-brand {
+        display: none;
+    }
+
+    .prime-brand-row,
+    .page-category-tourist-rental-service .prime-brand-row {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr) 86px;
+        gap: 10px;
+        align-items: center;
+        margin: 0;
+    }
+
+    .prime-brand-row img,
+    .page-category-tourist-rental-service .prime-brand-row img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .prime-brand-row strong,
+    .page-category-tourist-rental-service .prime-brand-row strong {
+        min-width: 0;
+        overflow: hidden;
+        font-size: clamp(24px, 7.2vw, 32px);
+        line-height: 1;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .mobile-menu-toggle {
+        display: grid;
+        justify-self: end;
+        width: 86px;
+        height: 42px;
+        border-radius: 999px;
+    }
+
+    .prime-actions {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+        margin: 10px 0 0;
+    }
+
+    .language-switcher,
+    .prime-header .language-switcher,
+    .page-category-tourist-rental-service .prime-header .language-switcher {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .language-current {
+        min-height: 42px;
+        border-radius: 999px;
+        background: #eef8f5;
+        color: var(--front-teal);
+        box-shadow: inset 0 0 0 1px rgba(8, 123, 110, .14);
+    }
+
+    .prime-nav,
+    .page-category-tourist-rental-service .prime-nav,
+    .site-header nav {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        z-index: 320;
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        max-height: calc(100vh - 178px);
+        margin: 0;
+        padding: 10px;
+        overflow-y: auto;
+        border: 1px solid rgba(8, 123, 110, .12);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 24px 64px rgba(7, 59, 53, .24);
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+    }
+
+    .prime-header.is-menu-open .prime-nav,
+    .site-header.is-menu-open nav {
+        display: grid;
+    }
+
+    .prime-nav a,
+    .page-category-tourist-rental-service .prime-nav a,
+    .site-header nav a {
+        justify-content: flex-start;
+        min-height: 44px;
+        padding: 0 14px;
+        border: 1px solid rgba(8, 123, 110, .08);
+        border-radius: 8px;
+        background: #f7fbfa;
+        color: var(--front-muted);
+        font-size: 14px;
+        font-weight: 850;
+        text-align: left;
+    }
+
+    .prime-nav a.active,
+    .prime-nav a:hover,
+    .page-category-tourist-rental-service .prime-nav a.active,
+    .page-category-tourist-rental-service .prime-nav a:hover,
+    .site-header nav a.active,
+    .site-header nav a:hover {
+        background: #e5f5f1;
+        color: var(--front-teal);
+    }
+
+    .prime-main,
+    .page-home-rental .prime-main,
+    .page-blog .prime-main,
+    .page-contact .prime-main,
+    .page-about-3 .prime-main,
+    .page-category-tourist-rental-service .prime-main,
+    .page-faq .prime-main {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 380px) {
+    .site,
+    .prime-site,
+    .page-faq.prime-site,
+    .page-category-tourist-rental-service.prime-site {
+        padding-top: 134px;
+    }
+
+    .prime-brand-row,
+    .page-category-tourist-rental-service .prime-brand-row {
+        grid-template-columns: 38px minmax(0, 1fr) 78px;
+        gap: 8px;
+    }
+
+    .prime-brand-row img,
+    .page-category-tourist-rental-service .prime-brand-row img {
+        width: 38px;
+        height: 38px;
+    }
+
+    .mobile-menu-toggle {
+        width: 78px;
+    }
+}
+
+/* Modern mobile prime navigation */
+@media (max-width: 640px) {
+    .site,
+    .prime-site,
+    .page-faq.prime-site,
+    .page-category-tourist-rental-service.prime-site {
+        padding-top: 156px;
+        background:
+            radial-gradient(circle at 12% -8%, rgba(38, 156, 232, .16), transparent 34%),
+            linear-gradient(180deg, #eef7f5 0%, #f8fbfa 44%, #ffffff 100%);
+    }
+
+    .prime-header,
+    .site-header,
+    .page-category-tourist-rental-service .prime-header,
+    .page-faq .prime-header {
+        top: max(10px, env(safe-area-inset-top));
+        left: 10px;
+        right: 10px;
+        padding: 8px;
+        border: 1px solid rgba(255, 255, 255, .76);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, .88);
+        box-shadow: 0 18px 44px rgba(7, 59, 53, .16);
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+    }
+
+    .prime-tools {
+        position: relative;
+        z-index: 540;
+        display: flex;
+        justify-content: flex-end;
+        margin: 0 0 7px;
+        min-height: 0;
+        font-size: 11px;
+        line-height: 1;
+    }
+
+    .prime-tools a:not(.prime-mini-brand) {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 11px;
+        border: 1px solid rgba(8, 123, 110, .1);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .78);
+        color: #063f39;
+        box-shadow: 0 8px 20px rgba(7, 59, 53, .08), inset 0 1px 0 rgba(255, 255, 255, .82);
+    }
+
+    .prime-brand-row,
+    .page-category-tourist-rental-service .prime-brand-row {
+        grid-template-columns: 46px minmax(0, 1fr) 44px;
+        gap: 10px;
+        min-height: 48px;
+    }
+
+    .prime-brand-row img,
+    .page-category-tourist-rental-service .prime-brand-row img {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        box-shadow: 0 10px 24px rgba(25, 55, 232, .18);
+    }
+
+    .prime-brand-row strong,
+    .page-category-tourist-rental-service .prime-brand-row strong {
+        padding-right: 0;
+        color: #2557e6;
+        font-size: clamp(27px, 7.4vw, 33px);
+        font-weight: 900;
+        line-height: .96;
+        white-space: nowrap;
+    }
+
+    .mobile-menu-toggle {
+        grid-template-columns: 18px;
+        grid-template-rows: repeat(3, 2px);
+        align-content: center;
+        justify-content: center;
+        gap: 5px;
+        width: 44px;
+        height: 44px;
+        border: 1px solid rgba(8, 123, 110, .14);
+        border-radius: 8px;
+        background: linear-gradient(180deg, #0a8d7d, #087568);
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(8, 123, 110, .22), inset 0 1px 0 rgba(255, 255, 255, .22);
+    }
+
+    .mobile-menu-toggle::after {
+        content: "";
+        display: none;
+    }
+
+    .mobile-menu-toggle span:not(.sr-only) {
+        width: 18px;
+        height: 2px;
+    }
+
+    .mobile-menu-toggle:hover,
+    .prime-header.is-menu-open .mobile-menu-toggle,
+    .site-header.is-menu-open .mobile-menu-toggle {
+        background: linear-gradient(180deg, #064c44, #087568);
+        color: #fff;
+        box-shadow: 0 14px 28px rgba(6, 76, 68, .28);
+    }
+
+    .prime-actions {
+        position: relative;
+        z-index: 520;
+        margin-top: 8px;
+    }
+
+    .language-current {
+        min-height: 40px;
+        padding: 0 13px;
+        border: 1px solid rgba(8, 123, 110, .11);
+        border-radius: 8px;
+        background: rgba(238, 248, 245, .86);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8);
+    }
+
+    .language-current .language-name {
+        font-size: 13px;
+    }
+
+    .language-menu {
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        z-index: 760;
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 18px 42px rgba(7, 59, 53, .18);
+    }
+
+    .language-menu::before {
+        display: none;
+    }
+
+    .prime-nav,
+    .page-category-tourist-rental-service .prime-nav,
+    .site-header nav {
+        top: calc(100% + 10px);
+        left: -1px;
+        right: -1px;
+        z-index: 430;
+        display: grid;
+        gap: 7px;
+        max-height: min(68vh, 560px);
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, .78);
+        border-radius: 8px;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(246, 252, 250, .98));
+        box-shadow: 0 28px 70px rgba(7, 59, 53, .24);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-10px) scale(.985);
+        transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .prime-header.is-menu-open .prime-nav,
+    .site-header.is-menu-open nav {
+        display: grid;
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+    }
+
+    .prime-nav a,
+    .page-category-tourist-rental-service .prime-nav a,
+    .site-header nav a {
+        position: relative;
+        justify-content: flex-start;
+        min-height: 48px;
+        padding: 0 42px 0 14px;
+        border: 1px solid rgba(8, 123, 110, .08);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, .76);
+        color: #50625e;
+        font-size: 14px;
+        font-weight: 850;
+        box-shadow: 0 8px 22px rgba(7, 59, 53, .055);
+    }
+
+    .prime-nav a::after,
+    .page-category-tourist-rental-service .prime-nav a::after,
+    .site-header nav a::after {
+        content: "";
+        position: absolute;
+        right: 16px;
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        opacity: .38;
+        transform: rotate(-45deg);
+    }
+
+    .prime-nav a.active,
+    .prime-nav a:hover,
+    .page-category-tourist-rental-service .prime-nav a.active,
+    .page-category-tourist-rental-service .prime-nav a:hover,
+    .site-header nav a.active,
+    .site-header nav a:hover {
+        border-color: rgba(8, 123, 110, .18);
+        background: linear-gradient(135deg, #087b6e, #0b5d52);
+        color: #fff;
+        box-shadow: 0 12px 26px rgba(8, 123, 110, .2);
+        transform: translateY(-1px);
+    }
+
+    .prime-nav a.active::before,
+    .page-category-tourist-rental-service .prime-nav a.active::before,
+    .site-header nav a.active::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        margin-right: 9px;
+        border-radius: 999px;
+        background: currentColor;
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, .18);
+    }
+}
+
+@media (max-width: 380px) {
+    .site,
+    .prime-site,
+    .page-faq.prime-site,
+    .page-category-tourist-rental-service.prime-site {
+        padding-top: 150px;
+    }
+
+    .prime-brand-row,
+    .page-category-tourist-rental-service .prime-brand-row {
+        grid-template-columns: 42px minmax(0, 1fr) 42px;
+        gap: 8px;
+    }
+
+    .prime-brand-row img,
+    .page-category-tourist-rental-service .prime-brand-row img,
+    .mobile-menu-toggle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .prime-brand-row strong,
+    .page-category-tourist-rental-service .prime-brand-row strong {
+        padding-right: 0;
+        font-size: clamp(24px, 7.1vw, 29px);
+    }
+}
+
+/* Final home-rental mobile clamp */
+@media (max-width: 640px) {
+    html,
+    body,
+    .page-home-rental.prime-site {
+        overflow-x: hidden;
+    }
+
+    .page-home-rental .prime-header {
+        left: 10px;
+        right: 10px;
+        width: auto;
+        max-width: none;
+    }
+
+    .page-home-rental .prime-main,
+    .page-home-rental .prime-footer {
+        width: calc(100% - 20px);
+        max-width: calc(100% - 20px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .page-home-rental .prime-brand-row {
+        grid-template-columns: 40px minmax(0, 1fr) 40px;
+        width: 100%;
+    }
+
+    .page-home-rental .prime-brand-row strong {
+        min-width: 0;
+        overflow: hidden;
+        padding-right: 0;
+        font-size: clamp(24px, 6.7vw, 29px);
+        line-height: 1;
+        text-overflow: clip;
+        white-space: nowrap;
+    }
+
+    .page-home-rental .prime-brand-row img,
+    .page-home-rental .mobile-menu-toggle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .page-home-rental .prime-hero,
+    .page-home-rental .prime-wide-image,
+    .page-home-rental .prime-gallery,
+    .page-home-rental .prime-text-section,
+    .page-home-rental .prime-text-section.is-holiday-intro,
+    .page-home-rental .prime-text-section.is-city-tour,
+    .page-home-rental .prime-rental-unit,
+    .page-home-rental .prime-rental-gallery,
+    .page-home-rental .prime-rental-unit h2,
+    .page-home-rental .prime-rental-unit .prime-open-copy,
+    .page-home-rental .prime-media-text,
+    .page-home-rental .prime-media-text > div,
+    .page-home-rental .holiday-home-listing {
+        width: 100%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .page-home-rental .prime-gallery,
+    .page-home-rental .prime-rental-gallery,
+    .page-home-rental .prime-service-images.is-count-4,
+    .page-home-rental .prime-media-text,
+    .page-home-rental .prime-media-text.is-reverse,
+    .page-home-rental .holiday-home-listing-head,
+    .page-home-rental .holiday-home-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-home-rental .prime-text-section,
+    .page-home-rental .prime-text-section.is-holiday-intro,
+    .page-home-rental .prime-text-section.is-city-tour,
+    .page-home-rental .prime-rental-unit h2,
+    .page-home-rental .prime-rental-unit .prime-open-copy,
+    .page-home-rental .prime-media-text > div {
+        padding: 18px;
+        border-radius: 8px;
+    }
+
+    .page-home-rental .prime-text-section h2,
+    .page-home-rental .prime-rental-unit h2,
+    .page-home-rental .prime-media-text h2 {
+        font-size: clamp(24px, 7vw, 32px);
+        line-height: 1.12;
+    }
+
+    .page-home-rental .prime-text-section .prime-open-copy,
+    .page-home-rental .prime-rental-unit .prime-open-copy,
+    .page-home-rental .prime-media-text .prime-copy {
+        min-height: 0;
+        font-size: clamp(17px, 4.8vw, 21px);
+        line-height: 1.45;
+    }
+
+    .page-home-rental .holiday-home-card-body {
+        padding: 16px;
+    }
+
+    .page-home-rental .holiday-home-card h3 {
+        margin-bottom: 12px;
+        font-size: 22px;
+    }
+
+    .page-home-rental .holiday-home-description.is-collapsible {
+        max-height: 148px;
+        overflow: hidden;
+    }
+
+    .page-home-rental .holiday-home-description.is-collapsible::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 58px;
+        background: linear-gradient(180deg, rgba(255,255,255,0), #fff 74%);
+        pointer-events: none;
+    }
+
+    .page-home-rental .holiday-home-card.is-description-expanded .holiday-home-description.is-collapsible {
+        max-height: none;
+    }
+
+    .page-home-rental .holiday-home-card.is-description-expanded .holiday-home-description.is-collapsible::after {
+        display: none;
+    }
+
+    .page-home-rental .holiday-home-more {
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+        margin: 0 0 16px;
+        border: 1px solid rgba(8, 123, 110, .28);
+        background: #eef8f5;
+        color: #087b6e;
+        box-shadow: none;
+        text-align: center;
+    }
+
+    .page-home-rental .holiday-home-card.is-description-expanded .holiday-home-more,
+    .page-home-rental .holiday-home-more[aria-expanded="true"] {
+        border-color: #087b6e;
+        background: linear-gradient(135deg, #087b6e, #064c44);
+        color: #fff;
+        box-shadow: 0 10px 22px rgba(8, 123, 110, .22);
+    }
+
+    .page-home-rental .holiday-home-more:hover,
+    .page-home-rental .holiday-home-more:focus-visible {
+        border-color: #064c44;
+        background: #064c44;
+        color: #fff;
+    }
+}
+
+/* Final FAQ mobile polish */
+@media (max-width: 640px) {
+    .page-faq.prime-site {
+        padding-top: 154px;
+        background:
+            radial-gradient(circle at 12% -8%, rgba(8, 123, 110, .16), transparent 34%),
+            linear-gradient(180deg, #eef7f5 0%, #fbfdfc 100%);
+        overflow-x: hidden;
+    }
+
+    .page-faq .prime-main {
+        width: calc(100% - 20px);
+        max-width: calc(100% - 20px);
+        margin: 0 auto;
+        padding: 10px;
+        border: 0;
+        background: transparent;
+    }
+
+    .page-faq .faq-order-section {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto 18px;
+        padding: 16px;
+        scroll-margin-top: 164px;
+        overflow: visible;
+        border: 1px solid rgba(8, 123, 110, .1);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 18px 44px rgba(7, 59, 53, .1);
+    }
+
+    .page-faq .faq-order-section::before {
+        inset: 0 0 auto;
+        width: auto;
+        height: 5px;
+        background: linear-gradient(90deg, #087b6e, #d6a63e);
+    }
+
+    .page-faq .faq-order-section h1 {
+        display: grid;
+        gap: 10px;
+        max-width: none;
+        margin: 4px 0 0;
+        color: #073b35;
+        font-size: clamp(34px, 10vw, 43px);
+        line-height: 1.02;
+    }
+
+    .page-faq .faq-order-section h1::before {
+        width: max-content;
+        min-height: 30px;
+        margin: 0;
+        padding: 0 11px;
+        font-size: 11px;
+    }
+
+    .page-faq .faq-order-section h1::after {
+        max-width: none;
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.45;
+    }
+
+    .page-faq .faq-order-form {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 14px;
+        border: 1px solid rgba(7, 59, 53, .08);
+        border-radius: 8px;
+        box-shadow: none;
+    }
+
+    .page-faq .faq-order-form label,
+    .page-faq .faq-order-form fieldset,
+    .page-faq .faq-order-form label:nth-of-type(5),
+    .page-faq .faq-order-form label:nth-of-type(7),
+    .page-faq .faq-order-form label:last-of-type {
+        grid-column: auto;
+    }
+
+    .page-faq .faq-order-form input,
+    .page-faq .faq-order-form select,
+    .page-faq .faq-order-form textarea {
+        min-height: 48px;
+        padding: 11px 13px;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    .page-faq .faq-order-form textarea {
+        min-height: 118px;
+    }
+
+    .page-faq .faq-order-form fieldset {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .page-faq .faq-order-form fieldset label {
+        min-height: 42px;
+        border-radius: 8px;
+    }
+
+    .page-faq .faq-order-form button {
+        width: 100%;
+        min-height: 50px;
+        margin-top: 2px;
+        border: 0;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #087b6e, #064c44);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 900;
+        box-shadow: 0 12px 24px rgba(8, 123, 110, .24);
+    }
+
+    .page-faq .prime-contact {
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 100%;
+        gap: 12px;
+    }
+
+    .page-faq .prime-contact > img {
+        display: none;
+    }
+
+    .page-faq .prime-contact .prime-panel {
+        min-height: 0;
+        padding: 18px;
+        border-radius: 8px;
+    }
+
+    .page-faq .prime-contact .prime-panel h2 {
+        font-size: clamp(24px, 7vw, 32px);
+    }
+
+    .page-faq .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 18px;
     }
 }

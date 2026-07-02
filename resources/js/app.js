@@ -30,6 +30,10 @@ document.querySelectorAll('[data-language-switcher]').forEach((switcher) => {
 
     toggle.addEventListener('click', (event) => {
         event.stopPropagation();
+        document.querySelectorAll('.prime-header.is-menu-open, .site-header.is-menu-open').forEach((header) => {
+            header.classList.remove('is-menu-open');
+            header.querySelector('[data-mobile-menu-toggle]')?.setAttribute('aria-expanded', 'false');
+        });
         const isOpen = switcher.classList.toggle('is-open');
         toggle.setAttribute('aria-expanded', String(isOpen));
     });
@@ -94,6 +98,42 @@ document.querySelectorAll('[data-slider]').forEach((slider) => {
 
     previous?.addEventListener('click', () => showSlide(current - 1));
     next?.addEventListener('click', () => showSlide(current + 1));
+});
+
+document.querySelectorAll('[data-holiday-home-list]').forEach((listing) => {
+    const search = listing.querySelector('[data-holiday-home-search]');
+    const cards = [...listing.querySelectorAll('[data-holiday-home-card]')];
+    const empty = listing.querySelector('[data-holiday-home-empty]');
+
+    listing.querySelectorAll('[data-holiday-home-more]').forEach((button) => {
+        const card = button.closest('[data-holiday-home-card]');
+        const description = card?.querySelector('[data-holiday-home-description]');
+
+        if (!card || !description) {
+            return;
+        }
+
+        button.addEventListener('click', () => {
+            const isExpanded = card.classList.toggle('is-description-expanded');
+            button.setAttribute('aria-expanded', String(isExpanded));
+            button.textContent = isExpanded ? 'Show less' : 'Show more';
+        });
+    });
+
+    search?.addEventListener('input', () => {
+        const query = search.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+            const isVisible = !query || (card.dataset.searchText || '').includes(query);
+            card.hidden = !isVisible;
+            visibleCount += isVisible ? 1 : 0;
+        });
+
+        if (empty) {
+            empty.hidden = visibleCount > 0;
+        }
+    });
 });
 
 document.querySelectorAll('[data-cms-editor]').forEach((editor) => {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MenuItem;
 use App\Models\Page;
 use App\Models\Language;
+use App\Models\HolidayHome;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -19,6 +20,14 @@ class PublicPageController extends Controller
         return redirect()->route('pages.show', [
             'locale' => $this->preferredLocale($request),
             'slug' => 'home',
+        ]);
+    }
+
+    public function faq(Request $request): RedirectResponse
+    {
+        return redirect()->route('pages.show', [
+            'locale' => $this->preferredLocale($request),
+            'slug' => 'faq',
         ]);
     }
 
@@ -39,6 +48,9 @@ class PublicPageController extends Controller
             'page' => $page,
             'locale' => $locale,
             'availableLocales' => $this->pageLocales($page),
+            'holidayHomes' => $page->slug === 'home-rental'
+                ? HolidayHome::where('is_active', true)->orderBy('sort_order')->orderBy('name')->get()
+                : collect(),
             'menuItems' => MenuItem::with('page')
                 ->where('is_active', true)
                 ->orderBy('sort_order')

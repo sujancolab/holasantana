@@ -59,6 +59,7 @@
             <div class="service-enquiry-toast is-error" role="alert">Please check the order enquiry form and try again.</div>
         @endif
         <main class="prime-main">
+            @php($holidayHomeListRendered = false)
             @foreach (($page->content_blocks ?? []) as $block)
                 @php($type = data_get($block, 'type', 'panel'))
 
@@ -134,6 +135,14 @@
                         @endif
                         <div class="prime-open-copy">{!! nl2br(e(data_get($block, "body.$locale", data_get($block, 'body.en')))) !!}</div>
                     </section>
+                @elseif ($type === 'rental_unit' && $page->slug === 'home-rental')
+                    @unless ($holidayHomeListRendered)
+                        @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale])
+                        @php($holidayHomeListRendered = true)
+                    @endunless
+                @elseif ($type === 'holiday_home_listing')
+                    @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale])
+                    @php($holidayHomeListRendered = true)
                 @elseif ($type === 'rental_unit')
                     <section class="prime-rental-unit">
                         <h2>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en')) }}</h2>
@@ -304,6 +313,37 @@
                                 title="Office Torrevieja map"></iframe>
                         </section>
                     </section>
+                @elseif ($type === 'faq_order_form')
+                    <section class="faq-order-section">
+                        <h1>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en')) }}</h1>
+                        <form class="faq-order-form" action="mailto:spm3182@gmail.com" method="post" enctype="text/plain">
+                            <label>Nombre *<input type="text" name="nombre" required></label>
+                            <label>Apellido *<input type="text" name="apellido" required></label>
+                            <label>Número de teléfono *<input type="tel" name="telefono" placeholder="🇪🇸" required></label>
+                            <label>Correo electrónico<input type="email" name="email"></label>
+                            <label>Dirección de la propiedad<input type="text" name="direccion"></label>
+                            <label>Fecha del pedido<input type="date" name="fecha_pedido"></label>
+                            <label>
+                                Area de servicio
+                                <select name="area_servicio">
+                                    <option value=""></option>
+                                    @foreach (data_get($block, 'services', []) as $service)
+                                        <option>{{ $service }}</option>
+                                    @endforeach
+                                </select>
+                            </label>
+                            <label>Fecha del servicio<input type="date" name="fecha_servicio"></label>
+                            <label>Hora de iniciar el servicio<input type="time" name="hora_servicio"></label>
+                            <fieldset>
+                                <legend>Prefiere contactar a través de</legend>
+                                @foreach (data_get($block, 'contact_methods', []) as $method)
+                                    <label><input type="radio" name="contacto" value="{{ $method }}"> {{ $method }}</label>
+                                @endforeach
+                            </fieldset>
+                            <label>Su mensaje *<textarea name="mensaje" rows="5" required></textarea></label>
+                            <button type="submit">Enviar</button>
+                        </form>
+                    </section>
                 @elseif ($type === 'contact')
                     <section class="prime-contact">
                         <img src="{{ data_get($block, 'left_image') }}" alt="" loading="lazy" decoding="async">
@@ -341,6 +381,9 @@
                     </section>
                 @endif
             @endforeach
+            @if ($page->slug === 'home-rental' && ! $holidayHomeListRendered)
+                @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale])
+            @endif
         </main>
         <footer class="prime-footer">
             <div>

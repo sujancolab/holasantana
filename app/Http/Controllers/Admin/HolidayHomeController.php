@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\HolidayHome;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class HolidayHomeController extends Controller
@@ -13,7 +14,7 @@ class HolidayHomeController extends Controller
     public function index(): View
     {
         return view('admin.holiday-homes.index', [
-            'holidayHomes' => HolidayHome::latest()->paginate(15),
+            'holidayHomes' => HolidayHome::orderBy('sort_order')->latest()->paginate(15),
         ]);
     }
 
@@ -50,12 +51,28 @@ class HolidayHomeController extends Controller
 
     private function payload(Request $request): array
     {
-        return $request->validate([
+        $validated = $request->validate([
             'area_name' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
+            'image' => ['nullable', 'image', 'max:5120'],
+            'image_url' => ['nullable', 'string', 'max:500'],
+            'description' => ['nullable', 'string'],
             'number_of_bedrooms' => ['required', 'integer', 'min:0'],
             'maximum_number_of_guests' => ['required', 'integer', 'min:1'],
             'online_booking_link' => ['nullable', 'url', 'max:500'],
+            'is_active' => ['nullable', 'boolean'],
+            'sort_order' => ['required', 'integer', 'min:0'],
         ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image_url'] = Storage::disk('public')->url(
+                $validated['image']->store('holiday-homes', 'public')
+            );
+        }
+
+        unset($validated['image']);
+        $validated['is_active'] = $request->boolean('is_active');
+
+        return $validated;
     }
 }
