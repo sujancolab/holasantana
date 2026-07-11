@@ -160,6 +160,10 @@ class PageController extends Controller
     private function pageLocales(Page $page): array
     {
         $moduleLocales = Language::activeOptions();
+        $allowedCodes = array_values(array_unique(array_merge(
+            array_keys($moduleLocales),
+            Language::query()->pluck('code')->all(),
+        )));
         $codes = array_keys($moduleLocales);
 
         foreach (['title', 'menu_label', 'meta_description', 'hero_eyebrow', 'hero_title', 'hero_subtitle'] as $field) {
@@ -171,7 +175,10 @@ class PageController extends Controller
         }
 
         $this->collectLocaleCodes($page->content_blocks ?? [], $codes);
-        $codes = array_values(array_unique(array_filter($codes, fn (string $code) => preg_match('/^[a-z]{2,3}(?:-[a-z]{2})?$/i', $code))));
+        $codes = array_values(array_unique(array_filter(
+            $codes,
+            fn (string $code) => in_array($code, $allowedCodes, true)
+        )));
 
         return collect($codes)
             ->mapWithKeys(fn (string $code) => [$code => $moduleLocales[$code] ?? strtoupper($code)])

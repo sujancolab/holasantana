@@ -142,12 +142,19 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
     const jsonField = editor.querySelector('[data-cms-json]');
     const blockList = editor.querySelector('[data-cms-block-list]');
     const blockEditor = editor.querySelector('[data-cms-block-editor]');
+    const blockModal = editor.querySelector('[data-cms-block-modal]');
+    const blockPreview = editor.querySelector('[data-cms-block-preview]');
+    const previewLocaleSelect = editor.querySelector('[data-cms-preview-locale]');
     const outline = editor.querySelector('[data-cms-outline]');
     const count = editor.querySelector('[data-cms-block-count]');
     let locales = JSON.parse(editor.dataset.cmsLocales || '{"en":"English","es":"Spanish"}');
+    const pagePreview = JSON.parse(editor.dataset.pagePreview || '{}');
     const uploadUrl = editor.dataset.uploadUrl;
+    const translateUrl = editor.dataset.translateUrl;
+    const translateBlockUrl = editor.dataset.translateBlockUrl;
     const csrfToken = editor.querySelector('input[name="_token"]')?.value;
     let selectedBlock = 0;
+    let previewLocale = locales.en ? 'en' : Object.keys(locales)[0] || 'en';
 
     const blockTemplates = {
         text_section: {
@@ -228,6 +235,25 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         renderBlocks();
     };
 
+    const openBlockModal = () => {
+        if (!blockModal) {
+            return;
+        }
+
+        blockModal.classList.add('is-open');
+        blockModal.setAttribute('aria-hidden', 'false');
+        blockModal.querySelector('[data-cms-block-editor] input, [data-cms-block-editor] textarea, [data-cms-block-editor] select')?.focus();
+    };
+
+    const closeBlockModal = () => {
+        if (!blockModal) {
+            return;
+        }
+
+        blockModal.classList.remove('is-open');
+        blockModal.setAttribute('aria-hidden', 'true');
+    };
+
     const firstImage = (block) => {
         if (block.image) {
             return block.image;
@@ -264,6 +290,14 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         block[key][locale] = value;
     };
 
+    const localizedBlockValue = (block, key, locale = previewLocale) => {
+        return getLocalized(block?.[key], locale) || getLocalized(block?.[key], 'en');
+    };
+
+    const localizedPageValue = (key, locale = previewLocale) => {
+        return getLocalized(pagePreview?.[key], locale) || getLocalized(pagePreview?.[key], 'en');
+    };
+
     const createEl = (tag, className, text = '') => {
         const el = document.createElement(tag);
         if (className) {
@@ -273,6 +307,27 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
             el.textContent = text;
         }
         return el;
+    };
+
+    const appendMultiline = (container, text) => {
+        String(text || '').split('\n').forEach((line, index) => {
+            if (index) {
+                container.append(document.createElement('br'));
+            }
+            container.append(document.createTextNode(line));
+        });
+    };
+
+    const imageEl = (src, className = '') => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        if (className) {
+            img.className = className;
+        }
+        return img;
     };
 
     const uploadImages = async (files, status) => {
@@ -310,6 +365,63 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         }, 2200);
 
         return urls;
+    };
+
+    const translateText = async ({ text, targetLocale, field }) => {
+        if (!translateUrl || !csrfToken) {
+            throw new Error('Translation is not configured.');
+        }
+
+        const response = await fetch(translateUrl, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                text,
+                source_locale: 'en',
+                target_locale: targetLocale,
+                field,
+            }),
+        });
+
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            throw new Error(payload.message || 'Translation failed.');
+        }
+
+        return payload.translation || '';
+    };
+
+    const translateBlock = async ({ fields, targetLocales }) => {
+        if (!translateBlockUrl || !csrfToken) {
+            throw new Error('Translation is not configured.');
+        }
+
+        const response = await fetch(translateBlockUrl, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                source_locale: 'en',
+                target_locales: targetLocales,
+                fields,
+            }),
+        });
+
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            throw new Error(payload.message || 'Translation failed.');
+        }
+
+        return payload.translations || {};
     };
 
     const field = (labelText, value, onInput, options = {}) => {
@@ -362,11 +474,54 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
     const renderLocaleFields = (container, block, key, labelText, options = {}) => {
         const group = createEl('div', 'cms-locale-grid');
         Object.entries(locales).forEach(([locale, localeLabel]) => {
-            group.append(field(`${localeLabel} ${labelText}`, getLocalized(block[key], locale), (value) => {
+            const localeField = field(`${localeLabel} ${labelText}`, getLocalized(block[key], locale), (value) => {
                 const blocks = parseBlocks();
                 setLocalized(blocks[selectedBlock], key, locale, value);
                 writeBlocks(blocks);
-            }, options));
+                renderBlockPreview(blocks[selectedBlock]);
+            }, options);
+
+            if (locale !== 'en') {
+                const control = localeField.querySelector('input, textarea');
+                const actions = createEl('div', 'cms-translate-row');
+                const button = createEl('button', 'cms-translate-button', `Translate from English`);
+                const status = createEl('span', 'cms-translate-status');
+                button.type = 'button';
+                button.addEventListener('click', async () => {
+                    const blocks = parseBlocks();
+                    const sourceText = getLocalized(blocks[selectedBlock]?.[key], 'en').trim();
+
+                    if (!sourceText) {
+                        status.textContent = 'Add English text first';
+                        return;
+                    }
+
+                    button.disabled = true;
+                    status.textContent = 'Translating...';
+
+                    try {
+                        const translated = await translateText({
+                            text: sourceText,
+                            targetLocale: locale,
+                            field: labelText,
+                        });
+                        const latest = parseBlocks();
+                        setLocalized(latest[selectedBlock], key, locale, translated);
+                        writeBlocks(latest);
+                        control.value = translated;
+                        renderBlockPreview(latest[selectedBlock]);
+                        status.textContent = 'Translated';
+                    } catch (error) {
+                        status.textContent = error.message || 'Translation failed';
+                    } finally {
+                        button.disabled = false;
+                    }
+                });
+                actions.append(button, status);
+                localeField.append(actions);
+            }
+
+            group.append(localeField);
         });
         container.append(group);
     };
@@ -394,6 +549,149 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         return block.body?.en || block.footer?.en || 'Ready to edit in JSON';
     };
 
+    const renderPreviewActions = (container, actions = []) => {
+        if (!Array.isArray(actions) || !actions.length) {
+            return;
+        }
+
+        const row = createEl('div', 'prime-button-row');
+        actions.forEach((action) => {
+            const label = getLocalized(action.label, previewLocale) || getLocalized(action.label, 'en');
+            if (!label) {
+                return;
+            }
+            const link = createEl('a', `prime-button ${action.class || ''}`, label);
+            link.href = action.url || '#';
+            row.append(link);
+        });
+        container.append(row);
+    };
+
+    const renderBlockPreview = (block) => {
+        if (!blockPreview) {
+            return;
+        }
+
+        blockPreview.innerHTML = '';
+        blockPreview.className = `cms-block-preview-surface prime-site page-${String(pagePreview.slug || 'preview').replace(/[\/_]/g, '-')}`;
+
+        if (!block) {
+            blockPreview.append(createEl('p', 'hint', 'Select a block to preview.'));
+            return;
+        }
+
+        const type = block.type || 'text_section';
+        const heading = localizedBlockValue(block, 'heading');
+        const body = localizedBlockValue(block, 'body');
+        const footer = localizedBlockValue(block, 'footer');
+        let section;
+
+        if (type === 'hero_image') {
+            section = createEl('section', 'prime-hero');
+            if (block.image) {
+                section.style.setProperty('--hero-image', `url('${block.image}')`);
+            }
+            section.append(
+                createEl('h1', '', localizedPageValue('hero_title') || heading || blockTitle(block, selectedBlock)),
+                createEl('p', '', localizedPageValue('hero_subtitle') || body),
+            );
+        } else if (type === 'hero_panel') {
+            section = createEl('section', 'prime-panel prime-page-hero');
+            section.append(
+                createEl('h1', '', localizedPageValue('hero_title') || heading),
+                createEl('p', '', localizedPageValue('hero_subtitle') || body),
+            );
+        } else if (type === 'wide_image') {
+            section = createEl('section', 'prime-wide-image');
+            if (block.image) {
+                section.append(imageEl(block.image));
+            }
+        } else if (type === 'gallery') {
+            section = createEl('section', `prime-gallery is-count-${(block.images || []).length}`);
+            (block.images || []).forEach((image) => section.append(imageEl(image)));
+        } else if (type === 'service_section') {
+            section = createEl('section', 'prime-open-section');
+            if (heading) section.append(createEl('h2', '', heading));
+            if (Array.isArray(block.images) && block.images.length) {
+                const images = createEl('div', `prime-service-images is-count-${block.images.length}`);
+                block.images.forEach((image) => images.append(imageEl(image)));
+                section.append(images);
+            }
+            if (body) {
+                const copy = createEl('div', 'prime-open-copy');
+                appendMultiline(copy, body);
+                section.append(copy);
+            }
+        } else if (type === 'category_products') {
+            section = createEl('section', 'prime-category');
+            if (heading) section.append(createEl('h1', '', heading));
+            const grid = createEl('div', 'prime-products');
+            (block.products || []).forEach((product) => {
+                const card = createEl('article', 'prime-product-card');
+                const media = createEl('div', 'prime-product-image');
+                if (product.image) media.append(imageEl(product.image));
+                const button = createEl('button', '', 'Order It');
+                button.type = 'button';
+                card.append(media, createEl('h2', '', product.name || 'Product'), button);
+                grid.append(card);
+            });
+            section.append(grid);
+        } else if (type === 'rental_unit') {
+            section = createEl('section', 'prime-rental-unit');
+            if (heading) section.append(createEl('h2', '', heading));
+            if (Array.isArray(block.images) && block.images.length) {
+                const gallery = createEl('div', `prime-rental-gallery is-count-${block.images.length}`);
+                block.images.forEach((image) => gallery.append(imageEl(image)));
+                section.append(gallery);
+            }
+            if (body) {
+                const copy = createEl('div', 'prime-open-copy');
+                appendMultiline(copy, body);
+                section.append(copy);
+            }
+            renderPreviewActions(section, block.actions);
+        } else if (type === 'media_text') {
+            section = createEl('section', `prime-panel prime-media-text ${block.reverse ? 'is-reverse' : ''}`);
+            if (block.image) section.append(imageEl(block.image));
+            const content = document.createElement('div');
+            if (heading) content.append(createEl('h2', '', heading));
+            if (body) {
+                const copy = createEl('div', 'prime-copy');
+                appendMultiline(copy, body);
+                content.append(copy);
+            }
+            section.append(content);
+        } else if (type === 'split') {
+            section = createEl('section', 'prime-panel prime-split');
+            const content = document.createElement('div');
+            if (heading) content.append(createEl('h2', '', heading));
+            if (body) {
+                const copy = createEl('div', 'prime-copy');
+                appendMultiline(copy, body);
+                content.append(copy);
+            }
+            renderPreviewActions(content, block.actions);
+            section.append(content);
+            if (block.image) section.append(imageEl(block.image));
+        } else {
+            section = createEl('section', `prime-open-section prime-text-section ${block.class || ''}`);
+            if (heading) section.append(createEl('h2', '', heading));
+            if (body) {
+                const copy = createEl('div', 'prime-open-copy');
+                appendMultiline(copy, body);
+                section.append(copy);
+            }
+            if (footer) {
+                const foot = createEl('div', 'prime-open-footer');
+                appendMultiline(foot, footer);
+                section.append(foot);
+            }
+            renderPreviewActions(section, block.actions);
+        }
+
+        blockPreview.append(section || createEl('p', 'hint', 'Preview is not available for this block type.'));
+    };
+
     const renderImagesEditor = (container, block) => {
         const hasImages = Array.isArray(block.images) || ['gallery', 'service_section', 'rental_unit'].includes(block.type);
 
@@ -402,6 +700,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 const blocks = parseBlocks();
                 blocks[selectedBlock].images = value.split('\n').map((line) => line.trim()).filter(Boolean);
                 writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
             }, { wide: true, multiline: true, rows: 5, placeholder: 'https://...', onChange: renderBlocks });
             imageField.append(imageUploadControl({
                 multiple: true,
@@ -422,6 +721,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                     delete blocks[selectedBlock].image;
                 }
                 writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
             }, { wide: true, placeholder: 'https://...', onChange: renderBlocks });
             imageField.append(imageUploadControl({
                 onUploaded: ([url]) => {
@@ -448,6 +748,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 blocks[selectedBlock].actions[0].label ??= {};
                 blocks[selectedBlock].actions[0].label[locale] = value;
                 writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
             }));
         });
 
@@ -456,6 +757,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
             blocks[selectedBlock].actions ??= [{}];
             blocks[selectedBlock].actions[0].url = value;
             writeBlocks(blocks);
+            renderBlockPreview(blocks[selectedBlock]);
         }, { placeholder: '/en/contact' }));
         container.append(card);
     };
@@ -493,6 +795,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 const blocks = parseBlocks();
                 blocks[selectedBlock].products[productIndex].name = value;
                 writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
             }));
             fields.append(field('Price', product.price || '', (value) => {
                 const blocks = parseBlocks();
@@ -508,6 +811,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 const blocks = parseBlocks();
                 blocks[selectedBlock].products[productIndex].image = value;
                 writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
             }, { wide: true, onChange: renderBlocks });
             imageField.append(imageUploadControl({
                 onUploaded: ([url]) => {
@@ -571,6 +875,62 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         title.append(typeSelect);
         blockEditor.append(title);
 
+        const translatePanel = createEl('div', 'cms-block-translate-panel');
+        const translateAll = createEl('button', 'button ghost', 'Translate all from English');
+        const translateStatus = createEl('span', 'cms-translate-status');
+        translateAll.type = 'button';
+        translateAll.addEventListener('click', async () => {
+            const blocks = parseBlocks();
+            const currentBlock = blocks[selectedBlock];
+            const fields = {
+                heading: getLocalized(currentBlock?.heading, 'en').trim(),
+                body: getLocalized(currentBlock?.body, 'en').trim(),
+                footer: getLocalized(currentBlock?.footer, 'en').trim(),
+            };
+            const hasFields = Object.values(fields).some(Boolean);
+            const targetLocales = Object.keys(locales).filter((locale) => locale !== 'en');
+
+            if (!hasFields) {
+                translateStatus.textContent = 'Add English heading, body, or footer first';
+                return;
+            }
+
+            if (!targetLocales.length) {
+                translateStatus.textContent = 'Add another language first';
+                return;
+            }
+
+            translateAll.disabled = true;
+            translateStatus.textContent = 'Translating section...';
+
+            try {
+                const translations = await translateBlock({ fields, targetLocales });
+                const latest = parseBlocks();
+
+                Object.entries(translations).forEach(([locale, translatedFields]) => {
+                    if (!targetLocales.includes(locale) || !translatedFields || typeof translatedFields !== 'object') {
+                        return;
+                    }
+
+                    ['heading', 'body', 'footer'].forEach((key) => {
+                        if (fields[key] && typeof translatedFields[key] === 'string') {
+                            setLocalized(latest[selectedBlock], key, locale, translatedFields[key]);
+                        }
+                    });
+                });
+
+                writeBlocks(latest);
+                renderBlocks();
+                blockEditor.querySelector('.cms-block-translate-panel .cms-translate-status').textContent = 'Section translated';
+            } catch (error) {
+                translateStatus.textContent = error.message || 'Translation failed';
+            } finally {
+                translateAll.disabled = false;
+            }
+        });
+        translatePanel.append(translateAll, translateStatus);
+        blockEditor.append(translatePanel);
+
         const formGrid = createEl('div', 'cms-block-fields');
         renderLocaleFields(formGrid, block, 'heading', 'heading');
         renderLocaleFields(formGrid, block, 'body', 'body', { wide: true, multiline: true, rows: 6 });
@@ -579,6 +939,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         renderActionsEditor(formGrid, block);
         renderProductsEditor(formGrid, block);
         blockEditor.append(formGrid);
+        renderBlockPreview(block);
     };
 
     const renderBlocks = () => {
@@ -608,6 +969,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 card.addEventListener('click', () => {
                     selectedBlock = index;
                     renderBlocks();
+                    openBlockModal();
                 });
                 item.append(card);
 
@@ -658,7 +1020,9 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 item.addEventListener('click', (event) => {
                     event.preventDefault();
                     activateTab('blocks');
-                    jsonField?.focus();
+                    selectedBlock = index;
+                    renderBlocks();
+                    openBlockModal();
                 });
                 outline.append(item);
             });
@@ -670,6 +1034,20 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
     tabs.forEach((tab) => {
         tab.addEventListener('click', () => activateTab(tab.dataset.cmsTab));
     });
+
+    if (previewLocaleSelect) {
+        Object.entries(locales).forEach(([locale, localeLabel]) => {
+            const option = document.createElement('option');
+            option.value = locale;
+            option.textContent = localeLabel;
+            option.selected = locale === previewLocale;
+            previewLocaleSelect.append(option);
+        });
+        previewLocaleSelect.addEventListener('change', () => {
+            previewLocale = previewLocaleSelect.value;
+            renderBlockPreview(parseBlocks()[selectedBlock]);
+        });
+    }
 
     editor.querySelectorAll('[data-cms-add-block]').forEach((button) => {
         button.addEventListener('click', () => {
@@ -683,7 +1061,18 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
             blocks.push(structuredClone(template));
             syncAndRender(blocks, blocks.length - 1);
             activateTab('blocks');
+            openBlockModal();
         });
+    });
+
+    editor.querySelectorAll('[data-cms-close-block-modal]').forEach((button) => {
+        button.addEventListener('click', closeBlockModal);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && blockModal?.classList.contains('is-open')) {
+            closeBlockModal();
+        }
     });
 
     editor.querySelector('[data-cms-format-json]')?.addEventListener('click', () => {

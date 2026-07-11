@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\OwnerController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\PropertyReservationController;
+use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Owner\AuthController as OwnerAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\PublicPageController;
@@ -35,6 +36,9 @@ Route::middleware('owner')->prefix('owner')->name('owner.')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::post('/media/upload-image', [PageController::class, 'uploadImage'])->name('media.upload-image');
+    Route::post('/translations/settings', [TranslationController::class, 'updateSettings'])->name('translations.settings');
+    Route::post('/translations/translate', [TranslationController::class, 'translate'])->name('translations.translate');
+    Route::post('/translations/translate-block', [TranslationController::class, 'translateBlock'])->name('translations.translate-block');
     Route::resource('owners', OwnerController::class)->except(['show']);
     Route::resource('properties', PropertyController::class)->except(['show']);
     Route::resource('reservations', PropertyReservationController::class)->except(['show'])->parameters(['reservations' => 'reservation']);

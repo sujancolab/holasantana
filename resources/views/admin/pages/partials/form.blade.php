@@ -2,9 +2,16 @@
     $previewUrl = $page->exists
         ? route('pages.show', ['locale' => 'en', 'slug' => $page->slug])
         : null;
+
+    $pagePreview = [
+        'slug' => $page->slug,
+        'template' => $page->template,
+        'hero_title' => $page->hero_title ?? [],
+        'hero_subtitle' => $page->hero_subtitle ?? [],
+    ];
 @endphp
 
-<form method="post" action="{{ $action }}" class="cms-form cms-editor" data-cms-editor data-cms-locales='@json($locales)' data-upload-url="{{ route('admin.media.upload-image') }}">
+<form method="post" action="{{ $action }}" class="cms-form cms-editor" data-cms-editor data-cms-locales='@json($locales)' data-page-preview='@json($pagePreview)' data-upload-url="{{ route('admin.media.upload-image') }}" data-translate-url="{{ route('admin.translations.translate') }}" data-translate-block-url="{{ route('admin.translations.translate-block') }}">
     @csrf
     @if ($method === 'put') @method('put') @endif
 
@@ -66,7 +73,7 @@
                 </div>
             </section>
 
-            <section class="cms-tab-panel" data-cms-panel="blocks">
+            <section class="cms-tab-panel cms-tab-panel--blocks" data-cms-panel="blocks">
                 <div class="cms-block-builder">
                     <aside class="cms-block-sidebar">
                         <button type="button" data-cms-add-block="text_section">Add text block</button>
@@ -82,7 +89,6 @@
                             </div>
                             <div class="cms-dynamic-builder">
                                 <div class="cms-block-list" data-cms-block-list></div>
-                                <div class="cms-block-editor-panel" data-cms-block-editor></div>
                             </div>
                             <details class="cms-json-editor">
                                 <summary>Advanced JSON</summary>
@@ -147,6 +153,34 @@
                 <div class="cms-outline" data-cms-outline></div>
             </div>
         </aside>
+    </div>
+
+    <div class="cms-modal" data-cms-block-modal aria-hidden="true">
+        <div class="cms-modal-backdrop" data-cms-close-block-modal></div>
+        <section class="cms-modal-panel" role="dialog" aria-modal="true" aria-label="Edit page block">
+            <div class="cms-modal-head">
+                <div>
+                    <p class="eyebrow">Block editor</p>
+                    <h3>Edit page block</h3>
+                </div>
+                <button type="button" class="cms-modal-close" data-cms-close-block-modal aria-label="Close editor">Close</button>
+            </div>
+            <div class="cms-modal-workspace">
+                <div class="cms-block-editor-panel" data-cms-block-editor></div>
+                <aside class="cms-block-preview-panel">
+                    <div class="cms-block-preview-head">
+                        <h4>Preview</h4>
+                        <select data-cms-preview-locale aria-label="Preview language"></select>
+                    </div>
+                    <div class="cms-block-preview-frame">
+                        <div class="cms-block-preview-surface prime-site" data-cms-block-preview></div>
+                    </div>
+                </aside>
+            </div>
+            <div class="cms-modal-actions">
+                <button type="button" class="button" data-cms-close-block-modal>Done</button>
+            </div>
+        </section>
     </div>
 
     <div class="form-actions">

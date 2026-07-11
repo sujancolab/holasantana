@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Language;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -22,6 +23,10 @@ class LanguageController extends Controller
                 'is_active' => true,
                 'sort_order' => (int) Language::max('sort_order') + 1,
             ]),
+            'translationSettings' => [
+                'has_api_key' => filled(SiteSetting::getValue('gemini_api_key')),
+                'model' => SiteSetting::getValue('gemini_model', 'gemini-3.5-flash'),
+            ],
         ]);
     }
 
