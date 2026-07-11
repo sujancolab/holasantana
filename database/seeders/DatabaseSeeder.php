@@ -220,7 +220,11 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'open_intro',
                 'body' => ['en' => "Santana Prime specializes in the comprehensive management of vacation rentals, offering exceptional service that ensures the satisfaction of each guest. At our company, we use biodegradable and allergen-free products, along with state-of-the-art equipment, all managed by a team of highly trained experts, committed to providing an efficient and environmentally friendly service.\n\nIn addition, we provide laundry services, key delivery and reception of guests for property demonstrations, ensuring a memorable experience for our clients.\n\nWe also offer additional options, such as reservation management and airport transfers, with the aim of optimising visitors' stay as much as possible.\n\nOur aim is to offer a unique service and make our clients' stay as comfortable and pleasant as possible."],
-                'footer' => ['en' => 'All our services:'],
+            ],
+            [
+                'type' => 'text_section',
+                'class' => 'is-services-heading',
+                'heading' => ['en' => 'All our services:'],
             ],
             [
                 'type' => 'service_section',

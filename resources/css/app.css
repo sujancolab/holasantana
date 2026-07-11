@@ -3900,6 +3900,45 @@ th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
     max-width: var(--layout-readable);
 }
 
+@media (min-width: 901px) {
+    .page-home-rental .prime-media-text {
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+        width: min(100%, var(--layout-wide));
+        gap: clamp(18px, 2.4vw, 34px);
+    }
+
+    .page-home-rental .prime-media-text:not(.is-reverse) {
+        grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+    }
+
+    .page-home-rental .prime-media-text > img {
+        max-height: 340px;
+    }
+
+    .page-home-rental .prime-text-section .prime-open-copy,
+    .page-home-rental .prime-rental-unit .prime-open-copy,
+    .page-home-rental .prime-media-text .prime-copy {
+        width: 100%;
+        max-width: none;
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+
+    .page-home-rental .prime-text-section h2,
+    .page-home-rental .prime-rental-unit h2,
+    .page-home-rental .prime-media-text h2 {
+        max-width: none;
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+
+    .page-home-rental .prime-media-text .prime-copy {
+        font-size: clamp(22px, 1.65vw, 27px);
+        line-height: 1.38;
+        white-space: nowrap;
+    }
+}
+
 /* Keep scrolled content from showing above/through the sticky header */
 @media (min-width: 641px) {
     .prime-header,
@@ -4666,5 +4705,175 @@ th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
         grid-template-columns: 1fr;
         gap: 10px;
         margin-top: 18px;
+    }
+}
+
+/* Final public typography polish */
+.site,
+.prime-site {
+    --type-hero: clamp(34px, 4.2vw, 58px);
+    --type-page-title: clamp(28px, 3vw, 42px);
+    --type-section-title: clamp(24px, 2.3vw, 34px);
+    --type-card-title: clamp(20px, 1.6vw, 26px);
+    --type-body: clamp(16px, 1.05vw, 18px);
+    --type-large-body: clamp(18px, 1.35vw, 22px);
+    --type-small: 14px;
+}
+
+.prime-hero h1,
+.hero h1 {
+    font-size: var(--type-hero);
+    line-height: 1.06;
+}
+
+.prime-hero p,
+.hero div {
+    font-size: var(--type-large-body);
+    line-height: 1.45;
+}
+
+.prime-page-hero h1,
+.blog-content h1,
+.contact-hero-copy h1,
+.about-intro h1,
+.faq-order-section h1 {
+    font-size: var(--type-page-title);
+    line-height: 1.12;
+}
+
+.prime-open-section h1,
+.prime-open-section h2,
+.prime-panel h2,
+.prime-rental-unit h2,
+.about-feature h2,
+.holiday-home-listing-head h2,
+.page-home-rental .prime-text-section h2,
+.page-home-rental .prime-rental-unit h2,
+.page-home-rental .prime-media-text h2,
+.page-faq .prime-contact .prime-panel h2,
+.prime-contact .prime-panel h2 {
+    font-size: var(--type-section-title);
+    line-height: 1.16;
+}
+
+.prime-open-copy,
+.prime-copy,
+.prime-rental-unit .prime-open-copy,
+.prime-footer-copy,
+.prime-open-footer,
+.about-intro div,
+.about-feature div div,
+.blog-card p,
+.contact-hero-copy p,
+.holiday-home-card p,
+.contact-grid {
+    font-size: var(--type-body);
+    line-height: 1.65;
+}
+
+.page-projects-6 .prime-open-copy,
+.page-home-rental .prime-text-section .prime-open-copy,
+.page-home-rental .prime-rental-unit .prime-open-copy,
+.page-home-rental .prime-media-text .prime-copy,
+.prime-checks {
+    font-size: var(--type-large-body);
+    line-height: 1.48;
+}
+
+.blog-card h2,
+.blog-card.is-text-only h2,
+.holiday-home-card h3,
+.prime-product-card h2 {
+    font-size: var(--type-card-title);
+    line-height: 1.2;
+}
+
+.prime-button,
+.site-button,
+.prime-product-card button,
+.contact-live-form button,
+.faq-order-form button {
+    font-size: 15px;
+}
+
+.prime-text-section.is-services-heading {
+    margin-bottom: 0;
+    padding-bottom: clamp(8px, 1.4vw, 18px);
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+}
+
+.prime-text-section.is-services-heading h2 {
+    margin-bottom: 0;
+    color: var(--front-teal-dark);
+    font-size: var(--type-page-title);
+}
+
+.prime-service-section {
+    margin-top: clamp(14px, 2vw, 24px);
+}
+
+.prime-service-section h2 {
+    color: var(--front-teal-dark);
+    font-size: var(--type-card-title);
+    line-height: 1.25;
+}
+
+.page-general-4 .prime-main {
+    padding-top: clamp(14px, 2vw, 26px);
+}
+
+.page-general-4 .prime-open-section {
+    margin-top: clamp(14px, 2vw, 24px);
+    margin-bottom: clamp(14px, 2vw, 24px);
+    padding: clamp(24px, 3vw, 38px) clamp(28px, 4vw, 56px);
+}
+
+.page-general-4 .prime-open-section:first-of-type {
+    margin-top: 0;
+}
+
+.page-general-4 .prime-text-section.is-services-heading {
+    margin: clamp(18px, 2.6vw, 34px) auto clamp(8px, 1.4vw, 16px);
+    padding: 0 clamp(28px, 4vw, 56px);
+}
+
+.page-general-4 .prime-text-section.is-services-heading h2 {
+    font-size: clamp(30px, 3.4vw, 46px);
+}
+
+.page-general-4 .prime-service-section {
+    margin-top: clamp(10px, 1.4vw, 18px);
+}
+
+.page-general-4 .prime-service-section h2 {
+    margin-bottom: clamp(14px, 1.8vw, 22px);
+}
+
+.page-general-4 .prime-service-section .prime-service-images {
+    margin: 0 auto clamp(18px, 2vw, 26px);
+}
+
+.page-general-4 .prime-service-section .prime-open-copy {
+    max-width: 980px;
+}
+
+@media (min-width: 901px) {
+    .page-home-rental .prime-media-text .prime-copy {
+        font-size: clamp(18px, 1.28vw, 21px);
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 640px) {
+    .site,
+    .prime-site {
+        --type-hero: clamp(30px, 9vw, 42px);
+        --type-page-title: clamp(26px, 8vw, 36px);
+        --type-section-title: clamp(23px, 7vw, 31px);
+        --type-card-title: 21px;
+        --type-body: 16px;
+        --type-large-body: 18px;
     }
 }

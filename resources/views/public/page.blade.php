@@ -124,7 +124,7 @@
                         @endif
                     </section>
                 @elseif ($type === 'service_section')
-                    <section class="prime-open-section">
+                    <section class="prime-open-section prime-service-section">
                         <h2>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en')) }}</h2>
                         @if (data_get($block, 'images'))
                             <div class="prime-service-images is-count-{{ count(data_get($block, 'images', [])) }}">
