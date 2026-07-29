@@ -7,10 +7,12 @@
     <meta name="description" content="{{ $page->localized('meta_description', $locale) }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-@php($isPrimeTemplate = in_array($page->template, ['home', 'prime'], true))
-@php($languageFlags = ['en' => '🇬🇧', 'es' => '🇪🇸', 'de' => '🇩🇪', 'sv' => '🇸🇪', 'fi' => '🇫🇮'])
-@php($languageNames = ['en' => 'English', 'es' => 'Spanish', 'de' => 'German', 'sv' => 'Swedish', 'fi' => 'Finnish'])
-@php($languageLabels = ['en' => 'English (US)', 'es' => 'Spanish', 'de' => 'German', 'sv' => 'Swedish', 'fi' => 'Finnish'])
+@php
+    $isPrimeTemplate = in_array($page->template, ['home', 'prime'], true);
+    $languageFlags = ['en' => '🇬🇧', 'es' => '🇪🇸', 'de' => '🇩🇪', 'sv' => '🇸🇪', 'fi' => '🇫🇮'];
+    $languageNames = ['en' => 'English', 'es' => 'Spanish', 'de' => 'German', 'sv' => 'Swedish', 'fi' => 'Finnish'];
+    $languageLabels = ['en' => 'English (US)', 'es' => 'Spanish', 'de' => 'German', 'sv' => 'Swedish', 'fi' => 'Finnish'];
+@endphp
 <body class="{{ $isPrimeTemplate ? 'prime-site' : 'site' }} page-{{ str_replace(['/', '_'], '-', $page->slug) }}">
     @if ($isPrimeTemplate)
         <header class="prime-header">
@@ -59,9 +61,19 @@
             <div class="service-enquiry-toast is-error" role="alert">Please check the order enquiry form and try again.</div>
         @endif
         <main class="prime-main">
-            @php($holidayHomeListRendered = false)
+            @php
+                $holidayHomeListRendered = false;
+            @endphp
             @foreach (($page->content_blocks ?? []) as $block)
-                @php($type = data_get($block, 'type', 'panel'))
+                @php
+                    $type = data_get($block, 'type', 'panel');
+                @endphp
+                @php
+                    $blockItems = data_get($block, "items.$locale", data_get($block, 'items.en', data_get($block, 'items', [])));
+                    $blockItems = is_array($blockItems)
+                        ? $blockItems
+                        : array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string) $blockItems))));
+                @endphp
 
                 @if ($type === 'hero_image')
                     <section class="prime-hero" style="--hero-image: url('{{ data_get($block, 'image') }}')">
@@ -109,6 +121,13 @@
                         @if (filled(data_get($block, "body.$locale", data_get($block, 'body.en'))))
                             <div class="prime-open-copy">{!! nl2br(e(data_get($block, "body.$locale", data_get($block, 'body.en')))) !!}</div>
                         @endif
+                        @if ($blockItems)
+                            <ul class="prime-checks">
+                                @foreach ($blockItems as $item)
+                                    <li>{{ $item }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
                         @if (filled(data_get($block, "footer.$locale", data_get($block, 'footer.en'))))
                             <div class="prime-open-footer">{!! nl2br(e(data_get($block, "footer.$locale", data_get($block, 'footer.en')))) !!}</div>
                         @endif
@@ -138,11 +157,15 @@
                 @elseif ($type === 'rental_unit' && $page->slug === 'home-rental')
                     @unless ($holidayHomeListRendered)
                         @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale])
-                        @php($holidayHomeListRendered = true)
+                        @php
+                            $holidayHomeListRendered = true;
+                        @endphp
                     @endunless
                 @elseif ($type === 'holiday_home_listing')
                     @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale])
-                    @php($holidayHomeListRendered = true)
+                    @php
+                        $holidayHomeListRendered = true;
+                    @endphp
                 @elseif ($type === 'rental_unit')
                     <section class="prime-rental-unit">
                         <h2>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en')) }}</h2>
@@ -178,7 +201,9 @@
                         @endif
                     </section>
                 @elseif ($type === 'slider')
-                    @php($slides = data_get($block, 'slides', []))
+                    @php
+                        $slides = data_get($block, 'slides', []);
+                    @endphp
                     @if ($slides)
                         <section class="prime-slider" data-slider>
                             <div class="prime-slider-track">
@@ -201,9 +226,9 @@
                         <div>
                             <h2>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en')) }}</h2>
                             <div class="prime-copy">{!! nl2br(e(data_get($block, "body.$locale", data_get($block, 'body.en')))) !!}</div>
-                            @if (data_get($block, 'items'))
+                            @if ($blockItems)
                                 <ul class="prime-checks">
-                                    @foreach (data_get($block, 'items', []) as $item)
+                                    @foreach ($blockItems as $item)
                                         <li>{{ $item }}</li>
                                     @endforeach
                                 </ul>
@@ -218,9 +243,9 @@
                         <div>
                             <h2>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en')) }}</h2>
                             <div class="prime-copy">{!! nl2br(e(data_get($block, "body.$locale", data_get($block, 'body.en')))) !!}</div>
-                            @if (data_get($block, 'items'))
+                            @if ($blockItems)
                                 <ul class="prime-checks">
-                                    @foreach (data_get($block, 'items', []) as $item)
+                                    @foreach ($blockItems as $item)
                                         <li>{{ $item }}</li>
                                     @endforeach
                                 </ul>
@@ -313,6 +338,29 @@
                                 title="Office Torrevieja map"></iframe>
                         </section>
                     </section>
+                @elseif ($type === 'faq_section')
+                    <section class="prime-faq-section">
+                        <div class="prime-faq-intro">
+                            <h1>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en', 'Frequently asked questions')) }}</h1>
+                            @if (filled(data_get($block, "body.$locale", data_get($block, 'body.en'))))
+                                <p>{!! nl2br(e(data_get($block, "body.$locale", data_get($block, 'body.en')))) !!}</p>
+                            @endif
+                        </div>
+                        <div class="prime-faq-list">
+                            @foreach (data_get($block, 'faqs', []) as $index => $faq)
+                                @php
+                                    $question = data_get($faq, "question.$locale", data_get($faq, 'question.en', data_get($faq, 'question')));
+                                    $answer = data_get($faq, "answer.$locale", data_get($faq, 'answer.en', data_get($faq, 'answer')));
+                                @endphp
+                                @if (filled($question) || filled($answer))
+                                    <details class="prime-faq-item" {{ $index === 0 ? 'open' : '' }}>
+                                        <summary>{{ $question ?: 'Question' }}</summary>
+                                        <div class="prime-faq-answer">{!! nl2br(e($answer)) !!}</div>
+                                    </details>
+                                @endif
+                            @endforeach
+                        </div>
+                    </section>
                 @elseif ($type === 'faq_order_form')
                     <section class="faq-order-section">
                         <h1>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en')) }}</h1>
@@ -345,20 +393,49 @@
                         </form>
                     </section>
                 @elseif ($type === 'contact')
+                    @php
+                        $contactItems = data_get($block, 'contact_items', [
+                            ['label' => ['en' => 'Get in touch with us'], 'text' => ['en' => 'Envíenos un correo electrónico'], 'url' => 'mailto:info@holasantana.com'],
+                            ['label' => [], 'text' => ['en' => 'Llámenos'], 'url' => 'tel:+34624229511'],
+                            ['label' => ['en' => 'Whatsapp'], 'text' => ['en' => 'Contact us'], 'url' => 'https://api.whatsapp.com/send?phone=34624229511'],
+                        ]);
+                        $socialHeading = data_get($block, "social_heading.$locale", data_get($block, 'social_heading.en', 'Follow us at'));
+                        $socialLinks = data_get($block, 'social_links', [
+                            ['icon' => 'f', 'label' => 'Facebook', 'url' => '#'],
+                            ['icon' => '◎', 'label' => 'Instagram', 'url' => '#'],
+                            ['icon' => '▶', 'label' => 'YouTube', 'url' => '#'],
+                        ]);
+                    @endphp
                     <section class="prime-contact">
                         <img src="{{ data_get($block, 'left_image') }}" alt="" loading="lazy" decoding="async">
                         <div class="prime-panel">
                             <h2>{!! nl2br(e(data_get($block, "heading.$locale", data_get($block, 'heading.en')))) !!}</h2>
                             <div class="contact-grid">
-                                <strong>Get in touch with us</strong>
-                                <a href="mailto:info@holasantana.com">Envíenos un correo electrónico</a>
-                                <a href="tel:+34624229511">Llámenos</a>
-                                <strong>Follow us at</strong>
+                                @foreach ($contactItems as $item)
+                                    @php
+                                        $itemLabel = data_get($item, "label.$locale", data_get($item, 'label.en', data_get($item, 'label')));
+                                        $itemText = data_get($item, "text.$locale", data_get($item, 'text.en', data_get($item, 'text')));
+                                        $itemUrl = data_get($item, 'url', '#');
+                                    @endphp
+                                    @if (filled($itemLabel))
+                                        <strong>{{ $itemLabel }}</strong>
+                                    @endif
+                                    @if (filled($itemText))
+                                        <a href="{{ $itemUrl }}">{{ $itemText }}</a>
+                                    @endif
+                                @endforeach
+                                @if (filled($socialHeading))
+                                    <strong>{{ $socialHeading }}</strong>
+                                @endif
                                 <div class="social-row">
-                                    <span>f</span><span>◎</span><span>▶</span>
+                                    @foreach ($socialLinks as $social)
+                                        @if (filled(data_get($social, 'url')))
+                                            <a href="{{ data_get($social, 'url') }}" aria-label="{{ data_get($social, 'label', data_get($social, 'icon')) }}">{{ data_get($social, 'icon') }}</a>
+                                        @else
+                                            <span>{{ data_get($social, 'icon') }}</span>
+                                        @endif
+                                    @endforeach
                                 </div>
-                                <strong>Whatsapp</strong>
-                                <a href="https://api.whatsapp.com/send?phone=34624229511">Contact us</a>
                             </div>
                         </div>
                         <img src="{{ data_get($block, 'right_image') }}" alt="" loading="lazy" decoding="async">
@@ -367,9 +444,9 @@
                     <section class="prime-panel">
                         <h2>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en')) }}</h2>
                         <div class="prime-copy">{!! nl2br(e(data_get($block, "body.$locale", data_get($block, 'body.en')))) !!}</div>
-                        @if (data_get($block, 'items'))
+                        @if ($blockItems)
                             <ul class="prime-checks">
-                                @foreach (data_get($block, 'items', []) as $item)
+                                @foreach ($blockItems as $item)
                                     <li>{{ $item }}</li>
                                 @endforeach
                             </ul>

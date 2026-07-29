@@ -162,6 +162,17 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
             heading: { en: 'New text section', es: '' },
             body: { en: 'Write your section content here.', es: '' },
         },
+        faq_section: {
+            type: 'faq_section',
+            heading: { en: 'Frequently asked questions', es: '' },
+            body: { en: 'Quick answers about Santana Prime services.', es: '' },
+            faqs: [
+                {
+                    question: { en: 'How can we help?', es: '' },
+                    answer: { en: 'Add your answer here.', es: '' },
+                },
+            ],
+        },
         gallery: {
             type: 'gallery',
             images: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80'],
@@ -187,6 +198,8 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
 
     const blockTypes = {
         text_section: 'Text section',
+        panel: 'Panel',
+        faq_section: 'FAQ',
         open_intro: 'Intro',
         service_section: 'Service section',
         gallery: 'Gallery',
@@ -200,6 +213,18 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         split: 'Split layout',
         rental_unit: 'Rental unit',
     };
+
+    const defaultContactItems = () => [
+        { label: { en: 'Get in touch with us' }, text: { en: 'Envíenos un correo electrónico' }, url: 'mailto:info@holasantana.com' },
+        { label: {}, text: { en: 'Llámenos' }, url: 'tel:+34624229511' },
+        { label: { en: 'Whatsapp' }, text: { en: 'Contact us' }, url: 'https://api.whatsapp.com/send?phone=34624229511' },
+    ];
+
+    const defaultSocialLinks = () => [
+        { icon: 'f', label: 'Facebook', url: '#' },
+        { icon: '◎', label: 'Instagram', url: '#' },
+        { icon: '▶', label: 'YouTube', url: '#' },
+    ];
 
     const activateTab = (name) => {
         tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.cmsTab === name));
@@ -292,6 +317,47 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
 
     const localizedBlockValue = (block, key, locale = previewLocale) => {
         return getLocalized(block?.[key], locale) || getLocalized(block?.[key], 'en');
+    };
+
+    const listToText = (value) => {
+        if (Array.isArray(value)) {
+            return value.join('\n');
+        }
+
+        return String(value || '');
+    };
+
+    const textToList = (value) => {
+        return String(value || '').split('\n').map((line) => line.trim()).filter(Boolean);
+    };
+
+    const getLocalizedList = (block, key, locale = previewLocale) => {
+        const value = block?.[key];
+
+        if (Array.isArray(value)) {
+            return value;
+        }
+
+        if (value && typeof value === 'object') {
+            const localized = value[locale] || value.en || [];
+            return Array.isArray(localized) ? localized : textToList(localized);
+        }
+
+        return [];
+    };
+
+    const setLocalizedList = (block, key, locale, value) => {
+        const lines = textToList(value);
+
+        if (Array.isArray(block[key])) {
+            block[key] = { en: block[key] };
+        }
+
+        if (!block[key] || typeof block[key] !== 'object') {
+            block[key] = {};
+        }
+
+        block[key][locale] = lines;
     };
 
     const localizedPageValue = (key, locale = previewLocale) => {
@@ -546,6 +612,10 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
             return `${block.videos.length} videos`;
         }
 
+        if (Array.isArray(block.faqs)) {
+            return `${block.faqs.length} questions`;
+        }
+
         return block.body?.en || block.footer?.en || 'Ready to edit in JSON';
     };
 
@@ -560,7 +630,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
             if (!label) {
                 return;
             }
-            const link = createEl('a', `prime-button ${action.class || ''}`, label);
+            const link = createEl('a', `prime-button ${action.variant ? `is-${action.variant}` : (action.class || '')}`, label);
             link.href = action.url || '#';
             row.append(link);
         });
@@ -584,6 +654,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         const heading = localizedBlockValue(block, 'heading');
         const body = localizedBlockValue(block, 'body');
         const footer = localizedBlockValue(block, 'footer');
+        const items = getLocalizedList(block, 'items');
         let section;
 
         if (type === 'hero_image') {
@@ -636,6 +707,64 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 grid.append(card);
             });
             section.append(grid);
+        } else if (type === 'faq_section') {
+            section = createEl('section', 'prime-faq-section');
+            const intro = createEl('div', 'prime-faq-intro');
+            if (heading) intro.append(createEl('h1', '', heading));
+            if (body) {
+                const copy = createEl('p', '', '');
+                appendMultiline(copy, body);
+                intro.append(copy);
+            }
+            section.append(intro);
+
+            const list = createEl('div', 'prime-faq-list');
+            (block.faqs || []).forEach((faq, faqIndex) => {
+                const item = createEl('details', 'prime-faq-item');
+                if (faqIndex === 0) {
+                    item.open = true;
+                }
+                item.append(
+                    createEl('summary', '', getLocalized(faq.question, previewLocale) || getLocalized(faq.question, 'en') || `Question ${faqIndex + 1}`),
+                );
+                const answer = createEl('div', 'prime-faq-answer');
+                appendMultiline(answer, getLocalized(faq.answer, previewLocale) || getLocalized(faq.answer, 'en'));
+                item.append(answer);
+                list.append(item);
+            });
+            section.append(list);
+        } else if (type === 'contact') {
+            section = createEl('section', 'prime-contact');
+            if (block.left_image) section.append(imageEl(block.left_image));
+            const panel = createEl('div', 'prime-panel');
+            if (heading) {
+                const title = createEl('h2');
+                appendMultiline(title, heading);
+                panel.append(title);
+            }
+            const grid = createEl('div', 'contact-grid');
+            (block.contact_items || defaultContactItems()).forEach((item) => {
+                const label = getLocalized(item.label, previewLocale) || getLocalized(item.label, 'en');
+                const text = getLocalized(item.text, previewLocale) || getLocalized(item.text, 'en');
+                if (label) grid.append(createEl('strong', '', label));
+                if (text) {
+                    const link = createEl('a', '', text);
+                    link.href = item.url || '#';
+                    grid.append(link);
+                }
+            });
+            const socialHeading = getLocalized(block.social_heading, previewLocale) || getLocalized(block.social_heading, 'en') || 'Follow us at';
+            if (socialHeading) grid.append(createEl('strong', '', socialHeading));
+            const socialRow = createEl('div', 'social-row');
+            (block.social_links || defaultSocialLinks()).forEach((social) => {
+                const socialLink = social.url ? createEl('a', '', social.icon || social.label || '') : createEl('span', '', social.icon || social.label || '');
+                if (social.url) socialLink.href = social.url;
+                socialRow.append(socialLink);
+            });
+            grid.append(socialRow);
+            panel.append(grid);
+            section.append(panel);
+            if (block.right_image) section.append(imageEl(block.right_image));
         } else if (type === 'rental_unit') {
             section = createEl('section', 'prime-rental-unit');
             if (heading) section.append(createEl('h2', '', heading));
@@ -660,6 +789,11 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 appendMultiline(copy, body);
                 content.append(copy);
             }
+            if (items.length) {
+                const list = createEl('ul', 'prime-checks');
+                items.forEach((item) => list.append(createEl('li', '', item)));
+                content.append(list);
+            }
             section.append(content);
         } else if (type === 'split') {
             section = createEl('section', 'prime-panel prime-split');
@@ -669,6 +803,11 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 const copy = createEl('div', 'prime-copy');
                 appendMultiline(copy, body);
                 content.append(copy);
+            }
+            if (items.length) {
+                const list = createEl('ul', 'prime-checks');
+                items.forEach((item) => list.append(createEl('li', '', item)));
+                content.append(list);
             }
             renderPreviewActions(content, block.actions);
             section.append(content);
@@ -680,6 +819,11 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 const copy = createEl('div', 'prime-open-copy');
                 appendMultiline(copy, body);
                 section.append(copy);
+            }
+            if (items.length) {
+                const list = createEl('ul', 'prime-checks');
+                items.forEach((item) => list.append(createEl('li', '', item)));
+                section.append(list);
             }
             if (footer) {
                 const foot = createEl('div', 'prime-open-footer');
@@ -693,6 +837,10 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
     };
 
     const renderImagesEditor = (container, block) => {
+        if (block.type === 'contact') {
+            return;
+        }
+
         const hasImages = Array.isArray(block.images) || ['gallery', 'service_section', 'rental_unit'].includes(block.type);
 
         if (hasImages) {
@@ -735,31 +883,411 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
     };
 
     const renderActionsEditor = (container, block) => {
-        const action = Array.isArray(block.actions) ? block.actions[0] || {} : {};
+        const actions = Array.isArray(block.actions) ? block.actions : [];
         const card = createEl('div', 'cms-subeditor');
         const head = createEl('div', 'cms-subeditor-head');
-        head.append(createEl('h4', '', 'Button'));
+        head.append(createEl('h4', '', 'Buttons'));
+        const add = createEl('button', 'button ghost', 'Add button');
+        add.type = 'button';
+        add.addEventListener('click', () => {
+            const blocks = parseBlocks();
+            blocks[selectedBlock].actions ??= [];
+            blocks[selectedBlock].actions.push({ label: { en: 'New button' }, url: '#' });
+            syncAndRender(blocks);
+        });
+        head.append(add);
+        card.append(head);
+
+        if (!actions.length) {
+            card.append(createEl('p', 'hint', 'No buttons yet.'));
+        }
+
+        actions.forEach((action, actionIndex) => {
+            const actionCard = createEl('div', 'cms-action-row');
+            const actionHead = createEl('div', 'cms-subeditor-head');
+            actionHead.append(createEl('h4', '', `Button ${actionIndex + 1}`));
+
+            const actionControls = createEl('div', 'cms-block-controls');
+            [
+                ['Up', () => {
+                    const blocks = parseBlocks();
+                    if (actionIndex === 0) return;
+                    [blocks[selectedBlock].actions[actionIndex - 1], blocks[selectedBlock].actions[actionIndex]] = [blocks[selectedBlock].actions[actionIndex], blocks[selectedBlock].actions[actionIndex - 1]];
+                    syncAndRender(blocks);
+                }],
+                ['Down', () => {
+                    const blocks = parseBlocks();
+                    if (actionIndex >= blocks[selectedBlock].actions.length - 1) return;
+                    [blocks[selectedBlock].actions[actionIndex + 1], blocks[selectedBlock].actions[actionIndex]] = [blocks[selectedBlock].actions[actionIndex], blocks[selectedBlock].actions[actionIndex + 1]];
+                    syncAndRender(blocks);
+                }],
+                ['Delete', () => {
+                    const blocks = parseBlocks();
+                    blocks[selectedBlock].actions.splice(actionIndex, 1);
+                    syncAndRender(blocks);
+                }],
+            ].forEach(([label, handler]) => {
+                const button = createEl('button', `cms-icon-button ${label === 'Delete' ? 'danger' : ''}`, label);
+                button.type = 'button';
+                button.addEventListener('click', handler);
+                actionControls.append(button);
+            });
+            actionHead.append(actionControls);
+            actionCard.append(actionHead);
+
+            Object.entries(locales).forEach(([locale, localeLabel]) => {
+                actionCard.append(field(`${localeLabel} label`, getLocalized(action.label, locale), (value) => {
+                    const blocks = parseBlocks();
+                    blocks[selectedBlock].actions ??= [];
+                    blocks[selectedBlock].actions[actionIndex] ??= {};
+                    blocks[selectedBlock].actions[actionIndex].label ??= {};
+                    if (typeof blocks[selectedBlock].actions[actionIndex].label === 'string') {
+                        blocks[selectedBlock].actions[actionIndex].label = { en: blocks[selectedBlock].actions[actionIndex].label };
+                    }
+                    blocks[selectedBlock].actions[actionIndex].label[locale] = value;
+                    writeBlocks(blocks);
+                    renderBlockPreview(blocks[selectedBlock]);
+                }));
+            });
+
+            actionCard.append(field('URL', action.url || '', (value) => {
+                const blocks = parseBlocks();
+                blocks[selectedBlock].actions ??= [];
+                blocks[selectedBlock].actions[actionIndex] ??= {};
+                blocks[selectedBlock].actions[actionIndex].url = value;
+                writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
+            }, { placeholder: '/en/contact' }));
+
+            actionCard.append(field('Style variant', action.variant || action.class || '', (value) => {
+                const blocks = parseBlocks();
+                blocks[selectedBlock].actions ??= [];
+                blocks[selectedBlock].actions[actionIndex] ??= {};
+                const cleanValue = value.trim();
+
+                if (cleanValue) {
+                    blocks[selectedBlock].actions[actionIndex].variant = cleanValue;
+                } else {
+                    delete blocks[selectedBlock].actions[actionIndex].variant;
+                    delete blocks[selectedBlock].actions[actionIndex].class;
+                }
+
+                writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
+            }, { placeholder: 'secondary' }));
+
+            card.append(actionCard);
+        });
+
+        container.append(card);
+    };
+
+    const renderItemsEditor = (container, block) => {
+        const hasItems = Array.isArray(block.items)
+            || (block.items && typeof block.items === 'object')
+            || ['panel', 'text_section', 'split', 'media_text'].includes(block.type || 'panel');
+
+        if (!hasItems) {
+            return;
+        }
+
+        const card = createEl('div', 'cms-subeditor');
+        const head = createEl('div', 'cms-subeditor-head');
+        head.append(createEl('h4', '', 'Selection list'));
         card.append(head);
 
         Object.entries(locales).forEach(([locale, localeLabel]) => {
-            card.append(field(`${localeLabel} label`, getLocalized(action.label, locale), (value) => {
+            const currentValue = Array.isArray(block.items)
+                ? (locale === 'en' ? block.items : [])
+                : (block.items?.[locale] || []);
+
+            const listField = field(`${localeLabel} items, one per line`, listToText(currentValue), (value) => {
                 const blocks = parseBlocks();
-                blocks[selectedBlock].actions ??= [{}];
-                blocks[selectedBlock].actions[0].label ??= {};
-                blocks[selectedBlock].actions[0].label[locale] = value;
+                setLocalizedList(blocks[selectedBlock], 'items', locale, value);
+                writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
+            }, { wide: true, multiline: true, rows: 5 });
+
+            if (locale !== 'en') {
+                const control = listField.querySelector('textarea');
+                const actions = createEl('div', 'cms-translate-row');
+                const button = createEl('button', 'cms-translate-button', 'Translate from English');
+                const status = createEl('span', 'cms-translate-status');
+                button.type = 'button';
+                button.addEventListener('click', async () => {
+                    const blocks = parseBlocks();
+                    const sourceText = listToText(getLocalizedList(blocks[selectedBlock], 'items', 'en')).trim();
+
+                    if (!sourceText) {
+                        status.textContent = 'Add English items first';
+                        return;
+                    }
+
+                    button.disabled = true;
+                    status.textContent = 'Translating...';
+
+                    try {
+                        const translated = await translateText({
+                            text: sourceText,
+                            targetLocale: locale,
+                            field: 'selection list',
+                        });
+                        const latest = parseBlocks();
+                        setLocalizedList(latest[selectedBlock], 'items', locale, translated);
+                        writeBlocks(latest);
+                        control.value = listToText(getLocalizedList(latest[selectedBlock], 'items', locale));
+                        renderBlockPreview(latest[selectedBlock]);
+                        status.textContent = 'Translated';
+                    } catch (error) {
+                        status.textContent = error.message || 'Translation failed';
+                    } finally {
+                        button.disabled = false;
+                    }
+                });
+                actions.append(button, status);
+                listField.append(actions);
+            }
+
+            card.append(listField);
+        });
+
+        container.append(card);
+    };
+
+    const renderFaqEditor = (container, block) => {
+        if (!Array.isArray(block.faqs) && block.type !== 'faq_section') {
+            return;
+        }
+
+        const card = createEl('div', 'cms-subeditor');
+        const head = createEl('div', 'cms-subeditor-head');
+        head.append(createEl('h4', '', 'FAQ questions'));
+        const add = createEl('button', 'button ghost', 'Add question');
+        add.type = 'button';
+        add.addEventListener('click', () => {
+            const blocks = parseBlocks();
+            blocks[selectedBlock].faqs ??= [];
+            blocks[selectedBlock].faqs.push({
+                question: { en: 'New question' },
+                answer: { en: 'New answer' },
+            });
+            syncAndRender(blocks);
+        });
+        head.append(add);
+        card.append(head);
+
+        if (!Array.isArray(block.faqs) || !block.faqs.length) {
+            card.append(createEl('p', 'hint', 'No FAQ questions yet.'));
+        }
+
+        (block.faqs || []).forEach((faq, faqIndex) => {
+            const faqCard = createEl('div', 'cms-action-row');
+            const faqHead = createEl('div', 'cms-subeditor-head');
+            faqHead.append(createEl('h4', '', `Question ${faqIndex + 1}`));
+
+            const faqControls = createEl('div', 'cms-block-controls');
+            [
+                ['Up', () => {
+                    const blocks = parseBlocks();
+                    if (faqIndex === 0) return;
+                    [blocks[selectedBlock].faqs[faqIndex - 1], blocks[selectedBlock].faqs[faqIndex]] = [blocks[selectedBlock].faqs[faqIndex], blocks[selectedBlock].faqs[faqIndex - 1]];
+                    syncAndRender(blocks);
+                }],
+                ['Down', () => {
+                    const blocks = parseBlocks();
+                    if (faqIndex >= blocks[selectedBlock].faqs.length - 1) return;
+                    [blocks[selectedBlock].faqs[faqIndex + 1], blocks[selectedBlock].faqs[faqIndex]] = [blocks[selectedBlock].faqs[faqIndex], blocks[selectedBlock].faqs[faqIndex + 1]];
+                    syncAndRender(blocks);
+                }],
+                ['Delete', () => {
+                    const blocks = parseBlocks();
+                    blocks[selectedBlock].faqs.splice(faqIndex, 1);
+                    syncAndRender(blocks);
+                }],
+            ].forEach(([label, handler]) => {
+                const button = createEl('button', `cms-icon-button ${label === 'Delete' ? 'danger' : ''}`, label);
+                button.type = 'button';
+                button.addEventListener('click', handler);
+                faqControls.append(button);
+            });
+            faqHead.append(faqControls);
+            faqCard.append(faqHead);
+
+            Object.entries(locales).forEach(([locale, localeLabel]) => {
+                faqCard.append(field(`${localeLabel} question`, getLocalized(faq.question, locale), (value) => {
+                    const blocks = parseBlocks();
+                    blocks[selectedBlock].faqs ??= [];
+                    blocks[selectedBlock].faqs[faqIndex] ??= {};
+                    blocks[selectedBlock].faqs[faqIndex].question ??= {};
+                    blocks[selectedBlock].faqs[faqIndex].question[locale] = value;
+                    writeBlocks(blocks);
+                    renderBlockPreview(blocks[selectedBlock]);
+                }));
+                faqCard.append(field(`${localeLabel} answer`, getLocalized(faq.answer, locale), (value) => {
+                    const blocks = parseBlocks();
+                    blocks[selectedBlock].faqs ??= [];
+                    blocks[selectedBlock].faqs[faqIndex] ??= {};
+                    blocks[selectedBlock].faqs[faqIndex].answer ??= {};
+                    blocks[selectedBlock].faqs[faqIndex].answer[locale] = value;
+                    writeBlocks(blocks);
+                    renderBlockPreview(blocks[selectedBlock]);
+                }, { wide: true, multiline: true, rows: 3 }));
+            });
+
+            card.append(faqCard);
+        });
+
+        container.append(card);
+    };
+
+    const renderContactEditor = (container, block) => {
+        if (block.type !== 'contact') {
+            return;
+        }
+
+        const imageCard = createEl('div', 'cms-subeditor');
+        const imageHead = createEl('div', 'cms-subeditor-head');
+        imageHead.append(createEl('h4', '', 'Contact images'));
+        imageCard.append(imageHead);
+
+        [
+            ['Left image URL', 'left_image'],
+            ['Right image URL', 'right_image'],
+        ].forEach(([labelText, key]) => {
+            const imageField = field(labelText, block[key] || '', (value) => {
+                const blocks = parseBlocks();
+                blocks[selectedBlock][key] = value.trim();
+                writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
+            }, { wide: true, placeholder: 'https://...', onChange: renderBlocks });
+            imageField.append(imageUploadControl({
+                onUploaded: ([url]) => {
+                    const blocks = parseBlocks();
+                    blocks[selectedBlock][key] = url;
+                    syncAndRender(blocks);
+                },
+            }));
+            imageCard.append(imageField);
+        });
+        container.append(imageCard);
+
+        const contactCard = createEl('div', 'cms-subeditor');
+        const contactHead = createEl('div', 'cms-subeditor-head');
+        contactHead.append(createEl('h4', '', 'Contact links'));
+        const addContact = createEl('button', 'button ghost', 'Add link');
+        addContact.type = 'button';
+        addContact.addEventListener('click', () => {
+            const blocks = parseBlocks();
+            blocks[selectedBlock].contact_items ??= defaultContactItems();
+            blocks[selectedBlock].contact_items.push({ label: { en: '' }, text: { en: 'New link' }, url: '#' });
+            syncAndRender(blocks);
+        });
+        contactHead.append(addContact);
+        contactCard.append(contactHead);
+
+        (block.contact_items || defaultContactItems()).forEach((item, itemIndex) => {
+            const row = createEl('div', 'cms-action-row');
+            const rowHead = createEl('div', 'cms-subeditor-head');
+            rowHead.append(createEl('h4', '', `Contact link ${itemIndex + 1}`));
+            const remove = createEl('button', 'cms-icon-button danger', 'Delete');
+            remove.type = 'button';
+            remove.addEventListener('click', () => {
+                const blocks = parseBlocks();
+                blocks[selectedBlock].contact_items ??= defaultContactItems();
+                blocks[selectedBlock].contact_items.splice(itemIndex, 1);
+                syncAndRender(blocks);
+            });
+            rowHead.append(remove);
+            row.append(rowHead);
+
+            Object.entries(locales).forEach(([locale, localeLabel]) => {
+                row.append(field(`${localeLabel} heading`, getLocalized(item.label, locale), (value) => {
+                    const blocks = parseBlocks();
+                    blocks[selectedBlock].contact_items ??= defaultContactItems();
+                    blocks[selectedBlock].contact_items[itemIndex].label ??= {};
+                    blocks[selectedBlock].contact_items[itemIndex].label[locale] = value;
+                    writeBlocks(blocks);
+                    renderBlockPreview(blocks[selectedBlock]);
+                }));
+                row.append(field(`${localeLabel} link text`, getLocalized(item.text, locale), (value) => {
+                    const blocks = parseBlocks();
+                    blocks[selectedBlock].contact_items ??= defaultContactItems();
+                    blocks[selectedBlock].contact_items[itemIndex].text ??= {};
+                    blocks[selectedBlock].contact_items[itemIndex].text[locale] = value;
+                    writeBlocks(blocks);
+                    renderBlockPreview(blocks[selectedBlock]);
+                }));
+            });
+
+            row.append(field('URL', item.url || '', (value) => {
+                const blocks = parseBlocks();
+                blocks[selectedBlock].contact_items ??= defaultContactItems();
+                blocks[selectedBlock].contact_items[itemIndex].url = value;
+                writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
+            }, { wide: true, placeholder: 'mailto:info@example.com' }));
+            contactCard.append(row);
+        });
+        container.append(contactCard);
+
+        const socialCard = createEl('div', 'cms-subeditor');
+        const socialHead = createEl('div', 'cms-subeditor-head');
+        socialHead.append(createEl('h4', '', 'Social links'));
+        const addSocial = createEl('button', 'button ghost', 'Add social');
+        addSocial.type = 'button';
+        addSocial.addEventListener('click', () => {
+            const blocks = parseBlocks();
+            blocks[selectedBlock].social_links ??= defaultSocialLinks();
+            blocks[selectedBlock].social_links.push({ icon: '•', label: 'Social', url: '#' });
+            syncAndRender(blocks);
+        });
+        socialHead.append(addSocial);
+        socialCard.append(socialHead);
+
+        Object.entries(locales).forEach(([locale, localeLabel]) => {
+            socialCard.append(field(`${localeLabel} social heading`, getLocalized(block.social_heading, locale), (value) => {
+                const blocks = parseBlocks();
+                blocks[selectedBlock].social_heading ??= {};
+                blocks[selectedBlock].social_heading[locale] = value;
                 writeBlocks(blocks);
                 renderBlockPreview(blocks[selectedBlock]);
             }));
         });
 
-        card.append(field('URL', action.url || '', (value) => {
-            const blocks = parseBlocks();
-            blocks[selectedBlock].actions ??= [{}];
-            blocks[selectedBlock].actions[0].url = value;
-            writeBlocks(blocks);
-            renderBlockPreview(blocks[selectedBlock]);
-        }, { placeholder: '/en/contact' }));
-        container.append(card);
+        (block.social_links || defaultSocialLinks()).forEach((social, socialIndex) => {
+            const row = createEl('div', 'cms-action-row');
+            row.append(field('Icon text', social.icon || '', (value) => {
+                const blocks = parseBlocks();
+                blocks[selectedBlock].social_links ??= defaultSocialLinks();
+                blocks[selectedBlock].social_links[socialIndex].icon = value;
+                writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
+            }));
+            row.append(field('Accessible label', social.label || '', (value) => {
+                const blocks = parseBlocks();
+                blocks[selectedBlock].social_links ??= defaultSocialLinks();
+                blocks[selectedBlock].social_links[socialIndex].label = value;
+                writeBlocks(blocks);
+            }));
+            row.append(field('URL', social.url || '', (value) => {
+                const blocks = parseBlocks();
+                blocks[selectedBlock].social_links ??= defaultSocialLinks();
+                blocks[selectedBlock].social_links[socialIndex].url = value;
+                writeBlocks(blocks);
+                renderBlockPreview(blocks[selectedBlock]);
+            }, { wide: true, placeholder: 'https://...' }));
+            const remove = createEl('button', 'cms-icon-button danger', 'Delete social');
+            remove.type = 'button';
+            remove.addEventListener('click', () => {
+                const blocks = parseBlocks();
+                blocks[selectedBlock].social_links ??= defaultSocialLinks();
+                blocks[selectedBlock].social_links.splice(socialIndex, 1);
+                syncAndRender(blocks);
+            });
+            row.append(remove);
+            socialCard.append(row);
+        });
+        container.append(socialCard);
     };
 
     const renderProductsEditor = (container, block) => {
@@ -886,12 +1414,13 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 heading: getLocalized(currentBlock?.heading, 'en').trim(),
                 body: getLocalized(currentBlock?.body, 'en').trim(),
                 footer: getLocalized(currentBlock?.footer, 'en').trim(),
+                items: listToText(getLocalizedList(currentBlock, 'items', 'en')).trim(),
             };
             const hasFields = Object.values(fields).some(Boolean);
             const targetLocales = Object.keys(locales).filter((locale) => locale !== 'en');
 
             if (!hasFields) {
-                translateStatus.textContent = 'Add English heading, body, or footer first';
+                translateStatus.textContent = 'Add English heading, body, footer, or selection list first';
                 return;
             }
 
@@ -917,6 +1446,10 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                             setLocalized(latest[selectedBlock], key, locale, translatedFields[key]);
                         }
                     });
+
+                    if (fields.items && typeof translatedFields.items === 'string') {
+                        setLocalizedList(latest[selectedBlock], 'items', locale, translatedFields.items);
+                    }
                 });
 
                 writeBlocks(latest);
@@ -935,6 +1468,9 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         renderLocaleFields(formGrid, block, 'heading', 'heading');
         renderLocaleFields(formGrid, block, 'body', 'body', { wide: true, multiline: true, rows: 6 });
         renderLocaleFields(formGrid, block, 'footer', 'footer', { wide: true, multiline: true, rows: 3 });
+        renderItemsEditor(formGrid, block);
+        renderFaqEditor(formGrid, block);
+        renderContactEditor(formGrid, block);
         renderImagesEditor(formGrid, block);
         renderActionsEditor(formGrid, block);
         renderProductsEditor(formGrid, block);

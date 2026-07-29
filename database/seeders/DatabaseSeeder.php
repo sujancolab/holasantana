@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
             ['home-rental', 'Rent our holiday home', 'Alquila nuestra casa vacacional', 'Rent our holiday home', 'Explore available holiday homes and plan a comfortable stay in the islands.', '/home'],
             ['about-3', 'About', 'Sobre nosotros', 'About Hola Santana', 'A local team helping homeowners and travelers with practical, personal service.', '/about-3'],
             ['contact', 'Contact', 'Contacto', 'Contact Hola Santana', 'Send an enquiry and the team will help with the right next step.', '/contact'],
-            ['faq', 'FAQ', 'FAQ', 'Submit your order / query', 'Send your Santana Prime service request with your preferred date, time, and contact method.', '/faq'],
+            ['faq', 'FAQ', 'FAQ', 'Frequently asked questions', 'Find quick answers about Santana Prime property care, cleaning, key holding, and holiday rental management.', '/faq'],
             ['blog', 'Blog', 'Blog', 'Blog', 'Guides, updates, and notes for holiday rentals, property owners, and guests.', '/blog'],
         ];
 
@@ -78,7 +78,7 @@ class DatabaseSeeder extends Seeder
                 $isHolidayRental => 'Welcome to the Holiday Home Santana',
                 $isAbout => 'About Santana Prime - Home Care and Tourist Rental Management Service',
                 $isContact => 'Santana Prime - Home care and Tourist rental management services',
-                $isFaq => 'Submit your order / query',
+                $isFaq => 'Frequently asked questions',
                 $isBlog => 'All Posts',
                 default => $hero,
             };
@@ -91,7 +91,7 @@ class DatabaseSeeder extends Seeder
                 $isHolidayRental => 'Your ideal retreat on the Costa Blanca in Torrevieja',
                 $isAbout => 'Santana Prime provides professional home management and holiday rental services in Torrevieja.',
                 $isContact => 'Experience in short-term rental management and Airbnb services',
-                $isFaq => 'Tell us what you need and our team will contact you.',
+                $isFaq => 'Find quick answers about Santana Prime property care, cleaning, key holding, and holiday rental management.',
                 $isBlog => 'All Posts',
                 default => $subtitle,
             };
@@ -684,24 +684,34 @@ class DatabaseSeeder extends Seeder
     {
         return [
             [
-                'type' => 'faq_order_form',
-                'heading' => ['en' => 'Submit your order / query', 'es' => 'Envia tu pedido / consulta'],
-                'services' => [
-                    'Holiday rental cleaning',
-                    'Private home cleaning',
-                    'Key holding',
-                    'Laundry service',
-                    'Property inspection',
-                    'Airport transfer',
-                    'Other',
+                'type' => 'faq_section',
+                'heading' => ['en' => 'Frequently asked questions', 'es' => 'Preguntas frecuentes'],
+                'body' => [
+                    'en' => 'Answers to the questions owners and guests ask us most often.',
+                    'es' => 'Respuestas a las preguntas que propietarios y huespedes nos hacen con mas frecuencia.',
                 ],
-                'contact_methods' => ['Email', 'WhatsApp', 'Telephone'],
-            ],
-            [
-                'type' => 'contact',
-                'heading' => ['en' => "Cleanliness isn't just what we do-it's who we are.\nPassion, precision, and professionalism in every detail.", 'es' => 'La limpieza no es solo lo que hacemos: es lo que somos.'],
-                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
-                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                'faqs' => [
+                    [
+                        'question' => ['en' => 'What areas do you cover?', 'es' => 'En que zonas trabajais?'],
+                        'answer' => ['en' => 'We work in Torrevieja, Orihuela Costa, La Mata, Guardamar, Punta Prima, Playa Flamenca, Cabo Roig, Los Altos, and nearby Costa Blanca areas.', 'es' => 'Trabajamos en Torrevieja, Orihuela Costa, La Mata, Guardamar, Punta Prima, Playa Flamenca, Cabo Roig, Los Altos y zonas cercanas de la Costa Blanca.'],
+                    ],
+                    [
+                        'question' => ['en' => 'Can you manage a property while I am away?', 'es' => 'Podeis gestionar una propiedad mientras estoy fuera?'],
+                        'answer' => ['en' => 'Yes. We offer key holding, regular inspections, maintenance coordination, cleaning, laundry, and owner updates so the property stays ready and cared for.', 'es' => 'Si. Ofrecemos custodia de llaves, inspecciones periodicas, coordinacion de mantenimiento, limpieza, lavanderia y actualizaciones para propietarios.'],
+                    ],
+                    [
+                        'question' => ['en' => 'Do you handle holiday rental guest support?', 'es' => 'Gestionais la atencion a huespedes de alquiler vacacional?'],
+                        'answer' => ['en' => 'Yes. We can help with guest communication, check-in support, cleaning between stays, restocking, and property preparation.', 'es' => 'Si. Podemos ayudar con comunicacion con huespedes, apoyo en check-in, limpieza entre estancias, reposicion y preparacion de la propiedad.'],
+                    ],
+                    [
+                        'question' => ['en' => 'Can I request only cleaning or laundry?', 'es' => 'Puedo solicitar solo limpieza o lavanderia?'],
+                        'answer' => ['en' => 'Yes. Services can be ordered individually or combined into a regular management plan.', 'es' => 'Si. Los servicios pueden contratarse individualmente o combinarse en un plan de gestion regular.'],
+                    ],
+                    [
+                        'question' => ['en' => 'How do I request a quote?', 'es' => 'Como solicito un presupuesto?'],
+                        'answer' => ['en' => 'Use the enquiry form on this page or contact us by WhatsApp. Tell us the property type, location, and service needed, and we will reply with the next steps.', 'es' => 'Use el formulario de consulta de esta pagina o contactenos por WhatsApp. Indiquenos el tipo de propiedad, ubicacion y servicio necesario, y responderemos con los siguientes pasos.'],
+                    ],
+                ],
             ],
         ];
     }

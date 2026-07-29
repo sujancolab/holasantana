@@ -122,16 +122,17 @@ PROMPT;
             'fields.heading' => ['nullable', 'string'],
             'fields.body' => ['nullable', 'string'],
             'fields.footer' => ['nullable', 'string'],
+            'fields.items' => ['nullable', 'string'],
         ]);
 
         $fields = collect($validated['fields'])
-            ->only(['heading', 'body', 'footer'])
+            ->only(['heading', 'body', 'footer', 'items'])
             ->filter(fn (?string $value) => filled($value))
             ->all();
 
         if ($fields === []) {
             return response()->json([
-                'message' => 'Add English heading, body, or footer text first.',
+                'message' => 'Add English heading, body, footer, or selection list text first.',
             ], 422);
         }
 
@@ -171,11 +172,12 @@ English source fields JSON object:
 Return only valid JSON, with this exact shape:
 {
   "translations": {
-    "locale_code": {
-      "heading": "translated heading if source heading exists",
-      "body": "translated body if source body exists",
-      "footer": "translated footer if source footer exists"
-    }
+      "locale_code": {
+        "heading": "translated heading if source heading exists",
+        "body": "translated body if source body exists",
+        "footer": "translated footer if source footer exists",
+        "items": "translated selection list if source items exists, preserving one item per line"
+      }
   }
 }
 

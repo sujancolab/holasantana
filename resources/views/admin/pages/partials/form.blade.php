@@ -77,6 +77,7 @@
                 <div class="cms-block-builder">
                     <aside class="cms-block-sidebar">
                         <button type="button" data-cms-add-block="text_section">Add text block</button>
+                        <button type="button" data-cms-add-block="faq_section">Add FAQ</button>
                         <button type="button" data-cms-add-block="gallery">Add gallery</button>
                         <button type="button" data-cms-add-block="service_section">Add service</button>
                         <button type="button" data-cms-add-block="category_products">Add products</button>
