@@ -13,7 +13,7 @@ document.querySelectorAll('[data-mobile-menu-toggle]').forEach((toggle) => {
         toggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    menu.querySelectorAll('a').forEach((link) => {
+    menu.querySelectorAll('a, button').forEach((link) => {
         link.addEventListener('click', () => {
             header.classList.remove('is-menu-open');
             toggle.setAttribute('aria-expanded', 'false');
@@ -69,6 +69,42 @@ document.querySelectorAll('[data-service-order-modal]').forEach((modal) => {
     });
 
     modal.querySelectorAll('[data-service-order-close]').forEach((button) => {
+        button.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+            closeModal();
+        }
+    });
+});
+
+document.querySelectorAll('[data-submit-query-modal]').forEach((modal) => {
+    const openButtons = document.querySelectorAll('[data-submit-query-open]');
+
+    const openModal = () => {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        modal.querySelector('input[name="first_name"]')?.focus();
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+    };
+
+    openButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.prime-header.is-menu-open, .site-header.is-menu-open').forEach((header) => {
+                header.classList.remove('is-menu-open');
+                header.querySelector('[data-mobile-menu-toggle]')?.setAttribute('aria-expanded', 'false');
+            });
+
+            openModal();
+        });
+    });
+
+    modal.querySelectorAll('[data-submit-query-close]').forEach((button) => {
         button.addEventListener('click', closeModal);
     });
 
@@ -173,6 +209,20 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 },
             ],
         },
+        faq_order_form: {
+            type: 'faq_order_form',
+            heading: { en: 'Submit your order / query', es: 'Envia tu pedido / consulta' },
+            services: [
+                'Holiday rental cleaning',
+                'Private home cleaning',
+                'Key holding',
+                'Laundry service',
+                'Property inspection',
+                'Airport transfer',
+                'Other',
+            ],
+            contact_methods: ['Email', 'WhatsApp', 'Telephone'],
+        },
         gallery: {
             type: 'gallery',
             images: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80'],
@@ -200,6 +250,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         text_section: 'Text section',
         panel: 'Panel',
         faq_section: 'FAQ',
+        faq_order_form: 'Order/query form',
         open_intro: 'Intro',
         service_section: 'Service section',
         gallery: 'Gallery',
@@ -701,9 +752,20 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 const card = createEl('article', 'prime-product-card');
                 const media = createEl('div', 'prime-product-image');
                 if (product.image) media.append(imageEl(product.image));
+                const price = createEl('p', 'prime-product-price');
+                if (product.sale_price && product.price) {
+                    price.append(createEl('span', 'prime-price-old', product.price));
+                }
+                if (product.sale_price || product.price) {
+                    price.append(createEl('span', '', product.sale_price || product.price));
+                }
                 const button = createEl('button', '', 'Order It');
                 button.type = 'button';
-                card.append(media, createEl('h2', '', product.name || 'Product'), button);
+                card.append(media, createEl('h2', '', product.name || 'Product'));
+                if (price.childNodes.length) {
+                    card.append(price);
+                }
+                card.append(button);
                 grid.append(card);
             });
             section.append(grid);
@@ -733,6 +795,24 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 list.append(item);
             });
             section.append(list);
+        } else if (type === 'faq_order_form') {
+            section = createEl('section', 'faq-order-section');
+            if (heading) section.append(createEl('h1', '', heading));
+            const form = createEl('form', 'faq-order-form');
+            [
+                'First name *',
+                'Last name *',
+                'Telephone number *',
+                'Email',
+                'Property address',
+                'Ordering date',
+                'Service area',
+                'Service date',
+                'Approximate service time',
+                'Your message *',
+            ].forEach((label) => form.append(createEl('label', '', label)));
+            form.append(createEl('button', '', 'Submit query'));
+            section.append(form);
         } else if (type === 'contact') {
             section = createEl('section', 'prime-contact');
             if (block.left_image) section.append(imageEl(block.left_image));

@@ -12,6 +12,7 @@
         <nav>
             <a href="{{ route('admin.dashboard') }}" @class(['active' => request()->routeIs('admin.dashboard')])>Dashboard</a>
             <a href="{{ route('admin.pages.index') }}" @class(['active' => request()->routeIs('admin.pages.*')])>Page Management</a>
+            <a href="{{ route('admin.footer-settings.edit') }}" @class(['active' => request()->routeIs('admin.footer-settings.*')])>Footer Settings</a>
             <a href="{{ route('admin.languages.index') }}" @class(['active' => request()->routeIs('admin.languages.*')])>Languages</a>
             <a href="{{ route('admin.owners.index') }}" @class(['active' => request()->routeIs('admin.owners.*')])>Owners</a>
             <a href="{{ route('admin.properties.index') }}" @class(['active' => request()->routeIs('admin.properties.*')])>Properties</a>

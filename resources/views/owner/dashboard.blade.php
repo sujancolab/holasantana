@@ -27,6 +27,9 @@
                 <button class="button ghost" type="submit">Logout</button>
             </form>
         </header>
+        @if (session('status'))
+            <div class="notice">{{ session('status') }}</div>
+        @endif
         <section class="panel" id="properties">
             <div class="panel-head"><h2>Property List</h2></div>
             <div class="table-wrap">
@@ -51,15 +54,26 @@
                             <td>{{ $property->remarks }}</td>
                         </tr>
                     @endforeach
+                    @if ($properties->isEmpty())
+                        <tr>
+                            <td colspan="6">No properties assigned to this owner yet. Admin must assign a property before reservations can be created.</td>
+                        </tr>
+                    @endif
                     </tbody>
                 </table>
             </div>
         </section>
         <section class="panel" id="reservations">
-            <div class="panel-head"><h2>Reservation List</h2></div>
+            <div class="panel-head">
+                <h2>Reservation List</h2>
+                <a class="button" href="{{ route('owner.reservations.create') }}">Add reservation</a>
+            </div>
+            @if ($properties->isEmpty())
+                <div class="notice">Reservation actions are visible here, but this owner needs at least one assigned property before adding a reservation.</div>
+            @endif
             <div class="table-wrap">
                 <table>
-                    <thead><tr><th>Property</th><th>Check-in</th><th>Check-out</th><th>Guests</th><th>Guest</th><th>Telephone</th><th>Remarks</th></tr></thead>
+                    <thead><tr><th>Property</th><th>Check-in</th><th>Check-out</th><th>Guests</th><th>Guest</th><th>Telephone</th><th>Remarks</th><th></th></tr></thead>
                     <tbody>
                     @foreach ($reservations as $reservation)
                         <tr>
@@ -70,8 +84,14 @@
                             <td>{{ $reservation->guest_name }}</td>
                             <td>{{ $reservation->telephone }}</td>
                             <td>{{ $reservation->remarks }}</td>
+                            <td><a href="{{ route('owner.reservations.edit', $reservation) }}">Edit</a></td>
                         </tr>
                     @endforeach
+                    @if ($reservations->isEmpty())
+                        <tr>
+                            <td colspan="8">No reservations yet. After a reservation is created, the Edit link will appear in this table.</td>
+                        </tr>
+                    @endif
                     </tbody>
                 </table>
             </div>

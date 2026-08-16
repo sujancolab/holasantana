@@ -12,6 +12,60 @@
     $languageFlags = ['en' => '🇬🇧', 'es' => '🇪🇸', 'de' => '🇩🇪', 'sv' => '🇸🇪', 'fi' => '🇫🇮'];
     $languageNames = ['en' => 'English', 'es' => 'Spanish', 'de' => 'German', 'sv' => 'Swedish', 'fi' => 'Finnish'];
     $languageLabels = ['en' => 'English (US)', 'es' => 'Spanish', 'de' => 'German', 'sv' => 'Swedish', 'fi' => 'Finnish'];
+    $submitQueryLabels = [
+        'en' => 'Submit query',
+        'es' => 'Enviar consulta',
+        'de' => 'Anfrage senden',
+        'sv' => 'Skicka fraga',
+        'fi' => 'Laheta kysely',
+    ];
+    $queryFormLabels = [
+        'en' => [
+            'heading' => 'Submit your order / query',
+            'intro' => 'Share the service details, preferred time, and best contact method. Santana Prime will follow up directly.',
+            'first_name' => 'First name',
+            'last_name' => 'Last name',
+            'telephone' => 'Telephone number',
+            'email' => 'Email',
+            'address' => 'Property address',
+            'order_date' => 'Ordering date',
+            'service_area' => 'Service area',
+            'service_date' => 'Service date',
+            'service_time' => 'Approximate service time',
+            'contact_through' => 'Prefers to contact through',
+            'message' => 'Your Message',
+            'submit' => 'Submit query',
+            'close' => 'Close form',
+        ],
+        'es' => [
+            'heading' => 'Envia tu pedido / consulta',
+            'intro' => 'Comparte los detalles del servicio, hora preferida y mejor metodo de contacto. Santana Prime respondera directamente.',
+            'first_name' => 'Nombre',
+            'last_name' => 'Apellido',
+            'telephone' => 'Numero de telefono',
+            'email' => 'Correo electronico',
+            'address' => 'Direccion de la propiedad',
+            'order_date' => 'Fecha del pedido',
+            'service_area' => 'Area de servicio',
+            'service_date' => 'Fecha del servicio',
+            'service_time' => 'Hora aproximada del servicio',
+            'contact_through' => 'Prefiere contactar a traves de',
+            'message' => 'Su mensaje',
+            'submit' => 'Enviar consulta',
+            'close' => 'Cerrar formulario',
+        ],
+    ];
+    $queryLabels = $queryFormLabels[$locale] ?? $queryFormLabels['en'];
+    $queryServices = [
+        'Holiday rental cleaning',
+        'Private home cleaning',
+        'Key holding',
+        'Laundry service',
+        'Property inspection',
+        'Airport transfer',
+        'Other',
+    ];
+    $queryContactMethods = ['Email', 'WhatsApp', 'Telephone'];
 @endphp
 <body class="{{ $isPrimeTemplate ? 'prime-site' : 'site' }} page-{{ str_replace(['/', '_'], '-', $page->slug) }}">
     @if ($isPrimeTemplate)
@@ -31,6 +85,9 @@
                 </button>
                 <nav class="prime-nav" id="prime-navigation" data-mobile-menu>
                     @foreach ($menuItems as $item)
+                        @if ($item->page?->slug === 'about-3')
+                            <button class="prime-nav-query" type="button" data-submit-query-open>{{ $submitQueryLabels[$locale] ?? $submitQueryLabels['en'] }}</button>
+                        @endif
                         <a @class(['active' => $item->page?->slug === $page->slug]) href="{{ $item->href($locale) }}" target="{{ $item->target }}">{{ $item->localizedLabel($locale) }}</a>
                     @endforeach
                 </nav>
@@ -57,8 +114,14 @@
         @if (session('service_enquiry_status'))
             <div class="service-enquiry-toast" role="status">{{ session('service_enquiry_status') }}</div>
         @endif
+        @if (session('submit_query_status'))
+            <div class="service-enquiry-toast" role="status">{{ session('submit_query_status') }}</div>
+        @endif
         @if ($errors->serviceEnquiry->any())
             <div class="service-enquiry-toast is-error" role="alert">Please check the order enquiry form and try again.</div>
+        @endif
+        @if ($errors->submitQuery->any())
+            <div class="service-enquiry-toast is-error" role="alert">Please check the submit query form and try again.</div>
         @endif
         <main class="prime-main">
             @php
@@ -105,6 +168,14 @@
                                         <img src="{{ data_get($product, 'image') }}" alt="{{ data_get($product, 'name') }}" loading="lazy" decoding="async">
                                     </div>
                                     <h2>{{ data_get($product, 'name') }}</h2>
+                                    @if (filled(data_get($product, 'price')) || filled(data_get($product, 'sale_price')))
+                                        <p class="prime-product-price">
+                                            @if (filled(data_get($product, 'sale_price')) && filled(data_get($product, 'price')))
+                                                <span class="prime-price-old">{{ data_get($product, 'price') }}</span>
+                                            @endif
+                                            <span>{{ data_get($product, 'sale_price') ?: data_get($product, 'price') }}</span>
+                                        </p>
+                                    @endif
                                     <button type="button" data-order-service="{{ data_get($product, 'name') }}">Order It</button>
                                 </article>
                             @endforeach
@@ -362,34 +433,68 @@
                         </div>
                     </section>
                 @elseif ($type === 'faq_order_form')
-                    <section class="faq-order-section">
+                    @php
+                        $formLabels = [
+                            'en' => [
+                                'first_name' => 'First name',
+                                'last_name' => 'Last name',
+                                'telephone' => 'Telephone number',
+                                'email' => 'Email',
+                                'address' => 'Property address',
+                                'order_date' => 'Ordering date',
+                                'service_area' => 'Service area',
+                                'service_date' => 'Service date',
+                                'service_time' => 'Approximate service time',
+                                'contact_through' => 'Prefers to contact through',
+                                'message' => 'Your Message',
+                                'submit' => 'Submit query',
+                            ],
+                            'es' => [
+                                'first_name' => 'Nombre',
+                                'last_name' => 'Apellido',
+                                'telephone' => 'Numero de telefono',
+                                'email' => 'Correo electronico',
+                                'address' => 'Direccion de la propiedad',
+                                'order_date' => 'Fecha del pedido',
+                                'service_area' => 'Area de servicio',
+                                'service_date' => 'Fecha del servicio',
+                                'service_time' => 'Hora aproximada del servicio',
+                                'contact_through' => 'Prefiere contactar a traves de',
+                                'message' => 'Su mensaje',
+                                'submit' => 'Enviar consulta',
+                            ],
+                        ];
+                        $labels = $formLabels[$locale] ?? $formLabels['en'];
+                    @endphp
+                    <section class="faq-order-section" id="submit-query">
                         <h1>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en')) }}</h1>
-                        <form class="faq-order-form" action="mailto:spm3182@gmail.com" method="post" enctype="text/plain">
-                            <label>Nombre *<input type="text" name="nombre" required></label>
-                            <label>Apellido *<input type="text" name="apellido" required></label>
-                            <label>Número de teléfono *<input type="tel" name="telefono" placeholder="🇪🇸" required></label>
-                            <label>Correo electrónico<input type="email" name="email"></label>
-                            <label>Dirección de la propiedad<input type="text" name="direccion"></label>
-                            <label>Fecha del pedido<input type="date" name="fecha_pedido"></label>
+                        <form class="faq-order-form" action="{{ route('submit-query.store') }}" method="post">
+                            @csrf
+                            <label>{{ $labels['first_name'] }} *<input type="text" name="first_name" required></label>
+                            <label>{{ $labels['last_name'] }} *<input type="text" name="last_name" required></label>
+                            <label>{{ $labels['telephone'] }} *<input type="tel" name="telephone" required></label>
+                            <label>{{ $labels['email'] }}<input type="email" name="email"></label>
+                            <label>{{ $labels['address'] }}<input type="text" name="property_address"></label>
+                            <label>{{ $labels['order_date'] }}<input type="date" name="ordering_date"></label>
                             <label>
-                                Area de servicio
-                                <select name="area_servicio">
+                                {{ $labels['service_area'] }}
+                                <select name="service_area">
                                     <option value=""></option>
                                     @foreach (data_get($block, 'services', []) as $service)
                                         <option>{{ $service }}</option>
                                     @endforeach
                                 </select>
                             </label>
-                            <label>Fecha del servicio<input type="date" name="fecha_servicio"></label>
-                            <label>Hora de iniciar el servicio<input type="time" name="hora_servicio"></label>
+                            <label>{{ $labels['service_date'] }}<input type="date" name="service_date"></label>
+                            <label>{{ $labels['service_time'] }}<input type="time" name="service_time"></label>
                             <fieldset>
-                                <legend>Prefiere contactar a través de</legend>
+                                <legend>{{ $labels['contact_through'] }}</legend>
                                 @foreach (data_get($block, 'contact_methods', []) as $method)
-                                    <label><input type="radio" name="contacto" value="{{ $method }}"> {{ $method }}</label>
+                                    <label><input type="radio" name="contact_method" value="{{ $method }}"> {{ $method }}</label>
                                 @endforeach
                             </fieldset>
-                            <label>Su mensaje *<textarea name="mensaje" rows="5" required></textarea></label>
-                            <button type="submit">Enviar</button>
+                            <label>{{ $labels['message'] }} *<textarea name="message" rows="5" required></textarea></label>
+                            <button type="submit">{{ $labels['submit'] }}</button>
                         </form>
                     </section>
                 @elseif ($type === 'contact')
@@ -465,13 +570,59 @@
         <footer class="prime-footer">
             <div>
                 <strong>Santana Prime</strong>
-                <span>Home care and holiday rental management in Torrevieja.</span>
+                <span>{{ $footerSettings['description'] }}</span>
             </div>
             <div>
-                <a href="mailto:info@holasantana.com">info@holasantana.com</a>
-                <a href="tel:+34624229511">+34 624 229 511</a>
+                <a href="mailto:{{ $footerSettings['email'] }}">{{ $footerSettings['email'] }}</a>
+                <a href="tel:{{ $footerSettings['phone_href'] }}">{{ $footerSettings['phone'] }}</a>
             </div>
         </footer>
+        <div class="submit-query-modal @if ($errors->submitQuery->any()) is-open @endif" data-submit-query-modal aria-hidden="{{ $errors->submitQuery->any() ? 'false' : 'true' }}">
+            <div class="submit-query-backdrop" data-submit-query-close></div>
+            <form class="submit-query-dialog" action="{{ route('submit-query.store') }}" method="post">
+                @csrf
+                <div class="submit-query-head">
+                    <div>
+                        <span>Service request</span>
+                        <h2>{{ $queryLabels['heading'] }}</h2>
+                        <p>{{ $queryLabels['intro'] }}</p>
+                    </div>
+                    <button type="button" aria-label="{{ $queryLabels['close'] }}" data-submit-query-close>×</button>
+                </div>
+                <div class="submit-query-grid">
+                    <label>{{ $queryLabels['first_name'] }} *<input type="text" name="first_name" required></label>
+                    <label>{{ $queryLabels['last_name'] }} *<input type="text" name="last_name" required></label>
+                    <label>{{ $queryLabels['telephone'] }} *<input type="tel" name="telephone" required></label>
+                    <label>{{ $queryLabels['email'] }}<input type="email" name="email"></label>
+                    <label class="wide">{{ $queryLabels['address'] }}<input type="text" name="property_address"></label>
+                    <label>{{ $queryLabels['order_date'] }}<input type="date" name="ordering_date"></label>
+                    <label>
+                        {{ $queryLabels['service_area'] }}
+                        <select name="service_area">
+                            <option value=""></option>
+                            @foreach ($queryServices as $service)
+                                <option>{{ $service }}</option>
+                            @endforeach
+                        </select>
+                    </label>
+                    <label>{{ $queryLabels['service_date'] }}<input type="date" name="service_date"></label>
+                    <label>{{ $queryLabels['service_time'] }}<input type="time" name="service_time"></label>
+                    <fieldset class="wide">
+                        <legend>{{ $queryLabels['contact_through'] }}</legend>
+                        <div>
+                            @foreach ($queryContactMethods as $method)
+                                <label><input type="radio" name="contact_method" value="{{ $method }}"> {{ $method }}</label>
+                            @endforeach
+                        </div>
+                    </fieldset>
+                    <label class="wide">{{ $queryLabels['message'] }} *<textarea name="message" rows="5" required></textarea></label>
+                </div>
+                <div class="submit-query-actions">
+                    <button type="submit">{{ $queryLabels['submit'] }}</button>
+                    <button type="button" data-submit-query-close>{{ $queryLabels['close'] }}</button>
+                </div>
+            </form>
+        </div>
         <div class="service-order-modal @if ($errors->serviceEnquiry->any()) is-open @endif" data-service-order-modal aria-hidden="{{ $errors->serviceEnquiry->any() ? 'false' : 'true' }}">
             <div class="service-order-backdrop" data-service-order-close></div>
             <form class="service-order-dialog" method="post" action="{{ route('service-enquiries.store') }}">
@@ -559,7 +710,7 @@
         </main>
         <footer class="site-footer">
             <span>Hola Santana</span>
-            <span>Dynamic CMS foundation powered by Laravel</span>
+            <span>{{ $footerSettings['description'] }}</span>
         </footer>
     @endif
 </body>

@@ -6,6 +6,7 @@ use App\Models\MenuItem;
 use App\Models\Page;
 use App\Models\Language;
 use App\Models\HolidayHome;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -51,6 +52,7 @@ class PublicPageController extends Controller
             'holidayHomes' => $page->slug === 'home-rental'
                 ? HolidayHome::where('is_active', true)->orderBy('sort_order')->orderBy('name')->get()
                 : collect(),
+            'footerSettings' => $this->footerSettings($locale),
             'menuItems' => MenuItem::with('page')
                 ->where('is_active', true)
                 ->orderBy('sort_order')
@@ -87,6 +89,52 @@ class PublicPageController extends Controller
         return back()->with('service_enquiry_status', 'Your service enquiry has been sent.');
     }
 
+    public function storeSubmitQuery(Request $request): RedirectResponse
+    {
+        $data = $request->validateWithBag('submitQuery', [
+            'first_name' => ['required', 'string', 'max:100'],
+            'last_name' => ['required', 'string', 'max:100'],
+            'telephone' => ['required', 'string', 'max:50'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'property_address' => ['nullable', 'string', 'max:255'],
+            'ordering_date' => ['nullable', 'date'],
+            'service_area' => ['nullable', 'string', 'max:255'],
+            'service_date' => ['nullable', 'date'],
+            'service_time' => ['nullable', 'date_format:H:i'],
+            'contact_method' => ['nullable', 'string', 'max:50'],
+            'message' => ['required', 'string', 'max:5000'],
+        ]);
+
+        $message = implode(PHP_EOL, [
+            'New submit query from Hola Santana',
+            '',
+            'First Name: ' . $data['first_name'],
+            'Last Name: ' . $data['last_name'],
+            'Telephone Number: ' . $data['telephone'],
+            'Email Address: ' . ($data['email'] ?? ''),
+            'Property Address: ' . ($data['property_address'] ?? ''),
+            'Ordering Date: ' . ($data['ordering_date'] ?? ''),
+            'Service Area: ' . ($data['service_area'] ?? ''),
+            'Service Date: ' . ($data['service_date'] ?? ''),
+            'Approximate Service Time: ' . ($data['service_time'] ?? ''),
+            'Preferred Contact Method: ' . ($data['contact_method'] ?? ''),
+            '',
+            'Message:',
+            $data['message'],
+        ]);
+
+        Mail::raw($message, function ($mail) use ($data) {
+            $mail->to('spm3182@gmail.com')
+                ->subject('Hola Santana Submit Query: ' . trim($data['first_name'] . ' ' . $data['last_name']));
+
+            if (filled($data['email'] ?? null)) {
+                $mail->replyTo($data['email'], trim($data['first_name'] . ' ' . $data['last_name']));
+            }
+        });
+
+        return back()->with('submit_query_status', 'Your query has been sent.');
+    }
+
     private function pageLocales(Page $page): array
     {
         return array_keys(Language::activeOptions());
@@ -103,5 +151,28 @@ class PublicPageController extends Controller
         }
 
         return Language::defaultCode();
+    }
+
+    private function footerSettings(string $locale): array
+    {
+        $descriptions = json_decode(SiteSetting::getValue('footer_description', '{}') ?: '{}', true);
+
+        if (! is_array($descriptions)) {
+            $descriptions = [];
+        }
+
+        $description = $descriptions[$locale]
+            ?? $descriptions['en']
+            ?? 'Home care and holiday rental management in Torrevieja.';
+        $email = SiteSetting::getValue('footer_email', 'info@holasantana.com') ?: 'info@holasantana.com';
+        $phone = SiteSetting::getValue('footer_phone', '+34 624 229 511') ?: '+34 624 229 511';
+        $phoneHref = preg_replace('/[^\d+]/', '', $phone) ?: $phone;
+
+        return [
+            'description' => $description,
+            'email' => $email,
+            'phone' => $phone,
+            'phone_href' => $phoneHref,
+        ];
     }
 }

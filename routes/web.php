@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FooterSettingController;
 use App\Http\Controllers\Admin\HolidayHomeController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\OwnerController;
@@ -12,14 +13,22 @@ use App\Http\Controllers\Admin\PropertyReservationController;
 use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Owner\AuthController as OwnerAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
+use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
 use App\Http\Controllers\PublicPageController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', fn () => response('ok'));
+Route::get('/clear-cache', function () {
+    Artisan::call('optimize:clear');
+
+    return response('Application cache cleared.');
+})->name('cache.clear');
 
 Route::get('/', [PublicPageController::class, 'home'])->name('home');
 Route::get('/faq', [PublicPageController::class, 'faq'])->name('faq');
 Route::post('/service-enquiries', [PublicPageController::class, 'storeServiceEnquiry'])->name('service-enquiries.store');
+Route::post('/submit-query', [PublicPageController::class, 'storeSubmitQuery'])->name('submit-query.store');
 
 Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.login');
 Route::get('/login', fn () => redirect()->route('admin.login'))->name('login');
@@ -31,10 +40,15 @@ Route::post('/owner/login', [OwnerAuthController::class, 'login'])->name('owner.
 Route::post('/owner/logout', [OwnerAuthController::class, 'logout'])->name('owner.logout');
 Route::middleware('owner')->prefix('owner')->name('owner.')->group(function () {
     Route::get('/dashboard', OwnerDashboardController::class)->name('dashboard');
+    Route::resource('reservations', OwnerReservationController::class)
+        ->except(['index', 'show'])
+        ->parameters(['reservations' => 'reservation']);
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/footer-settings', [FooterSettingController::class, 'edit'])->name('footer-settings.edit');
+    Route::put('/footer-settings', [FooterSettingController::class, 'update'])->name('footer-settings.update');
     Route::post('/media/upload-image', [PageController::class, 'uploadImage'])->name('media.upload-image');
     Route::post('/translations/settings', [TranslationController::class, 'updateSettings'])->name('translations.settings');
     Route::post('/translations/translate', [TranslationController::class, 'translate'])->name('translations.translate');
