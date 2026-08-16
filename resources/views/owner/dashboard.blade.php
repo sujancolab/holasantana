@@ -30,6 +30,19 @@
         @if (session('status'))
             <div class="notice">{{ session('status') }}</div>
         @endif
+        @if (filled($owner->google_activity_list_link) || filled($owner->google_photo_album_link))
+            <section class="panel owner-link-panel">
+                <div class="panel-head"><h2>Owner Links</h2></div>
+                <div class="owner-link-actions">
+                    @if (filled($owner->google_activity_list_link))
+                        <a class="button" href="{{ $owner->google_activity_list_link }}" target="_blank" rel="noopener">Work-sheet</a>
+                    @endif
+                    @if (filled($owner->google_photo_album_link))
+                        <a class="button ghost" href="{{ $owner->google_photo_album_link }}" target="_blank" rel="noopener">Photo Album</a>
+                    @endif
+                </div>
+            </section>
+        @endif
         <section class="panel" id="properties">
             <div class="panel-head"><h2>Property List</h2></div>
             <div class="table-wrap">

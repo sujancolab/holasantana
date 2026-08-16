@@ -12,6 +12,7 @@ class Owner extends Model
         'telephone',
         'email',
         'whatsapp',
+        'google_activity_list_link',
         'google_photo_album_link',
         'owner_user_id',
         'owner_password',

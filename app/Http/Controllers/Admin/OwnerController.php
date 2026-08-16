@@ -57,6 +57,7 @@ class OwnerController extends Controller
             'telephone' => ['nullable', 'string', 'max:50'],
             'email' => ['nullable', 'email', 'max:255'],
             'whatsapp' => ['nullable', 'string', 'max:50'],
+            'google_activity_list_link' => ['nullable', 'url', 'max:500'],
             'google_photo_album_link' => ['nullable', 'url', 'max:500'],
             'owner_user_id' => ['required', 'string', 'max:100', Rule::unique('owners', 'owner_user_id')->ignore($owner)],
             'owner_password' => [$owner ? 'nullable' : 'required', 'string', 'min:8', 'max:255'],

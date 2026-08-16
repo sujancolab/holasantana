@@ -13,6 +13,7 @@
             <label>Telephone Number<input name="telephone" value="{{ old('telephone', $owner->telephone) }}"></label>
             <label>Email Address<input type="email" name="email" value="{{ old('email', $owner->email) }}"></label>
             <label>WhatsApp Number<input name="whatsapp" value="{{ old('whatsapp', $owner->whatsapp) }}"></label>
+            <label class="wide">Google Activity list Link<input type="url" name="google_activity_list_link" value="{{ old('google_activity_list_link', $owner->google_activity_list_link) }}"></label>
             <label class="wide">Google Photo Album Link<input type="url" name="google_photo_album_link" value="{{ old('google_photo_album_link', $owner->google_photo_album_link) }}"></label>
             <label>Owner User ID *<input name="owner_user_id" value="{{ old('owner_user_id', $owner->owner_user_id) }}" required></label>
             <label>Owner Password {{ $owner->exists ? '(leave blank to keep current)' : '*' }}<input type="password" name="owner_password" @required(! $owner->exists)></label>
