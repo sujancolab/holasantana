@@ -24,6 +24,7 @@ class Property extends Model
         'type',
         'other_type',
         'address',
+        'google_photo_link',
         'owner_id',
         'laundry_included',
         'check_in_included',

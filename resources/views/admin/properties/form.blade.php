@@ -27,6 +27,7 @@
                 </select>
             </label>
             <label class="wide">Address<textarea name="address" rows="3">{{ old('address', $property->address) }}</textarea></label>
+            <label class="wide">Google photo link<input type="url" name="google_photo_link" value="{{ old('google_photo_link', $property->google_photo_link) }}"></label>
             @foreach (['laundry_included' => 'Laundry Included', 'check_in_included' => 'Check-in Included', 'cleaning_included' => 'Cleaning Included', 'management_included' => 'Management Included', 'full_service_included' => 'Full Service Included'] as $field => $label)
                 <label class="checkbox"><input type="checkbox" name="{{ $field }}" value="1" @checked(old($field, $property->{$field}))> {{ $label }} (Yes/No)</label>
             @endforeach

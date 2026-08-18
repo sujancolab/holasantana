@@ -66,6 +66,7 @@ class PropertyController extends Controller
             'type' => ['required', Rule::in(Property::TYPES)],
             'other_type' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
+            'google_photo_link' => ['nullable', 'url', 'max:500'],
             'owner_id' => ['required', 'exists:owners,id'],
             'laundry_included' => ['nullable', 'boolean'],
             'check_in_included' => ['nullable', 'boolean'],

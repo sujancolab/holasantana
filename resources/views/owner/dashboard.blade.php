@@ -30,16 +30,11 @@
         @if (session('status'))
             <div class="notice">{{ session('status') }}</div>
         @endif
-        @if (filled($owner->google_activity_list_link) || filled($owner->google_photo_album_link))
+        @if (filled($owner->google_activity_list_link))
             <section class="panel owner-link-panel">
                 <div class="panel-head"><h2>Owner Links</h2></div>
                 <div class="owner-link-actions">
-                    @if (filled($owner->google_activity_list_link))
-                        <a class="button" href="{{ $owner->google_activity_list_link }}" target="_blank" rel="noopener">Work-sheet</a>
-                    @endif
-                    @if (filled($owner->google_photo_album_link))
-                        <a class="button ghost" href="{{ $owner->google_photo_album_link }}" target="_blank" rel="noopener">Photo Album</a>
-                    @endif
+                    <a class="button" href="{{ $owner->google_activity_list_link }}" target="_blank" rel="noopener">Work-sheet</a>
                 </div>
             </section>
         @endif
@@ -47,7 +42,7 @@
             <div class="panel-head"><h2>Property List</h2></div>
             <div class="table-wrap">
                 <table>
-                    <thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Address</th><th>Services</th><th>Remarks</th></tr></thead>
+                    <thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Address</th><th>Google photo link</th><th>Services</th><th>Remarks</th></tr></thead>
                     <tbody>
                     @foreach ($properties as $property)
                         <tr>
@@ -55,6 +50,11 @@
                             <td>{{ $property->name }}</td>
                             <td>{{ $property->type }}</td>
                             <td>{{ $property->address }}</td>
+                            <td>
+                                @if (filled($property->google_photo_link))
+                                    <a href="{{ $property->google_photo_link }}" target="_blank" rel="noopener">Photo link</a>
+                                @endif
+                            </td>
                             <td>
                                 {{ collect([
                                     $property->laundry_included ? 'Laundry' : null,
@@ -69,7 +69,7 @@
                     @endforeach
                     @if ($properties->isEmpty())
                         <tr>
-                            <td colspan="6">No properties assigned to this owner yet. Admin must assign a property before reservations can be created.</td>
+                            <td colspan="7">No properties assigned to this owner yet. Admin must assign a property before reservations can be created.</td>
                         </tr>
                     @endif
                     </tbody>
