@@ -50,20 +50,29 @@ Route::middleware('owner')->prefix('owner')->name('owner.')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/test-mail', function (Request $request) {
-        $to = $request->query('to', config('mail.from.address'));
+        $to = $request->query('to')
+            ? array_map('trim', explode(',', $request->query('to')))
+            : ['spm3182@gmail.com', 'Info@santanaprime.es'];
 
         validator(['to' => $to], [
-            'to' => ['required', 'email'],
+            'to' => ['required', 'array'],
+            'to.*' => ['required', 'email'],
         ])->validate();
+
+        $mailer = config('mail.default');
 
         Mail::raw('This is a test email from Hola Santana sent at '.now()->toDateTimeString().'.', function ($mail) use ($to) {
             $mail->to($to)->subject('Hola Santana test email');
         });
 
         return response()->json([
-            'sent' => true,
+            'sent' => $mailer !== 'log',
+            'logged' => $mailer === 'log',
             'to' => $to,
-            'mailer' => config('mail.default'),
+            'mailer' => $mailer,
+            'message' => $mailer === 'log'
+                ? 'MAIL_MAILER is log, so the email was written to Laravel logs instead of being delivered.'
+                : 'Test email was handed to the configured mailer.',
         ]);
     })->name('test-mail');
     Route::get('/footer-settings', [FooterSettingController::class, 'edit'])->name('footer-settings.edit');

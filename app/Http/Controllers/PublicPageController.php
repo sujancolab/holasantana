@@ -16,6 +16,11 @@ use Illuminate\View\View;
 
 class PublicPageController extends Controller
 {
+    private const MAIL_RECIPIENTS = [
+        'spm3182@gmail.com',
+        'Info@santanaprime.es',
+    ];
+
     public function home(Request $request): RedirectResponse
     {
         return redirect()->route('pages.show', [
@@ -81,7 +86,7 @@ class PublicPageController extends Controller
         ]);
 
         Mail::raw($message, function ($mail) use ($data) {
-            $mail->to('spm3182@gmail.com')
+            $mail->to(self::MAIL_RECIPIENTS)
                 ->replyTo($data['email'], $data['name'])
                 ->subject('Hola Santana Service Enquiry: ' . $data['service_name']);
         });
@@ -124,7 +129,7 @@ class PublicPageController extends Controller
         ]);
 
         Mail::raw($message, function ($mail) use ($data) {
-            $mail->to('spm3182@gmail.com')
+            $mail->to(self::MAIL_RECIPIENTS)
                 ->subject('Hola Santana Submit Query: ' . trim($data['first_name'] . ' ' . $data['last_name']));
 
             if (filled($data['email'] ?? null)) {

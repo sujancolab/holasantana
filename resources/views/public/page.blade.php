@@ -400,7 +400,7 @@
                                     @endforeach
                                 </address>
                             </div>
-                            <form class="contact-live-form" action="mailto:spm3182@gmail.com" method="post" enctype="text/plain">
+                            <form class="contact-live-form" action="mailto:spm3182@gmail.com,Info@santanaprime.es" method="post" enctype="text/plain">
                                 <h2>{{ data_get($block, "form_heading.$locale", data_get($block, 'form_heading.en')) }}</h2>
                                 <p>{{ data_get($block, "form_intro.$locale", data_get($block, 'form_intro.en')) }}</p>
                                 <input type="text" name="name" placeholder="Name">
