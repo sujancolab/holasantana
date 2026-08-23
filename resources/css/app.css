@@ -7859,6 +7859,24 @@ html[lang="de"] {
     line-height: 1.72;
 }
 
+.page-general-4 .prime-intro-section h1,
+.page-general-4 .prime-intro-section h2,
+.page-general-4 .prime-text-section.is-tourist-rental-intro h1,
+.page-general-4 .prime-text-section.is-tourist-rental-intro h2 {
+    max-width: 1060px;
+    font-size: clamp(22px, 1.62vw, 28px);
+    font-weight: 750;
+    line-height: 1.24;
+}
+
+.page-general-4 .prime-intro-section .prime-open-copy,
+.page-general-4 .prime-text-section.is-tourist-rental-intro .prime-open-copy {
+    max-width: 1060px;
+    font-size: clamp(17px, 0.98vw, 18px);
+    font-weight: 650;
+    line-height: 1.58;
+}
+
 .page-general-4 .prime-open-copy + .prime-open-copy,
 .page-general-4 .prime-open-copy br + br {
     margin-top: 12px;
@@ -7874,6 +7892,20 @@ html[lang="de"] {
     .page-general-4 .prime-open-copy {
         font-size: 17px;
         line-height: 1.65;
+    }
+
+    .page-general-4 .prime-intro-section h1,
+    .page-general-4 .prime-intro-section h2,
+    .page-general-4 .prime-text-section.is-tourist-rental-intro h1,
+    .page-general-4 .prime-text-section.is-tourist-rental-intro h2 {
+        font-size: clamp(20px, 5.2vw, 25px);
+        line-height: 1.22;
+    }
+
+    .page-general-4 .prime-intro-section .prime-open-copy,
+    .page-general-4 .prime-text-section.is-tourist-rental-intro .prime-open-copy {
+        font-size: 15.5px;
+        line-height: 1.58;
     }
 }
 

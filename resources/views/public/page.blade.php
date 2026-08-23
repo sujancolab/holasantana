@@ -192,7 +192,12 @@
                         @endif
                     </section>
                 @elseif ($type === 'text_section')
-                    <section class="prime-open-section prime-text-section {{ data_get($block, 'class') }}">
+                    <section @class([
+                        'prime-open-section',
+                        'prime-text-section',
+                        data_get($block, 'class'),
+                        'is-tourist-rental-intro' => $page->slug === 'general-4' && str_contains((string) data_get($block, 'heading.en'), 'Stress-Free Holiday Rental Management'),
+                    ])>
                         @if (filled(data_get($block, "heading.$locale", data_get($block, 'heading.en'))))
                             <h2>{{ data_get($block, "heading.$locale", data_get($block, 'heading.en')) }}</h2>
                         @endif
