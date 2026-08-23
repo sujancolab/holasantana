@@ -128,7 +128,7 @@
                 <a href="{{ route('owner.login') }}">Clients Login</a>
             </div>
             <div class="prime-brand-row">
-                <img src="https://static.wixstatic.com/media/c50f24_80b75f48949d41deaf57c5edaedaae72~mv2.png/v1/fill/w_112,h_108,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Prime_logo_pdf%20(1)_pdf%20(1).png" alt="Santana Prime logo" decoding="async">
+                <img src="/assets/wix-assets/42e1ed561864a25f-prime-logo-pdf-1-pdf-1.png" alt="Santana Prime logo" decoding="async">
                 <strong>Santana Prime</strong>
                 <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="prime-navigation" data-mobile-menu-toggle>
                     <span></span>

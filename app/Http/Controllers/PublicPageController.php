@@ -7,6 +7,7 @@ use App\Models\Page;
 use App\Models\Language;
 use App\Models\HolidayHome;
 use App\Models\SiteSetting;
+use App\Support\WixAssetUrl;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -49,14 +50,21 @@ class PublicPageController extends Controller
         $page = Page::where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
+        $page->content_blocks = WixAssetUrl::localize($page->content_blocks ?? []);
+
+        $holidayHomes = $page->slug === 'home-rental'
+            ? HolidayHome::where('is_active', true)->orderBy('sort_order')->orderBy('name')->get()
+            : collect();
+
+        $holidayHomes->each(function (HolidayHome $holidayHome) {
+            $holidayHome->image_url = WixAssetUrl::localize($holidayHome->image_url);
+        });
 
         return view('public.page', [
             'page' => $page,
             'locale' => $locale,
             'availableLocales' => $this->pageLocales($page),
-            'holidayHomes' => $page->slug === 'home-rental'
-                ? HolidayHome::where('is_active', true)->orderBy('sort_order')->orderBy('name')->get()
-                : collect(),
+            'holidayHomes' => $holidayHomes,
             'footerSettings' => $this->footerSettings($locale),
             'menuItems' => MenuItem::with('page')
                 ->where('is_active', true)

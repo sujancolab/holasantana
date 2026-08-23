@@ -29,8 +29,8 @@ return new class extends Migration
                     'en' => "Cleanliness isn't just what we do-it's who we are.\nPassion, precision, and professionalism in every detail.",
                     'es' => 'La limpieza no es solo lo que hacemos: es lo que somos.',
                 ],
-                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
-                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                'left_image' => '/assets/wix-assets/e0224388eb048fa9-a-vertical-image-of-home-cleaning-service.jpg',
+                'right_image' => '/assets/wix-assets/a899f9840b79fa84-a-vertical-image-of-a-home-cleaning-service.jpg',
             ],
         ];
 

@@ -147,7 +147,7 @@ class DatabaseSeeder extends Seeder
             [
                 'area_name' => 'Torrevieja',
                 'name' => 'Apartment Santana 2-19',
-                'image_url' => 'https://static.wixstatic.com/media/c50f24_54f3b656a6454182b532d999f8cbd0f0~mv2.jpg/v1/fill/w_464,h_388,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240112-WA0007.jpg',
+                'image_url' => '/assets/wix-assets/05cc8d9510c17b4b-img-20240112-wa0007.jpg',
                 'description' => 'Stylish one-bedroom rental with pool views, private parking, elevator access and a fully equipped kitchen.',
                 'number_of_bedrooms' => 1,
                 'maximum_number_of_guests' => 4,
@@ -157,7 +157,7 @@ class DatabaseSeeder extends Seeder
             [
                 'area_name' => 'Torrevieja',
                 'name' => 'Studio Apartment Santana 2-18',
-                'image_url' => 'https://static.wixstatic.com/media/c50f24_08df06e85d024d738e89466c01ff46ec~mv2.jpg/v1/fill/w_456,h_276,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/1.jpg',
+                'image_url' => '/assets/wix-assets/67335c95154ef5be-1.jpg',
                 'description' => 'Bright studio with balcony, compact pool, private parking and modern amenities for a comfortable stay.',
                 'number_of_bedrooms' => 0,
                 'maximum_number_of_guests' => 2,
@@ -167,7 +167,7 @@ class DatabaseSeeder extends Seeder
             [
                 'area_name' => 'Torrevieja',
                 'name' => 'Studio Apartment Santana 3-05',
-                'image_url' => 'https://static.wixstatic.com/media/c50f24_4fd97b5f913d4634874317d6801c9530~mv2.jpg/v1/fill/w_412,h_372,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/14.jpg',
+                'image_url' => '/assets/wix-assets/208b79af86e60916-14.jpg',
                 'description' => 'Chic studio with pool views, elevator access, furnished kitchen, air conditioning and heating.',
                 'number_of_bedrooms' => 0,
                 'maximum_number_of_guests' => 2,
@@ -177,7 +177,7 @@ class DatabaseSeeder extends Seeder
             [
                 'area_name' => 'Salinas',
                 'name' => 'Apartment Santana Salinas',
-                'image_url' => 'https://static.wixstatic.com/media/c50f24_2ca06924b7fa41f3ad973523fb9e1b42~mv2.jpeg/v1/fill/w_538,h_396,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/WhatsApp%20Image%202026-04-29%20at%2012_40_11.jpeg',
+                'image_url' => '/assets/wix-assets/c34c93919407f737-whatsapp-image-2026-04-29-at-12-40-11.jpeg',
                 'description' => 'Two-bedroom apartment with Mediterranean Sea view, balcony, lift access and a modern open kitchen.',
                 'number_of_bedrooms' => 2,
                 'maximum_number_of_guests' => 4,
@@ -212,9 +212,9 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'gallery',
                 'images' => [
-                    'https://static.wixstatic.com/media/11062b_e59bd196cba4410c9e6066e800d74d6d~mv2_d_3456_5184_s_4_2.jpg/v1/fill/w_776,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Modern%20Living%20Room.jpg',
-                    'https://static.wixstatic.com/media/91493d838ac447d19ede2426f503cc8d.jpg/v1/fill/w_964,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Modern%20Bedroom%20Interior.jpg',
-                    'https://static.wixstatic.com/media/feb654e11d3a49daa79c16b483bee805.jpg/v1/fill/w_800,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/feb654e11d3a49daa79c16b483bee805.jpg',
+                    '/assets/wix-assets/d3812977f020bd8f-modern-living-room.jpg',
+                    '/assets/wix-assets/9355e4deed2bead8-modern-bedroom-interior.jpg',
+                    '/assets/wix-assets/898a17de2d375b6a-feb654e11d3a49daa79c16b483bee805.jpg',
                 ],
             ],
             [
@@ -230,8 +230,8 @@ class DatabaseSeeder extends Seeder
                 'type' => 'service_section',
                 'heading' => ['en' => 'Why choose our cleaning services?'],
                 'images' => [
-                    'https://static.wixstatic.com/media/c50f24_0ccb27a5b3bb409a8955266883af6aeb~mv2.png/v1/fill/w_536,h_732,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/Office_clean.png',
-                    'https://static.wixstatic.com/media/11062b_9fa0a758b5c74abe8b22d362456644ee~mv2.jpg/v1/fill/w_678,h_732,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Cleaning%20Team%20Portrait.jpg',
+                    '/assets/wix-assets/12726f5bb117f054-office-clean.png',
+                    '/assets/wix-assets/7a8db6192a851d73-cleaning-team-portrait.jpg',
                 ],
                 'body' => ['en' => "Excellence in every detail: Our cleaners pride themselves on their attention to detail, ensuring a level of excellence that exceeds expectations.\n\nTailored to your needs: Our cleaning services are flexible and tailored to your specific needs, whether it's preparing for your guests or maintaining your own space.\n\nTime-saving solutions: Enjoy more free time without compromising on cleaning. Our efficient cleaning services allow you to focus on what matters most.\n\nElevate your living experience with our professional cleaning services. Immerse yourself in a world of cleanliness and relaxation, where every detail is carefully taken care of."],
             ],
@@ -239,8 +239,8 @@ class DatabaseSeeder extends Seeder
                 'type' => 'service_section',
                 'heading' => ['en' => 'Why choose our check-in and check-out service?'],
                 'images' => [
-                    'https://static.wixstatic.com/media/11062b_aaa3d7aa68764820a4aa29af761f235e~mv2.jpg/v1/fill/w_742,h_496,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Key%20Lock.jpg',
-                    'https://static.wixstatic.com/media/11062b_efb3adc854344396b2b2b4ddc9ef7f69~mv2.jpg/v1/fill/w_656,h_496,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Handing%20Over%20Keys.jpg',
+                    '/assets/wix-assets/d3414d6c3165e70b-key-lock.jpg',
+                    '/assets/wix-assets/ca81161b41b64d2b-handing-over-keys.jpg',
                 ],
                 'body' => ['en' => "Peace of mind: Entrust the logistics to our experienced team, allowing you to focus on what matters most.\n\nProfessional Presentation: Make a lasting impression with a well-organized and professional check-in and check-out process.\n\nTime Saving: Streamline your property management tasks and save valuable time with our efficient services."],
             ],
@@ -248,8 +248,8 @@ class DatabaseSeeder extends Seeder
                 'type' => 'service_section',
                 'heading' => ['en' => 'Laundry service'],
                 'images' => [
-                    'https://static.wixstatic.com/media/5fd4767141624c128a6f2fe9df273f7f.jpg/v1/fill/w_700,h_502,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Vintage%20Laundry%20Machines.jpg',
-                    'https://static.wixstatic.com/media/11062b_84511c3f4d9a4ab4b699c4087b28618b~mv2.jpg/v1/fill/w_680,h_502,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Hotel%20Laundry%20Room.jpg',
+                    '/assets/wix-assets/a2d219f13b0148f1-vintage-laundry-machines.jpg',
+                    '/assets/wix-assets/f1e8c414df3223ca-hotel-laundry-room.jpg',
                 ],
                 'body' => ['en' => "Effortless laundry: Your bed linen and towels can be washed and ironed at our own laundry station without lifting a finger.\n\nFor just EUR 15 per booking (provided you provide spare sets of sheets and towels), our full laundry service (we deliver sets of sheets and towels) EUR 20 ensures your living spaces remain immaculate and inviting for the next guests."],
             ],
@@ -257,8 +257,8 @@ class DatabaseSeeder extends Seeder
                 'type' => 'service_section',
                 'heading' => ['en' => 'General maintenance and repairs'],
                 'images' => [
-                    'https://static.wixstatic.com/media/11062b_0bb0795bdb324557b31f13c496848d31~mv2.jpeg/v1/fill/w_690,h_576,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Pipe%20Repair%20Close-Up.jpeg',
-                    'https://static.wixstatic.com/media/c72cc3075b6b4cb0a4b5691df7a374e9.jpg/v1/fill/w_690,h_576,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Air%20Conditioner%20Maintenance.jpg',
+                    '/assets/wix-assets/c1258e6f8e6fcb31-pipe-repair-close-up.jpeg',
+                    '/assets/wix-assets/b643e39f91980af8-air-conditioner-maintenance.jpg',
                 ],
                 'body' => ['en' => "Your comfort is our top priority.\nWe are proud to offer a wide range of maintenance services.\nWe understand that every home is unique.\nWe have your back when it comes to basic home maintenance, preventative checkups, painting, and much more."],
             ],
@@ -266,8 +266,8 @@ class DatabaseSeeder extends Seeder
                 'type' => 'service_section',
                 'heading' => ['en' => 'Additional service'],
                 'images' => [
-                    'https://static.wixstatic.com/media/0ec9843575814a96a9191e950a8b8f9a.jpg/v1/fill/w_710,h_618,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Signing%20A%20Document.jpg',
-                    'https://static.wixstatic.com/media/fabcbe0da8494d1db64d284d3336461f.jpg/v1/fill/w_676,h_618,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Hand%20Stamping%20Document.jpg',
+                    '/assets/wix-assets/a944c6d0c2f0dd5e-signing-a-document.jpg',
+                    '/assets/wix-assets/d0600418daa572d2-hand-stamping-document.jpg',
                 ],
                 'body' => ['en' => "We can also help you with:\n\nObtaining a NIE number and opening a bank account\nNotarial and tax services\nSetting up tax payments and bills for your community, etc.\nAttendance at the annual general meeting of the community\n\nWe can recommend local builders, gardeners, pool maintenance companies, car rental and mechanics.\n\nTranslation services if necessary."],
             ],
@@ -276,16 +276,16 @@ class DatabaseSeeder extends Seeder
                 'heading' => ['en' => 'This small studio may have limited space, but for us it has the heart of a large home. We care for every corner with love, dedication and genuine passion.'],
                 'videos' => [
                     [
-                        'src' => 'https://video.wixstatic.com/video/c50f24_ce1375bcb2b949b09412a87b1e5990f8/480p/mp4/file.mp4',
-                        'poster' => 'https://static.wixstatic.com/media/c50f24_ce1375bcb2b949b09412a87b1e5990f8f000.jpg/v1/fill/w_478,h_850,al_c,q_85,enc_avif,quality_auto/c50f24_ce1375bcb2b949b09412a87b1e5990f8f000.jpg',
+                        'src' => '/assets/wix-assets/cc254de4827a3a79-file.mp4',
+                        'poster' => '/assets/wix-assets/527b99cb5ebf2c3e-c50f24-ce1375bcb2b949b09412a87b1e5990f8f000.jpg',
                     ],
                     [
-                        'src' => 'https://video.wixstatic.com/video/c50f24_4aefdc64ca704e2a9cc3803271e5d4a2/480p/mp4/file.mp4',
-                        'poster' => 'https://static.wixstatic.com/media/c50f24_4aefdc64ca704e2a9cc3803271e5d4a2f000.jpg/v1/fill/w_478,h_850,al_c,q_85,enc_avif,quality_auto/c50f24_4aefdc64ca704e2a9cc3803271e5d4a2f000.jpg',
+                        'src' => '/assets/wix-assets/e6f746493e8bc77d-file.mp4',
+                        'poster' => '/assets/wix-assets/aa82bf1102fb3194-c50f24-4aefdc64ca704e2a9cc3803271e5d4a2f000.jpg',
                     ],
                     [
-                        'src' => 'https://video.wixstatic.com/video/c50f24_c9d53a87fb2048c18ff5810b19e86639/480p/mp4/file.mp4',
-                        'poster' => 'https://static.wixstatic.com/media/c50f24_c9d53a87fb2048c18ff5810b19e86639f000.jpg/v1/fill/w_478,h_850,al_c,q_85,enc_avif,quality_auto/c50f24_c9d53a87fb2048c18ff5810b19e86639f000.jpg',
+                        'src' => '/assets/wix-assets/0b42add7dfa91d28-file.mp4',
+                        'poster' => '/assets/wix-assets/2a13252bbe6fefff-c50f24-c9d53a87fb2048c18ff5810b19e86639f000.jpg',
                     ],
                 ],
                 'body' => ['en' => "Here is a small sample of how we prepare, present and care for the properties we manage.\nFrom impeccable cleaning to perfect staging, every detail is treated with professionalism and passion, so that your guests always arrive at a welcoming, fresh and unforgettable home."],
@@ -293,25 +293,25 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'slider',
                 'slides' => [
-                    ['title' => 'Master bedroom', 'image' => 'https://static.wixstatic.com/media/c50f24_2924771e373643cfa61cc6cd2a86bfd8~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_2924771e373643cfa61cc6cd2a86bfd8~mv2.jpeg'],
-                    ['title' => 'Living room', 'image' => 'https://static.wixstatic.com/media/c50f24_295c6e35052b4142ba6c2facd83c0c54~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_295c6e35052b4142ba6c2facd83c0c54~mv2.jpeg'],
-                    ['title' => 'Kitchen', 'image' => 'https://static.wixstatic.com/media/c50f24_c89e08ab621c45ec9f142db0e04672a4~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_c89e08ab621c45ec9f142db0e04672a4~mv2.jpeg'],
-                    ['title' => 'Second bedroom', 'image' => 'https://static.wixstatic.com/media/c50f24_3506bf52c47841fb9fdb909e70d5c270~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_3506bf52c47841fb9fdb909e70d5c270~mv2.jpeg'],
-                    ['title' => 'Living room', 'image' => 'https://static.wixstatic.com/media/c50f24_b1a074ade9f74ee5aa53d90015ce0634~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_b1a074ade9f74ee5aa53d90015ce0634~mv2.jpeg'],
-                    ['title' => 'Kitchen', 'image' => 'https://static.wixstatic.com/media/c50f24_027dbb8861e84d539fc2c60c97fd6cb4~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_027dbb8861e84d539fc2c60c97fd6cb4~mv2.jpeg'],
-                    ['title' => 'Master bathroom', 'image' => 'https://static.wixstatic.com/media/c50f24_7f888a67c8fd453da3d1cf5f6ecd2585~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_7f888a67c8fd453da3d1cf5f6ecd2585~mv2.jpeg'],
-                    ['title' => 'Extra bathroom', 'image' => 'https://static.wixstatic.com/media/c50f24_a673980e117b411c8cc834683958824c~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_a673980e117b411c8cc834683958824c~mv2.jpeg'],
-                    ['title' => 'Guest room', 'image' => 'https://static.wixstatic.com/media/c50f24_26037b3df5f94e5fbbd57ead5fc6a72b~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_26037b3df5f94e5fbbd57ead5fc6a72b~mv2.jpeg'],
-                    ['title' => 'Stairs to Roof Terrasse', 'image' => 'https://static.wixstatic.com/media/c50f24_119f2251ae7748f590f05e0fc67fa899~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_119f2251ae7748f590f05e0fc67fa899~mv2.jpeg'],
-                    ['title' => 'Roof Terasse', 'image' => 'https://static.wixstatic.com/media/c50f24_f12fd6df9da84bef840605df49aa43d8~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_f12fd6df9da84bef840605df49aa43d8~mv2.jpeg'],
-                    ['title' => 'Roof Terrasse', 'image' => 'https://static.wixstatic.com/media/c50f24_14d819a5165348378243f3169343dd33~mv2.jpeg/v1/fill/w_980,h_300,al_c,q_85,enc_avif,quality_auto/c50f24_14d819a5165348378243f3169343dd33~mv2.jpeg'],
+                    ['title' => 'Master bedroom', 'image' => '/assets/wix-assets/a6e7b56402a3816f-c50f24-2924771e373643cfa61cc6cd2a86bfd8-mv2.jpeg'],
+                    ['title' => 'Living room', 'image' => '/assets/wix-assets/fb38e9a09f5b0d2b-c50f24-295c6e35052b4142ba6c2facd83c0c54-mv2.jpeg'],
+                    ['title' => 'Kitchen', 'image' => '/assets/wix-assets/1f974d73a202a741-c50f24-c89e08ab621c45ec9f142db0e04672a4-mv2.jpeg'],
+                    ['title' => 'Second bedroom', 'image' => '/assets/wix-assets/7ab828a52e37a7b5-c50f24-3506bf52c47841fb9fdb909e70d5c270-mv2.jpeg'],
+                    ['title' => 'Living room', 'image' => '/assets/wix-assets/6c09a5d2589fe6e8-c50f24-b1a074ade9f74ee5aa53d90015ce0634-mv2.jpeg'],
+                    ['title' => 'Kitchen', 'image' => '/assets/wix-assets/8476b1bfe8d371e4-c50f24-027dbb8861e84d539fc2c60c97fd6cb4-mv2.jpeg'],
+                    ['title' => 'Master bathroom', 'image' => '/assets/wix-assets/68c183d59f6319ed-c50f24-7f888a67c8fd453da3d1cf5f6ecd2585-mv2.jpeg'],
+                    ['title' => 'Extra bathroom', 'image' => '/assets/wix-assets/72b8e5b83dd0efc0-c50f24-a673980e117b411c8cc834683958824c-mv2.jpeg'],
+                    ['title' => 'Guest room', 'image' => '/assets/wix-assets/f73bf286ac1c9ac5-c50f24-26037b3df5f94e5fbbd57ead5fc6a72b-mv2.jpeg'],
+                    ['title' => 'Stairs to Roof Terrasse', 'image' => '/assets/wix-assets/6cc05b725b2a28ca-c50f24-119f2251ae7748f590f05e0fc67fa899-mv2.jpeg'],
+                    ['title' => 'Roof Terasse', 'image' => '/assets/wix-assets/d8c188519c2d4cb8-c50f24-f12fd6df9da84bef840605df49aa43d8-mv2.jpeg'],
+                    ['title' => 'Roof Terrasse', 'image' => '/assets/wix-assets/aa189b161323c2af-c50f24-14d819a5165348378243f3169343dd33-mv2.jpeg'],
                 ],
             ],
             [
                 'type' => 'contact',
                 'heading' => ['en' => "Cleanliness isn't just what we do-it's who we are.\nPassion, precision, and professionalism in every detail.", 'es' => 'La limpieza no es solo lo que hacemos: es lo que somos.'],
-                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
-                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                'left_image' => '/assets/wix-assets/e0224388eb048fa9-a-vertical-image-of-home-cleaning-service.jpg',
+                'right_image' => '/assets/wix-assets/a899f9840b79fa84-a-vertical-image-of-a-home-cleaning-service.jpg',
             ],
         ];
     }
@@ -328,115 +328,115 @@ class DatabaseSeeder extends Seeder
                         'name' => 'Key ownership - monthly check and monitoring',
                         'price' => '€250.00',
                         'sale_price' => '€225.00',
-                        'image' => 'https://static.wixstatic.com/media/11062b_aaa3d7aa68764820a4aa29af761f235e~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Key%20Lock.jpg',
+                        'image' => '/assets/wix-assets/349946898a11d7ac-key-lock.jpg',
                     ],
                     [
                         'name' => 'Key ownership - biweekly control',
                         'price' => '€375.00',
                         'sale_price' => '€337.50',
-                        'image' => 'https://static.wixstatic.com/media/11062b_aaa3d7aa68764820a4aa29af761f235e~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Key%20Lock.jpg',
+                        'image' => '/assets/wix-assets/349946898a11d7ac-key-lock.jpg',
                     ],
                     [
                         'name' => 'Key ownership - weekly check',
                         'price' => '€575.00',
                         'sale_price' => '€517.50',
-                        'image' => 'https://static.wixstatic.com/media/11062b_aaa3d7aa68764820a4aa29af761f235e~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Key%20Lock.jpg',
+                        'image' => '/assets/wix-assets/349946898a11d7ac-key-lock.jpg',
                     ],
                     [
                         'name' => 'Cleaning of commercial premises',
                         'price' => '€0.00',
-                        'image' => 'https://static.wixstatic.com/media/c50f24_0ccb27a5b3bb409a8955266883af6aeb~mv2.png/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Office_clean.png',
+                        'image' => '/assets/wix-assets/59692305f5d6bb83-office-clean.png',
                     ],
                     [
                         'name' => 'Reception of guests in Torrevieja (other than post codes 03182).',
                         'price' => '€20.00',
-                        'image' => 'https://static.wixstatic.com/media/11062b_efb3adc854344396b2b2b4ddc9ef7f69~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Handing%20Over%20Keys.jpg',
+                        'image' => '/assets/wix-assets/1ad0bdebee35d6a8-handing-over-keys.jpg',
                     ],
                     [
                         'name' => 'Reception of guests (only post code 03182) in Torrevieja',
                         'price' => '€15.00',
-                        'image' => 'https://static.wixstatic.com/media/11062b_efb3adc854344396b2b2b4ddc9ef7f69~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Handing%20Over%20Keys.jpg',
+                        'image' => '/assets/wix-assets/1ad0bdebee35d6a8-handing-over-keys.jpg',
                     ],
                     [
                         'name' => 'Laundry service',
                         'price' => '€15.00',
-                        'image' => 'https://static.wixstatic.com/media/11062b_84511c3f4d9a4ab4b699c4087b28618b~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Hotel%20Laundry%20Room.jpg',
+                        'image' => '/assets/wix-assets/ce6b2c0b27bc1df8-hotel-laundry-room.jpg',
                     ],
                     [
                         'name' => 'Laundry service including rental of towels and bed linen',
                         'price' => '€25.00',
-                        'image' => 'https://static.wixstatic.com/media/11062b_84511c3f4d9a4ab4b699c4087b28618b~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Hotel%20Laundry%20Room.jpg',
+                        'image' => '/assets/wix-assets/ce6b2c0b27bc1df8-hotel-laundry-room.jpg',
                     ],
                     [
                         'name' => 'Cleaning service of 2 bedrooms and 1 bathroom apartment',
                         'price' => '€54.00',
-                        'image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
+                        'image' => '/assets/wix-assets/3edee5c34634237b-a-vertical-image-of-home-cleaning-service.jpg',
                     ],
                     [
                         'name' => 'Cleaning service of 2 bedrooms and 2 bathrooms apartment',
                         'price' => '€60.00',
-                        'image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                        'image' => '/assets/wix-assets/4b7f78f219d80f74-a-vertical-image-of-a-home-cleaning-service.jpg',
                     ],
                     [
                         'name' => 'Cleaning service of 3 bedrooms and 1 bathroom apartment',
                         'price' => '€70.00',
-                        'image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
+                        'image' => '/assets/wix-assets/3edee5c34634237b-a-vertical-image-of-home-cleaning-service.jpg',
                     ],
                     [
                         'name' => 'Cleaning service of 3 bedrooms and 2 bathrooms apartment',
                         'price' => '€75.00',
-                        'image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                        'image' => '/assets/wix-assets/4b7f78f219d80f74-a-vertical-image-of-a-home-cleaning-service.jpg',
                     ],
                     [
                         'name' => 'Cleaning service of 1 bedroom and 1 bathroom apartment',
                         'price' => '€46.00',
-                        'image' => 'https://static.wixstatic.com/media/11062b_e59bd196cba4410c9e6066e800d74d6d~mv2_d_3456_5184_s_4_2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Modern%20Living%20Room.jpg',
+                        'image' => '/assets/wix-assets/ce98faa53920e9f8-modern-living-room.jpg',
                     ],
                     [
                         'name' => 'Studio apartment cleaning service',
                         'price' => '€40.00',
-                        'image' => 'https://static.wixstatic.com/media/91493d838ac447d19ede2426f503cc8d.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Modern%20Bedroom%20Interior.jpg',
+                        'image' => '/assets/wix-assets/1c0fc7e7f93b501e-modern-bedroom-interior.jpg',
                     ],
                     [
                         'name' => 'Cleaning service of 2 bedroom house',
                         'price' => '€65.00',
-                        'image' => 'https://static.wixstatic.com/media/feb654e11d3a49daa79c16b483bee805.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/feb654e11d3a49daa79c16b483bee805.jpg',
+                        'image' => '/assets/wix-assets/71efa38bec3aaa34-feb654e11d3a49daa79c16b483bee805.jpg',
                     ],
                     [
                         'name' => 'Cleaning service of 3 bedroom house',
                         'price' => '€70.00',
-                        'image' => 'https://static.wixstatic.com/media/feb654e11d3a49daa79c16b483bee805.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/feb654e11d3a49daa79c16b483bee805.jpg',
+                        'image' => '/assets/wix-assets/71efa38bec3aaa34-feb654e11d3a49daa79c16b483bee805.jpg',
                     ],
                     [
                         'name' => 'Cleaning service for private homes',
                         'price' => '€15.00',
-                        'image' => 'https://static.wixstatic.com/media/c50f24_0ccb27a5b3bb409a8955266883af6aeb~mv2.png/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Office_clean.png',
+                        'image' => '/assets/wix-assets/59692305f5d6bb83-office-clean.png',
                     ],
                     [
                         'name' => 'Cleaning, laundry and key delivery service for studio',
                         'price' => '€60.00',
                         'sale_price' => '€54.00',
-                        'image' => 'https://static.wixstatic.com/media/5fd4767141624c128a6f2fe9df273f7f.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Vintage%20Laundry%20Machines.jpg',
+                        'image' => '/assets/wix-assets/7c82092db36a58af-vintage-laundry-machines.jpg',
                     ],
                     [
                         'name' => 'Cleaning, laundry and key delivery service for 2 bedroom, 2 bathroom apartment',
                         'price' => '€98.00',
                         'sale_price' => '€88.20',
-                        'image' => 'https://static.wixstatic.com/media/11062b_84511c3f4d9a4ab4b699c4087b28618b~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Hotel%20Laundry%20Room.jpg',
+                        'image' => '/assets/wix-assets/ce6b2c0b27bc1df8-hotel-laundry-room.jpg',
                     ],
                     [
                         'name' => 'Cleaning, laundry and key delivery service for 2 bedroom, 1 bathroom apartment',
                         'price' => '€90.00',
                         'sale_price' => '€81.00',
-                        'image' => 'https://static.wixstatic.com/media/11062b_efb3adc854344396b2b2b4ddc9ef7f69~mv2.jpg/v1/fill/w_360,h_300,al_c,q_85,enc_avif,quality_auto/Handing%20Over%20Keys.jpg',
+                        'image' => '/assets/wix-assets/1ad0bdebee35d6a8-handing-over-keys.jpg',
                     ],
                 ],
             ],
             [
                 'type' => 'contact',
                 'heading' => ['en' => "La limpieza no es solo lo que hacemos: es lo que somos.\nPasion, precision y profesionalidad en cada detalle.", 'es' => "La limpieza no es solo lo que hacemos: es lo que somos.\nPasion, precision y profesionalidad en cada detalle."],
-                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
-                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                'left_image' => '/assets/wix-assets/e0224388eb048fa9-a-vertical-image-of-home-cleaning-service.jpg',
+                'right_image' => '/assets/wix-assets/a899f9840b79fa84-a-vertical-image-of-a-home-cleaning-service.jpg',
             ],
         ];
     }
@@ -451,10 +451,10 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'gallery',
                 'images' => [
-                    'https://static.wixstatic.com/media/11062b_8e19e54d8a1f45bebdc63312246937f4~mv2.jpg/v1/fill/w_670,h_482,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Gutachter_in.jpg',
-                    'https://static.wixstatic.com/media/11062b_0f70e7ee6ee84899b878c1e8a9451ed1~mv2.jpg/v1/fill/w_644,h_482,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Lockers%20with%20keys.jpg',
-                    'https://static.wixstatic.com/media/11062b_29de2e7fdd784693a1b3d013aed52473~mv2.jpeg/v1/fill/w_680,h_482,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Postbox.jpeg',
-                    'https://static.wixstatic.com/media/7852e112b197410fb7b2ff1f5fb426a3.jpg/v1/fill/w_656,h_482,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Legal%20Research%20and%20Writing.jpg',
+                    '/assets/wix-assets/142e3b5a9a237839-gutachter-in.jpg',
+                    '/assets/wix-assets/25e74731d79718c4-lockers-with-keys.jpg',
+                    '/assets/wix-assets/845a5f617e5f5068-postbox.jpeg',
+                    '/assets/wix-assets/768b0b11fae7b2dd-legal-research-and-writing.jpg',
                 ],
             ],
             [
@@ -480,17 +480,17 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'gallery',
                 'images' => [
-                    'https://static.wixstatic.com/media/11062b_9daba6d3615440418985a1c4f0f05a98~mv2.jpg/v1/fill/w_594,h_458,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Couple%20Relaxing%20Outdoors.jpg',
-                    'https://static.wixstatic.com/media/11062b_3bd46dc3a49e45d897b97d07486147ad~mv2.jpeg/v1/fill/w_614,h_478,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Man%20Inspecting%20Entrance.jpeg',
-                    'https://static.wixstatic.com/media/11062b_b6a5893b404d4a60825bd5204ab5e5cc~mv2.jpg/v1/fill/w_594,h_468,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Guests%20Meeting%20Host.jpg',
-                    'https://static.wixstatic.com/media/4b6a43d859d31fd9ec83c9d534f0bcfa.jpg/v1/fill/w_604,h_478,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Hand%20Holding%20Key.jpg',
+                    '/assets/wix-assets/086dcc3fb63345e8-couple-relaxing-outdoors.jpg',
+                    '/assets/wix-assets/1e0758c60e674d91-man-inspecting-entrance.jpeg',
+                    '/assets/wix-assets/805f2a44e012af7d-guests-meeting-host.jpg',
+                    '/assets/wix-assets/66d1891a5136a4e8-hand-holding-key.jpg',
                 ],
             ],
             [
                 'type' => 'contact',
                 'heading' => ['en' => "Cleanliness isn't just what we do-it's who we are.\nPassion, precision, and professionalism in every detail.", 'es' => 'La limpieza no es solo lo que hacemos: es lo que somos.'],
-                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
-                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                'left_image' => '/assets/wix-assets/e0224388eb048fa9-a-vertical-image-of-home-cleaning-service.jpg',
+                'right_image' => '/assets/wix-assets/a899f9840b79fa84-a-vertical-image-of-a-home-cleaning-service.jpg',
             ],
         ];
     }
@@ -500,7 +500,7 @@ class DatabaseSeeder extends Seeder
         return [
             [
                 'type' => 'hero_image',
-                'image' => 'https://static.wixstatic.com/media/11062b_61aae7f1f0fc4dc2ad4a418f8550a622~mv2.jpg/v1/fill/w_1920,h_535,al_c,q_85,enc_avif,quality_auto/11062b_61aae7f1f0fc4dc2ad4a418f8550a622~mv2.jpg',
+                'image' => '/assets/wix-assets/9903f3cb2c6ca52a-11062b-61aae7f1f0fc4dc2ad4a418f8550a622-mv2.jpg',
             ],
             [
                 'type' => 'text_section',
@@ -511,24 +511,24 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'gallery',
                 'images' => [
-                    'https://static.wixstatic.com/media/c50f24_3021131a84c545efb31a6b32af10a8b1~mv2.webp/v1/fill/w_620,h_474,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/parasailing.webp',
-                    'https://static.wixstatic.com/media/c50f24_cb8fc14ee68544908610b79de25975dc~mv2.jpeg/v1/fill/w_564,h_474,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/beach1.jpeg',
-                    'https://static.wixstatic.com/media/c50f24_debefa2268ef49dbab18350ae576c060~mv2.jpg/v1/fill/w_590,h_474,al_c,lg_1,q_80,enc_avif,quality_auto/beach3.jpg',
-                    'https://static.wixstatic.com/media/c50f24_9d62acba90e54144b4264a0bdb434561~mv2.jpeg/v1/fill/w_341,h_287,al_c,lg_1,q_80,enc_avif,quality_auto/snorkeling.jpeg',
+                    '/assets/wix-assets/4858f1ecf5bc08fd-parasailing.webp',
+                    '/assets/wix-assets/5deb719370d5af0a-beach1.jpeg',
+                    '/assets/wix-assets/469a5023df488987-beach3.jpg',
+                    '/assets/wix-assets/2ed2072d1498b507-snorkeling.jpeg',
                 ],
             ],
             [
                 'type' => 'rental_unit',
                 'heading' => ['en' => 'Apartment Santana 2-19'],
                 'images' => [
-                    'https://static.wixstatic.com/media/c50f24_54f3b656a6454182b532d999f8cbd0f0~mv2.jpg/v1/fill/w_464,h_388,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240112-WA0007.jpg',
-                    'https://static.wixstatic.com/media/c50f24_83fe3f9619c047af8fe216226fded395~mv2.jpg/v1/fill/w_414,h_388,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240112-WA0008.jpg',
-                    'https://static.wixstatic.com/media/c50f24_ec0d39e1f7254e4e8b2f940ba5a9e306~mv2.jpg/v1/fill/w_438,h_388,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240112-WA0011.jpg',
-                    'https://static.wixstatic.com/media/c50f24_75c23546f8b148069e75b2aea8766cfa~mv2.jpg/v1/fill/w_452,h_388,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240112-WA0006.jpg',
-                    'https://static.wixstatic.com/media/c50f24_3f91f9cc09cb48638312f703111c8d76~mv2.jpg/v1/fill/w_476,h_398,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240112-WA0010.jpg',
-                    'https://static.wixstatic.com/media/c50f24_c416533944484463b17538a14b002188~mv2.jpg/v1/fill/w_476,h_388,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240112-WA0012.jpg',
-                    'https://static.wixstatic.com/media/c50f24_58e324c9043b40a0849eea39f2b948a0~mv2.jpg/v1/fill/w_414,h_388,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240112-WA0017.jpg',
-                    'https://static.wixstatic.com/media/c50f24_92af014bf5ac47b08da5c89138252755~mv2.jpg/v1/fill/w_438,h_388,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240112-WA0003.jpg',
+                    '/assets/wix-assets/05cc8d9510c17b4b-img-20240112-wa0007.jpg',
+                    '/assets/wix-assets/ce159c2a4652691b-img-20240112-wa0008.jpg',
+                    '/assets/wix-assets/cd6b783642288db8-img-20240112-wa0011.jpg',
+                    '/assets/wix-assets/319be6409bf562e7-img-20240112-wa0006.jpg',
+                    '/assets/wix-assets/93de7ee73384f4ed-img-20240112-wa0010.jpg',
+                    '/assets/wix-assets/ee53772994b3b80f-img-20240112-wa0012.jpg',
+                    '/assets/wix-assets/8172960e606c8528-img-20240112-wa0017.jpg',
+                    '/assets/wix-assets/8336e7916a3607af-img-20240112-wa0003.jpg',
                 ],
                 'body' => ['en' => "Welcome to your perfect getaway! Our stylish one-bedroom rental offers a serene retreat with a beautiful, large pool as its centerpiece. Inside, you'll find a modern living room with an open kitchen, a luxurious bathroom, and a private balcony with stunning pool views.\n\nEnjoy the convenience of private parking, an elevator and access to a communal terrace.\n\nEnjoy ultimate comfort in our holiday home, equipped with all the modern amenities you need. Relax with a smart TV and Bluetooth music system for your entertainment. Stay cool with air conditioning in the summer and cosy with heating in the winter. Our fully furnished kitchen allows you to prepare meals with ease, making your stay truly comfortable and convenient.\n\nWhether you're here to relax or explore, our rentals promise comfort, convenience and a touch of luxury.\n\nBook your stay today and experience the best in short-term accommodation!"],
                 'actions' => [
@@ -537,20 +537,20 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'type' => 'wide_image',
-                'image' => 'https://static.wixstatic.com/media/c50f24_cf89139e96a942498186504d7f505b64~mv2.jpg/v1/fill/w_1096,h_388,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/swimming_pool_good_2.jpg',
+                'image' => '/assets/wix-assets/fb96194423b0f3f0-swimming-pool-good-2.jpg',
             ],
             [
                 'type' => 'rental_unit',
                 'heading' => ['en' => 'Studio Apartment Santana 2-18'],
                 'images' => [
-                    'https://static.wixstatic.com/media/c50f24_08df06e85d024d738e89466c01ff46ec~mv2.jpg/v1/fill/w_456,h_276,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/1.jpg',
-                    'https://static.wixstatic.com/media/c50f24_8654e3ac587f4ebfa16693cc1efa9b63~mv2.jpg/v1/fill/w_456,h_314,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/1716217128771.jpg',
-                    'https://static.wixstatic.com/media/c50f24_1fd43597c31a47bea886f2c5148095c6~mv2.jpg/v1/fill/w_456,h_372,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240412-WA0048.jpg',
-                    'https://static.wixstatic.com/media/c50f24_20d0d280ff654d4889613445c7a7244d~mv2.jpg/v1/fill/w_426,h_276,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/3.jpg',
-                    'https://static.wixstatic.com/media/c50f24_21a2b274f6904496b22c90ca641330c9~mv2.jpg/v1/fill/w_426,h_314,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/1716217128750.jpg',
-                    'https://static.wixstatic.com/media/c50f24_83e231717ce945d3a856040dfe742337~mv2.jpg/v1/fill/w_426,h_372,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240412-WA0038.jpg',
-                    'https://static.wixstatic.com/media/c50f24_fcafef9cbac9479d8c7ac57cacade18d~mv2.jpg/v1/fill/w_412,h_276,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/2.jpg',
-                    'https://static.wixstatic.com/media/c50f24_8eb9bb7b64b1466480d2f562e24d9110~mv2.jpg/v1/fill/w_412,h_314,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240412-WA0041.jpg',
+                    '/assets/wix-assets/67335c95154ef5be-1.jpg',
+                    '/assets/wix-assets/e14693849a9ff2b8-1716217128771.jpg',
+                    '/assets/wix-assets/f3e7e02299985c29-img-20240412-wa0048.jpg',
+                    '/assets/wix-assets/ba299d6bae7b1bc3-3.jpg',
+                    '/assets/wix-assets/0a32197554bc6fac-1716217128750.jpg',
+                    '/assets/wix-assets/c7f13cbb276b3f9c-img-20240412-wa0038.jpg',
+                    '/assets/wix-assets/f80db035a1d3dba8-2.jpg',
+                    '/assets/wix-assets/2c8fcd4d15daf29a-img-20240412-wa0041.jpg',
                 ],
                 'body' => ['en' => "Welcome to your perfect getaway! Our stylish studio rental offers a serene retreat with a beautiful, compact pool as its centrepiece. Inside, you'll find a modern living area with an open kitchen, a luxurious bathroom and a private balcony with stunning pool views. All-day sunlight on the balcony is guaranteed.\n\nEnjoy the convenience of private parking, an elevator and access to a communal terrace.\n\nEnjoy ultimate comfort in our holiday home, equipped with all the modern amenities you need. Relax with a smart TV and Bluetooth music system for your entertainment. Stay cool with air conditioning in the summer and cosy with heating in the winter. Our fully furnished kitchen allows you to prepare meals with ease, making your stay truly comfortable and convenient."],
                 'actions' => [
@@ -561,14 +561,14 @@ class DatabaseSeeder extends Seeder
                 'type' => 'rental_unit',
                 'heading' => ['en' => 'Studio Apartment Santana 3-05'],
                 'images' => [
-                    'https://static.wixstatic.com/media/c50f24_4fd97b5f913d4634874317d6801c9530~mv2.jpg/v1/fill/w_412,h_372,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/14.jpg',
-                    'https://static.wixstatic.com/media/c50f24_77e8fefbc7bf45c3a4544de8c9b37dad~mv2.jpg/v1/fill/w_390,h_276,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240412-WA0035.jpg',
-                    'https://static.wixstatic.com/media/c50f24_495c87385fff439a97bc8c7b6773f9e3~mv2.jpg/v1/fill/w_390,h_314,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240412-WA0042.jpg',
-                    'https://static.wixstatic.com/media/c50f24_f729f64fa73046008b834f4111966792~mv2.jpg/v1/fill/w_390,h_372,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/30.jpg',
-                    'https://static.wixstatic.com/media/c50f24_02fa4b8caef0400ba2d43d38da555334~mv2.jpg/v1/fill/w_462,h_360,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/1716215986746.jpg',
-                    'https://static.wixstatic.com/media/c50f24_b46e79d606114c799ffa684356c911b3~mv2.jpg/v1/fill/w_462,h_432,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240412-WA0021.jpg',
-                    'https://static.wixstatic.com/media/c50f24_1c606e4284a04a7ca0be881ffadaec89~mv2.jpg/v1/fill/w_462,h_360,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240412-WA0024.jpg',
-                    'https://static.wixstatic.com/media/c50f24_7d2e25728b064df78655784b9f0f6cd0~mv2.jpg/v1/fill/w_462,h_432,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG-20240412-WA0047.jpg',
+                    '/assets/wix-assets/208b79af86e60916-14.jpg',
+                    '/assets/wix-assets/da873dd30b8c7cce-img-20240412-wa0035.jpg',
+                    '/assets/wix-assets/5fab718feca8501a-img-20240412-wa0042.jpg',
+                    '/assets/wix-assets/b9e0421671c410a0-30.jpg',
+                    '/assets/wix-assets/b367dcfa4aea122a-1716215986746.jpg',
+                    '/assets/wix-assets/f47bda8dca6f762f-img-20240412-wa0021.jpg',
+                    '/assets/wix-assets/0e76f146f7f5536a-img-20240412-wa0024.jpg',
+                    '/assets/wix-assets/39bc59723837c443-img-20240412-wa0047.jpg',
                 ],
                 'body' => ['en' => "Welcome to your perfect place! Our chic studio for rent offers a serene retreat with a beautiful, compact pool as its centerpiece. Inside, you'll find a modern living area with an open kitchen, a luxurious bathroom, and a private balcony with stunning pool views.\n\nEnjoy the convenience of private parking, an elevator and access to a communal terrace.\n\nEnjoy ultimate comfort in our holiday home, equipped with all the modern amenities you need. Relax with a smart TV and Bluetooth music system for your entertainment. Stay cool with air conditioning in the summer and cosy with heating in the winter. Our fully furnished kitchen allows you to prepare meals with ease, making your stay truly comfortable and convenient.\n\nWhether you're here to relax or explore, our rentals promise comfort, convenience and a touch of luxury.\n\nBook your stay today and experience the best in short-term accommodation!"],
                 'actions' => [
@@ -579,14 +579,14 @@ class DatabaseSeeder extends Seeder
                 'type' => 'rental_unit',
                 'heading' => ['en' => 'Apartment Santana Salinas'],
                 'images' => [
-                    'https://static.wixstatic.com/media/c50f24_2ca06924b7fa41f3ad973523fb9e1b42~mv2.jpeg/v1/fill/w_538,h_396,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/WhatsApp%20Image%202026-04-29%20at%2012_40_11.jpeg',
-                    'https://static.wixstatic.com/media/c50f24_aad2756bf8f74dcf9021b36c2f0c36ba~mv2.jpg/v1/fill/w_538,h_396,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/22.jpg',
-                    'https://static.wixstatic.com/media/c50f24_bc6e49c7ae714ec3ad03a544f7be08c2~mv2.jpg/v1/fill/w_538,h_396,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/21.jpg',
-                    'https://static.wixstatic.com/media/c50f24_6e0c12f8758e464cba04b12e410793f2~mv2.jpg/v1/fill/w_538,h_396,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/2.jpg',
-                    'https://static.wixstatic.com/media/c50f24_b0781383f10b46e188cea6f40c577fbe~mv2.jpg/v1/fill/w_538,h_356,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/14.jpg',
-                    'https://static.wixstatic.com/media/c50f24_38c73c4b265c4709b2ee0e92ed2be109~mv2.jpg/v1/fill/w_538,h_396,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/19.jpg',
-                    'https://static.wixstatic.com/media/c50f24_c193e8cb17b64803aa6adc2e53b6ab46~mv2.jpeg/v1/fill/w_538,h_396,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/WhatsApp%20Image%202025-12-15%20at%2019_24_48.jpeg',
-                    'https://static.wixstatic.com/media/c50f24_e9455b60573f49f5a0669da29dc313d9~mv2.jpg/v1/fill/w_538,h_356,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/4.jpg',
+                    '/assets/wix-assets/c34c93919407f737-whatsapp-image-2026-04-29-at-12-40-11.jpeg',
+                    '/assets/wix-assets/d81749485007ca63-22.jpg',
+                    '/assets/wix-assets/2a166b7325eb2b3a-21.jpg',
+                    '/assets/wix-assets/fe3b52b633cc7761-2.jpg',
+                    '/assets/wix-assets/b67c1df70628ec37-14.jpg',
+                    '/assets/wix-assets/526c39ae340f3a6f-19.jpg',
+                    '/assets/wix-assets/cce4e33c2816fef4-whatsapp-image-2025-12-15-at-19-24-48.jpeg',
+                    '/assets/wix-assets/58c72cb86f7d6245-4.jpg',
                 ],
                 'body' => ['en' => "Welcome to Santana Salinas! Our stylish two bedroom flat for rent offers a serene view of the Mediterranean Sea from a beautiful stunning balcony. Inside, you will find a modern living room with open kitchen and a luxurious bathroom.\n\nEnjoy the convenience of a lift and access to a communal terrace.\nEnjoy maximum comfort in our holiday home, equipped with all the modern conveniences you need. Relax with a smart TV and Bluetooth music system for your entertainment. Keep cool with air conditioning in summer and cosy with heating in winter. Our fully furnished kitchen allows you to prepare meals with ease, making your stay truly comfortable and convenient.\n\nWhether you're here to relax or explore, our rental promises comfort, convenience and a touch of luxury.\nBook your stay today and enjoy the best in short-term accommodation.\n\nContact us for reservation"],
                 'actions' => [
@@ -596,7 +596,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'type' => 'wide_image',
-                'image' => 'https://static.wixstatic.com/media/05e3dc_313e242f412c4998a000fabdbbee8f10.jpg/v1/fill/w_979,h_273,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/05e3dc_313e242f412c4998a000fabdbbee8f10.jpg',
+                'image' => '/assets/wix-assets/af0b6c823b851b15-05e3dc-313e242f412c4998a000fabdbbee8f10.jpg',
             ],
             [
                 'type' => 'text_section',
@@ -612,13 +612,13 @@ class DatabaseSeeder extends Seeder
                 'type' => 'media_text',
                 'heading' => ['en' => 'The Santana Family, your host'],
                 'body' => ['en' => "Greetings, we are the Santana family and we are proud to share our beloved holiday home with guests looking for a memorable stay in Torrevieja.\n\nWith a passion for hospitality and a deep love for our local community, we are committed to ensuring that every guest experiences the warmth and authenticity of our beloved destination."],
-                'image' => 'https://static.wixstatic.com/media/c50f24_67635c3970e64b8385c0cf1ceda30cda~mv2.jpg/v1/fill/w_624,h_882,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/santana_poster_en.jpg',
+                'image' => '/assets/wix-assets/8e66850528c79162-santana-poster-en.jpg',
             ],
             [
                 'type' => 'contact',
                 'heading' => ['en' => "Cleanliness isn't just what we do-it's who we are.\nPassion, precision, and professionalism in every detail.", 'es' => 'La limpieza no es solo lo que hacemos: es lo que somos.'],
-                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
-                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                'left_image' => '/assets/wix-assets/e0224388eb048fa9-a-vertical-image-of-home-cleaning-service.jpg',
+                'right_image' => '/assets/wix-assets/a899f9840b79fa84-a-vertical-image-of-a-home-cleaning-service.jpg',
             ],
         ];
     }
@@ -635,20 +635,20 @@ class DatabaseSeeder extends Seeder
                 'type' => 'about_feature',
                 'heading' => ['en' => 'Mission:'],
                 'body' => ['en' => "We want to change the way you think of Holiday Homes.\n\nOur passion lies in creating vacation home experiences that benefit both property owners and our visitors.\n\nWe strive to make every house a welcoming and practical haven without compromise, believing that your holiday home should stand as the epitome of excellence to attract the most discerning guests."],
-                'image' => 'https://static.wixstatic.com/media/11062b_54593c84d61b4570b5a5b260c16ca008~mv2.jpg/v1/fill/w_976,h_1062,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_54593c84d61b4570b5a5b260c16ca008~mv2.jpg',
+                'image' => '/assets/wix-assets/1d4ec1a9c97efb43-11062b-54593c84d61b4570b5a5b260c16ca008-mv2.jpg',
             ],
             [
                 'type' => 'about_feature',
                 'heading' => ['en' => 'Vision:'],
                 'body' => ['en' => "We understand the challenges of managing holiday rentals and the importance of effective communication, which is why we offer no-obligation consultations.\n\nTo create cleaner, healthier, and more sustainable spaces by delivering top-quality cleaning services with professionalism, innovation, and eco-friendly solutions."],
-                'image' => 'https://static.wixstatic.com/media/11062b_068b7e6d3cad4283833b28adc03699ef~mv2.jpeg/v1/fill/w_978,h_386,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_068b7e6d3cad4283833b28adc03699ef~mv2.jpeg',
+                'image' => '/assets/wix-assets/54310ef93d16b1bb-11062b-068b7e6d3cad4283833b28adc03699ef-mv2.jpeg',
                 'reverse' => true,
             ],
             [
                 'type' => 'contact',
                 'heading' => ['en' => "Cleanliness isn't just what we do-it's who we are.\nPassion, precision, and professionalism in every detail.", 'es' => 'La limpieza no es solo lo que hacemos: es lo que somos.'],
-                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
-                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                'left_image' => '/assets/wix-assets/e0224388eb048fa9-a-vertical-image-of-home-cleaning-service.jpg',
+                'right_image' => '/assets/wix-assets/a899f9840b79fa84-a-vertical-image-of-a-home-cleaning-service.jpg',
             ],
         ];
     }
@@ -658,10 +658,10 @@ class DatabaseSeeder extends Seeder
         return [
             [
                 'type' => 'contact_page',
-                'poster' => 'https://static.wixstatic.com/media/c50f24_adf8b55141e04bc48ca2b38dec79393a~mv2.png/v1/fill/w_361,h_303,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Santana_ES.png',
+                'poster' => '/assets/wix-assets/751184b17a0fec8f-santana-es.png',
                 'office_images' => [
-                    'https://static.wixstatic.com/media/c50f24_5ab055d9f846403bb1cdad19ecc9d4bc~mv2.jpg/v1/fill/w_163,h_215,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/1766580327050.jpg',
-                    'https://static.wixstatic.com/media/c50f24_5ab055d9f846403bb1cdad19ecc9d4bc~mv2.jpg/v1/fill/w_163,h_215,fp_0.65_0.55,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/1766580327050.jpg',
+                    '/assets/wix-assets/d7373a1b8fec6713-1766580327050.jpg',
+                    '/assets/wix-assets/fa5c6b85d494d42a-1766580327050.jpg',
                 ],
                 'form_heading' => ['en' => 'Contact us'],
                 'form_intro' => ['en' => 'Do you have questions?'],
@@ -674,8 +674,8 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'contact',
                 'heading' => ['en' => "Cleanliness isn't just what we do-it's who we are.\nPassion, precision, and professionalism in every detail.", 'es' => 'La limpieza no es solo lo que hacemos: es lo que somos.'],
-                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
-                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                'left_image' => '/assets/wix-assets/e0224388eb048fa9-a-vertical-image-of-home-cleaning-service.jpg',
+                'right_image' => '/assets/wix-assets/a899f9840b79fa84-a-vertical-image-of-a-home-cleaning-service.jpg',
             ],
         ];
     }
@@ -723,7 +723,7 @@ class DatabaseSeeder extends Seeder
                 'type' => 'blog_listing',
                 'filter_label' => ['en' => 'All Posts', 'es' => 'All Posts'],
                 'heading' => ['en' => 'All Posts', 'es' => 'All Posts'],
-                'side_image' => 'https://static.wixstatic.com/media/11062b_4b7c9a8e48334d5aad2fd274fddba3bc~mv2.jpg/v1/fill/w_760,h_1080,al_c,q_80,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/11062b_4b7c9a8e48334d5aad2fd274fddba3bc~mv2.jpg',
+                'side_image' => '/assets/wix-assets/da4b49ea81221258-11062b-4b7c9a8e48334d5aad2fd274fddba3bc-mv2.jpg',
                 'posts' => [
                     [
                         'author' => 'Santana Prime',
@@ -731,8 +731,8 @@ class DatabaseSeeder extends Seeder
                         'read_time' => '2 min read',
                         'title' => 'Cleaning Services in Torrevieja: What You Need to Know',
                         'excerpt' => 'Keeping your holiday home in Torrevieja spotless is essential to getting the most out of it. Cleaning not only improves the atmosphere, but also protects the...',
-                        'image' => 'https://static.wixstatic.com/media/c50f24_edc8d45c0fe040bf92882e427f1fbcf2~mv2.png/v1/fill/w_1022,h_768,fp_0.50_0.50,q_95,enc_avif,quality_auto/c50f24_edc8d45c0fe040bf92882e427f1fbcf2~mv2.png',
-                        'avatar' => 'https://static.wixstatic.com/media/11062b_ba29744d482846cfb08835f7419128a1~mv2.jpg/v1/fill/w_80,h_80,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_ba29744d482846cfb08835f7419128a1~mv2.jpg',
+                        'image' => '/assets/wix-assets/7365b9f7f8289696-c50f24-edc8d45c0fe040bf92882e427f1fbcf2-mv2.png',
+                        'avatar' => '/assets/wix-assets/a88ffdf9c7987751-11062b-ba29744d482846cfb08835f7419128a1-mv2.jpg',
                         'views' => '0 views',
                         'comments' => '0 comments',
                     ],
@@ -742,7 +742,7 @@ class DatabaseSeeder extends Seeder
                         'read_time' => '1 min read',
                         'title' => 'More bookings, at better prices and happier guest.',
                         'excerpt' => 'We love your property and we would like to manage it for you. Santana - Torrevieja: Your partner for short-Term property management. At...',
-                        'avatar' => 'https://static.wixstatic.com/media/11062b_ba29744d482846cfb08835f7419128a1~mv2.jpg/v1/fill/w_80,h_80,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_ba29744d482846cfb08835f7419128a1~mv2.jpg',
+                        'avatar' => '/assets/wix-assets/a88ffdf9c7987751-11062b-ba29744d482846cfb08835f7419128a1-mv2.jpg',
                         'views' => '5 views',
                         'comments' => '0 comments',
                     ],
@@ -751,8 +751,8 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'contact',
                 'heading' => ['en' => "Cleanliness isn't just what we do-it's who we are.\nPassion, precision, and professionalism in every detail.", 'es' => 'La limpieza no es solo lo que hacemos: es lo que somos.'],
-                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
-                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                'left_image' => '/assets/wix-assets/e0224388eb048fa9-a-vertical-image-of-home-cleaning-service.jpg',
+                'right_image' => '/assets/wix-assets/a899f9840b79fa84-a-vertical-image-of-a-home-cleaning-service.jpg',
             ],
         ];
     }
@@ -762,7 +762,7 @@ class DatabaseSeeder extends Seeder
         return [
             [
                 'type' => 'hero_image',
-                'image' => 'https://static.wixstatic.com/media/99ea595a123e414dba96b7c23df3cb87.jpg/v1/fill/w_1423,h_571,al_c,q_85,enc_avif,quality_auto/Modern%20Family%20Home.jpg',
+                'image' => '/assets/wix-assets/56ac427a7edc4ce6-modern-family-home.jpg',
             ],
             [
                 'type' => 'panel',
@@ -785,10 +785,10 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'gallery',
                 'images' => [
-                    'https://static.wixstatic.com/media/4c34e844a76749b2b6c4ed85ec5f5c44.jpg/v1/fill/w_634,h_474,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Modern%20Luxury%20House.jpg',
-                    'https://static.wixstatic.com/media/11062b_27a6e9b32a6d44eca54c007b88e94abe~mv2.jpeg/v1/fill/w_614,h_474,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Building%20Inspection.jpeg',
-                    'https://static.wixstatic.com/media/11062b_29de2e7fdd784693a1b3d013aed52473~mv2.jpeg/v1/fill/w_634,h_474,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Postbox.jpeg',
-                    'https://static.wixstatic.com/media/11062b_3bd46dc3a49e45d897b97d07486147ad~mv2.jpeg/v1/fill/w_654,h_450,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Man%20Inspecting%20Entrance.jpeg',
+                    '/assets/wix-assets/3ccb3288cfb8248a-modern-luxury-house.jpg',
+                    '/assets/wix-assets/d236d292e96ff00c-building-inspection.jpeg',
+                    '/assets/wix-assets/48865763e2e52f40-postbox.jpeg',
+                    '/assets/wix-assets/2d499f7198bbd35a-man-inspecting-entrance.jpeg',
                 ],
             ],
             [
@@ -812,11 +812,11 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'gallery',
                 'images' => [
-                    'https://static.wixstatic.com/media/11062b_9fa0a758b5c74abe8b22d362456644ee~mv2.jpg/v1/fill/w_546,h_504,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Cleaning%20Team%20Portrait.jpg',
-                    'https://static.wixstatic.com/media/11062b_068b7e6d3cad4283833b28adc03699ef~mv2.jpeg/v1/fill/w_456,h_504,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Cleaning%20the%20Windows.jpeg',
-                    'https://static.wixstatic.com/media/11062b_29ddc6a8cb6d4007a2de61d8ce8f9d58~mv2.jpg/v1/fill/w_488,h_504,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Bathroom%20Cleaner.jpg',
-                    'https://static.wixstatic.com/media/11062b_84511c3f4d9a4ab4b699c4087b28618b~mv2.jpg/v1/fill/w_546,h_504,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Hotel%20Laundry%20Room.jpg',
-                    'https://static.wixstatic.com/media/11062b_efb3adc854344396b2b2b4ddc9ef7f69~mv2.jpg/v1/fill/w_546,h_504,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Handing%20Over%20Keys.jpg',
+                    '/assets/wix-assets/cedd63ecb52f77f8-cleaning-team-portrait.jpg',
+                    '/assets/wix-assets/0508cb0453d86f4e-cleaning-the-windows.jpeg',
+                    '/assets/wix-assets/da5482a7b76c1410-bathroom-cleaner.jpg',
+                    '/assets/wix-assets/4e1bcf870e1bf665-hotel-laundry-room.jpg',
+                    '/assets/wix-assets/e5a80bb660436f51-handing-over-keys.jpg',
                 ],
             ],
             [
@@ -834,7 +834,7 @@ class DatabaseSeeder extends Seeder
                     'Representation at community meetings (AGM) if needed',
                     'Assistance with insurance and tax management',
                 ],
-                'image' => 'https://static.wixstatic.com/media/c50f24_0ccb27a5b3bb409a8955266883af6aeb~mv2.png/v1/fill/w_499,h_788,al_c,q_90,enc_avif,quality_auto/Office_clean.png',
+                'image' => '/assets/wix-assets/397361307f8c6938-office-clean.png',
                 'actions' => [
                     ['label' => '*Check our offer', 'url' => '/en/category/tourist-rental-service'],
                     ['label' => 'Contact us', 'url' => 'https://api.whatsapp.com/send?phone=34624229511'],
@@ -843,10 +843,10 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'gallery',
                 'images' => [
-                    'https://static.wixstatic.com/media/11062b_41561a16bd94495d8c9c685b35a1f468~mv2.jpg/v1/fill/w_546,h_546,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Putzfrauen.jpg',
-                    'https://static.wixstatic.com/media/11062b_61618c092a3e452aac5e8a3a87f9e332~mv2.jpg/v1/fill/w_626,h_546,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Cleaning%20with%20a%20Mop.jpg',
-                    'https://static.wixstatic.com/media/11062b_ad421945ebe44142934f333e6725ae51~mv2.jpeg/v1/fill/w_742,h_530,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Basket%20Of%20Linens.jpeg',
-                    'https://static.wixstatic.com/media/11062b_cb9d627b8f344dbe9b6c3da26e50317b~mv2.jpg/v1/fill/w_636,h_530,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Ein%20Bett%20machen.jpg',
+                    '/assets/wix-assets/904277086ea40e37-putzfrauen.jpg',
+                    '/assets/wix-assets/ab6e895963dc140b-cleaning-with-a-mop.jpg',
+                    '/assets/wix-assets/3007cfbf3956d095-basket-of-linens.jpeg',
+                    '/assets/wix-assets/dd0c995a3567fae4-ein-bett-machen.jpg',
                 ],
             ],
             [
@@ -878,8 +878,8 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'contact',
                 'heading' => ['en' => "Cleanliness isn't just what we do-it's who we are.\nPassion, precision, and professionalism in every detail.", 'es' => 'La limpieza no es solo lo que hacemos: es lo que somos.'],
-                'left_image' => 'https://static.wixstatic.com/media/c50f24_2bee8acd2b094103820a9c8b22e1f9f1~mv2.jpg/v1/fill/w_784,h_988,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20home%20cleaning%20service.jpg',
-                'right_image' => 'https://static.wixstatic.com/media/c50f24_b7220545dfd7477b8eea148404e68422~mv2.jpg/v1/fill/w_774,h_968,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/a%20vertical%20image%20of%20a%20home%20cleaning%20service%20.jpg',
+                'left_image' => '/assets/wix-assets/e0224388eb048fa9-a-vertical-image-of-home-cleaning-service.jpg',
+                'right_image' => '/assets/wix-assets/a899f9840b79fa84-a-vertical-image-of-a-home-cleaning-service.jpg',
             ],
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\WixAssetUrl;
 use Illuminate\Database\Eloquent\Model;
 
 class HolidayHome extends Model
@@ -24,7 +25,7 @@ class HolidayHome extends Model
 
     public function getImageSrcAttribute(): string
     {
-        $imageUrl = trim((string) $this->image_url);
+        $imageUrl = trim((string) WixAssetUrl::localize($this->image_url));
 
         if ($imageUrl === '') {
             return '';
