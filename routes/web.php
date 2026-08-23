@@ -16,6 +16,8 @@ use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
 use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', fn () => response('ok'));
@@ -47,6 +49,23 @@ Route::middleware('owner')->prefix('owner')->name('owner.')->group(function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/test-mail', function (Request $request) {
+        $to = $request->query('to', config('mail.from.address'));
+
+        validator(['to' => $to], [
+            'to' => ['required', 'email'],
+        ])->validate();
+
+        Mail::raw('This is a test email from Hola Santana sent at '.now()->toDateTimeString().'.', function ($mail) use ($to) {
+            $mail->to($to)->subject('Hola Santana test email');
+        });
+
+        return response()->json([
+            'sent' => true,
+            'to' => $to,
+            'mailer' => config('mail.default'),
+        ]);
+    })->name('test-mail');
     Route::get('/footer-settings', [FooterSettingController::class, 'edit'])->name('footer-settings.edit');
     Route::put('/footer-settings', [FooterSettingController::class, 'update'])->name('footer-settings.update');
     Route::post('/media/upload-image', [PageController::class, 'uploadImage'])->name('media.upload-image');

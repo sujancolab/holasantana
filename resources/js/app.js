@@ -140,6 +140,36 @@ document.querySelectorAll('[data-holiday-home-list]').forEach((listing) => {
     const search = listing.querySelector('[data-holiday-home-search]');
     const cards = [...listing.querySelectorAll('[data-holiday-home-card]')];
     const empty = listing.querySelector('[data-holiday-home-empty]');
+    const modals = [...listing.querySelectorAll('[data-holiday-home-modal]')];
+
+    const openHolidayHomeModal = (id) => {
+        const modal = id ? listing.querySelector(`#${CSS.escape(id)}`) : null;
+
+        if (!modal) {
+            return;
+        }
+
+        document.querySelectorAll('.prime-header.is-menu-open, .site-header.is-menu-open').forEach((header) => {
+            header.classList.remove('is-menu-open');
+            header.querySelector('[data-mobile-menu-toggle]')?.setAttribute('aria-expanded', 'false');
+        });
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('has-holiday-home-modal');
+        modal.querySelector('[data-holiday-home-close]')?.focus();
+    };
+
+    const closeHolidayHomeModal = (modal) => {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        if (!modals.some((item) => item.classList.contains('is-open'))) {
+            document.body.classList.remove('has-holiday-home-modal');
+        }
+    };
+
+    const shouldIgnoreCardClick = (target) => {
+        return Boolean(target.closest('a, button, input, textarea, select, label'));
+    };
 
     listing.querySelectorAll('[data-holiday-home-more]').forEach((button) => {
         const card = button.closest('[data-holiday-home-card]');
@@ -154,6 +184,72 @@ document.querySelectorAll('[data-holiday-home-list]').forEach((listing) => {
             button.setAttribute('aria-expanded', String(isExpanded));
             button.textContent = isExpanded ? 'Show less' : 'Show more';
         });
+    });
+
+    listing.querySelectorAll('[data-holiday-home-open]').forEach((trigger) => {
+        trigger.addEventListener('click', (event) => {
+            if (trigger.matches('[data-holiday-home-card]') && shouldIgnoreCardClick(event.target)) {
+                return;
+            }
+
+            openHolidayHomeModal(trigger.dataset.holidayHomeOpen);
+        });
+
+        trigger.addEventListener('keydown', (event) => {
+            if (!trigger.matches('[data-holiday-home-card]') || !['Enter', ' '].includes(event.key)) {
+                return;
+            }
+
+            event.preventDefault();
+            openHolidayHomeModal(trigger.dataset.holidayHomeOpen);
+        });
+    });
+
+    modals.forEach((modal) => {
+        modal.querySelectorAll('[data-holiday-home-close]').forEach((button) => {
+            button.addEventListener('click', () => closeHolidayHomeModal(modal));
+        });
+
+        modal.querySelectorAll('[data-holiday-home-slider]').forEach((slider) => {
+            const slides = [...slider.querySelectorAll('[data-holiday-slide]')];
+            const thumbs = [...slider.querySelectorAll('[data-holiday-thumb]')];
+            const previous = slider.querySelector('[data-holiday-prev]');
+            const next = slider.querySelector('[data-holiday-next]');
+            const counter = slider.querySelector('[data-holiday-counter]');
+            let current = 0;
+
+            const show = (index) => {
+                if (!slides.length) {
+                    return;
+                }
+
+                current = (index + slides.length) % slides.length;
+                slides.forEach((slide, slideIndex) => {
+                    slide.classList.toggle('is-active', slideIndex === current);
+                });
+                thumbs.forEach((thumb, thumbIndex) => {
+                    thumb.classList.toggle('is-active', thumbIndex === current);
+                });
+                if (counter) {
+                    counter.textContent = `${current + 1} / ${slides.length}`;
+                }
+            };
+
+            previous?.addEventListener('click', () => show(current - 1));
+            next?.addEventListener('click', () => show(current + 1));
+            thumbs.forEach((thumb) => {
+                thumb.addEventListener('click', () => show(Number(thumb.dataset.holidayThumb || 0)));
+            });
+            show(0);
+        });
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') {
+            return;
+        }
+
+        modals.filter((modal) => modal.classList.contains('is-open')).forEach(closeHolidayHomeModal);
     });
 
     search?.addEventListener('input', () => {
@@ -277,6 +373,61 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
         { icon: '▶', label: 'YouTube', url: '#' },
     ];
 
+    const normalizeAssetUrl = (url) => {
+        if (typeof url !== 'string' || !url.trim()) {
+            return url;
+        }
+
+        try {
+            const parsed = new URL(url, window.location.origin);
+            const isLocalHost = ['localhost', '127.0.0.1'].includes(parsed.hostname);
+
+            if (isLocalHost && parsed.pathname.startsWith('/storage/')) {
+                return parsed.pathname;
+            }
+        } catch {
+            return url;
+        }
+
+        return url;
+    };
+
+    const normalizeBlockAssetUrls = (blocks) => blocks.map((block) => {
+        if (!block || typeof block !== 'object') {
+            return block;
+        }
+
+        ['image', 'left_image', 'right_image'].forEach((key) => {
+            if (block[key]) {
+                block[key] = normalizeAssetUrl(block[key]);
+            }
+        });
+
+        ['images', 'office_images'].forEach((key) => {
+            if (Array.isArray(block[key])) {
+                block[key] = block[key].map(normalizeAssetUrl);
+            }
+        });
+
+        if (Array.isArray(block.products)) {
+            block.products.forEach((product) => {
+                if (product?.image) {
+                    product.image = normalizeAssetUrl(product.image);
+                }
+            });
+        }
+
+        if (Array.isArray(block.videos)) {
+            block.videos.forEach((video) => {
+                if (video?.poster) {
+                    video.poster = normalizeAssetUrl(video.poster);
+                }
+            });
+        }
+
+        return block;
+    });
+
     const activateTab = (name) => {
         tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.cmsTab === name));
         panels.forEach((panel) => panel.classList.toggle('active', panel.dataset.cmsPanel === name));
@@ -302,7 +453,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
             return;
         }
 
-        jsonField.value = JSON.stringify(blocks, null, 2);
+        jsonField.value = JSON.stringify(normalizeBlockAssetUrls(blocks), null, 2);
     };
 
     const syncAndRender = (blocks, nextSelected = selectedBlock) => {
@@ -437,7 +588,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
 
     const imageEl = (src, className = '') => {
         const img = document.createElement('img');
-        img.src = src;
+        img.src = normalizeAssetUrl(src);
         img.alt = '';
         img.loading = 'lazy';
         img.decoding = 'async';
@@ -468,11 +619,12 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 body: data,
             });
 
+            const payload = await response.json().catch(() => ({}));
+
             if (!response.ok) {
-                throw new Error('Upload failed');
+                throw new Error(payload.message || 'Upload failed');
             }
 
-            const payload = await response.json();
             urls.push(payload.url);
         }
 
@@ -560,14 +712,15 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
 
     const imageUploadControl = ({ multiple = false, onUploaded }) => {
         const wrap = createEl('div', 'cms-upload-control');
-        const label = createEl('label', 'cms-upload-button', multiple ? 'Upload images' : 'Upload image');
+        const button = createEl('button', 'cms-upload-button', multiple ? 'Upload images' : 'Upload image');
         const input = document.createElement('input');
         const status = createEl('span', 'cms-upload-status');
+        button.type = 'button';
         input.type = 'file';
         input.accept = 'image/*';
         input.multiple = multiple;
-        label.append(input);
-        wrap.append(label, status);
+        button.addEventListener('click', () => input.click());
+        wrap.append(button, input, status);
 
         input.addEventListener('change', async () => {
             const files = [...input.files];
@@ -578,8 +731,8 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
             try {
                 const urls = await uploadImages(files, status);
                 onUploaded(urls);
-            } catch {
-                status.textContent = 'Upload failed';
+            } catch (error) {
+                status.textContent = error.message || 'Upload failed';
             } finally {
                 input.value = '';
             }
@@ -930,7 +1083,7 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 writeBlocks(blocks);
                 renderBlockPreview(blocks[selectedBlock]);
             }, { wide: true, multiline: true, rows: 5, placeholder: 'https://...', onChange: renderBlocks });
-            imageField.append(imageUploadControl({
+            const uploadControl = imageUploadControl({
                 multiple: true,
                 onUploaded: (urls) => {
                     const blocks = parseBlocks();
@@ -938,8 +1091,8 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                     blocks[selectedBlock].images.push(...urls);
                     syncAndRender(blocks);
                 },
-            }));
-            container.append(imageField);
+            });
+            container.append(imageField, uploadControl);
         } else {
             const imageField = field('Image URL', block.image || '', (value) => {
                 const blocks = parseBlocks();
@@ -951,14 +1104,14 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 writeBlocks(blocks);
                 renderBlockPreview(blocks[selectedBlock]);
             }, { wide: true, placeholder: 'https://...', onChange: renderBlocks });
-            imageField.append(imageUploadControl({
+            const uploadControl = imageUploadControl({
                 onUploaded: ([url]) => {
                     const blocks = parseBlocks();
                     blocks[selectedBlock].image = url;
                     syncAndRender(blocks);
                 },
-            }));
-            container.append(imageField);
+            });
+            container.append(imageField, uploadControl);
         }
     };
 
@@ -1240,14 +1393,14 @@ document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
                 writeBlocks(blocks);
                 renderBlockPreview(blocks[selectedBlock]);
             }, { wide: true, placeholder: 'https://...', onChange: renderBlocks });
-            imageField.append(imageUploadControl({
+            const uploadControl = imageUploadControl({
                 onUploaded: ([url]) => {
                     const blocks = parseBlocks();
                     blocks[selectedBlock][key] = url;
                     syncAndRender(blocks);
                 },
-            }));
-            imageCard.append(imageField);
+            });
+            imageCard.append(imageField, uploadControl);
         });
         container.append(imageCard);
 

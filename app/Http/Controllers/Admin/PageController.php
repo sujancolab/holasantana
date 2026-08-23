@@ -9,7 +9,6 @@ use App\Models\Page;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -76,7 +75,7 @@ class PageController extends Controller
         $path = $validated['image']->store('cms-images', 'public');
 
         return response()->json([
-            'url' => Storage::disk('public')->url($path),
+            'url' => '/storage/'.$path,
         ]);
     }
 

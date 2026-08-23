@@ -126,6 +126,13 @@
         <main class="prime-main">
             @php
                 $holidayHomeListRendered = false;
+                $holidayHomeDetails = collect($page->content_blocks ?? [])
+                    ->filter(fn ($block) => data_get($block, 'type') === 'rental_unit')
+                    ->mapWithKeys(function ($block) {
+                        $name = data_get($block, 'heading.en', data_get($block, 'heading', ''));
+
+                        return [strtolower(trim((string) $name)) => $block];
+                    });
             @endphp
             @foreach (($page->content_blocks ?? []) as $block)
                 @php
@@ -227,13 +234,13 @@
                     </section>
                 @elseif ($type === 'rental_unit' && $page->slug === 'home-rental')
                     @unless ($holidayHomeListRendered)
-                        @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale])
+                        @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale, 'holidayHomeDetails' => $holidayHomeDetails])
                         @php
                             $holidayHomeListRendered = true;
                         @endphp
                     @endunless
                 @elseif ($type === 'holiday_home_listing')
-                    @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale])
+                    @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale, 'holidayHomeDetails' => $holidayHomeDetails])
                     @php
                         $holidayHomeListRendered = true;
                     @endphp
@@ -564,7 +571,7 @@
                 @endif
             @endforeach
             @if ($page->slug === 'home-rental' && ! $holidayHomeListRendered)
-                @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale])
+                @include('public.partials.holiday-home-list', ['holidayHomes' => $holidayHomes, 'locale' => $locale, 'holidayHomeDetails' => $holidayHomeDetails])
             @endif
         </main>
         <footer class="prime-footer">

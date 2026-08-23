@@ -731,6 +731,7 @@ th {
     font-weight: 900;
     cursor: pointer;
 }
+.cms-upload-control input,
 .cms-upload-button input {
     position: absolute;
     width: 1px;
@@ -1713,11 +1714,14 @@ th {
     border-radius: 8px;
     background: white;
     box-shadow: 0 18px 46px rgba(7, 59, 53, 0.1);
+    cursor: pointer;
     transition:
         transform 0.18s ease,
         box-shadow 0.18s ease;
 }
-.holiday-home-card:hover {
+.holiday-home-card:hover,
+.holiday-home-card:focus-visible {
+    outline: 0;
     transform: translateY(-3px);
     box-shadow: 0 24px 62px rgba(7, 59, 53, 0.15);
 }
@@ -1847,6 +1851,26 @@ th {
     margin-top: 8px;
     text-decoration: none;
 }
+.holiday-home-details-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 42px;
+    margin-top: 10px;
+    border: 1px solid rgba(8, 123, 110, 0.26);
+    border-radius: 999px;
+    background: #eef8f5;
+    color: var(--front-teal, #087b6e);
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+}
+.holiday-home-details-button:hover,
+.holiday-home-details-button:focus-visible {
+    background: var(--front-teal, #087b6e);
+    color: #fff;
+}
 .holiday-home-empty {
     margin: 16px 0 0;
     padding: 18px;
@@ -1855,6 +1879,98 @@ th {
     color: var(--front-teal-dark, #073b35);
     font-weight: 800;
     text-align: center;
+}
+.holiday-home-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: none;
+    padding: clamp(18px, 4vw, 42px);
+}
+.holiday-home-modal.is-open {
+    display: grid;
+    place-items: center;
+}
+.holiday-home-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba(7, 22, 20, 0.62);
+    cursor: pointer;
+}
+.holiday-home-modal-panel {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 980px);
+    max-height: min(86vh, 980px);
+    overflow: auto;
+    padding: clamp(22px, 4vw, 46px);
+    border: 1px solid rgba(7, 59, 53, 0.14);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 32px 90px rgba(7, 22, 20, 0.26);
+}
+.holiday-home-modal-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 18px;
+    align-items: start;
+    margin-bottom: 24px;
+}
+.holiday-home-modal-head p {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--front-teal, #087b6e);
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.holiday-home-modal-head h2 {
+    margin: 0;
+    color: var(--front-ink, #14201f);
+    font-size: clamp(32px, 4.8vw, 58px);
+    line-height: 1.05;
+}
+.holiday-home-modal-head button {
+    min-height: 42px;
+    padding: 0 18px;
+    border: 1px solid rgba(7, 59, 53, 0.16);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--front-teal, #087b6e);
+    font-weight: 900;
+    cursor: pointer;
+}
+.holiday-home-modal-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 180px));
+    gap: 12px;
+    margin: 24px 0;
+}
+.holiday-home-modal-facts div {
+    padding: 16px;
+    border-radius: 8px;
+    background: #eef7f4;
+}
+.holiday-home-modal-facts dt {
+    color: var(--front-muted, #66706d);
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+.holiday-home-modal-facts dd {
+    margin: 4px 0 0;
+    color: var(--front-teal-dark, #073b35);
+    font-size: 30px;
+    font-weight: 900;
+}
+.holiday-home-modal .prime-open-copy {
+    max-width: 76ch;
+    margin: 0;
+}
+.holiday-home-modal .prime-button-row {
+    margin-top: 24px;
 }
 .page-blog .prime-main {
     width: 100%;
@@ -8336,6 +8452,7 @@ html[lang="de"] {
 
 .page-home-rental .prime-hero h1 {
     width: 100%;
+    max-width: none;
     margin: 0;
     padding-left: clamp(22px, 2.2vw, 36px);
     padding-right: clamp(22px, 2.2vw, 36px);
@@ -8346,4 +8463,169 @@ html[lang="de"] {
     margin-top: clamp(26px, 4vw, 68px);
     margin-left: clamp(22px, 2.2vw, 36px);
     margin-right: clamp(22px, 2.2vw, 36px);
+}
+
+.holiday-home-modal .holiday-home-modal-panel {
+    width: min(94vw, 860px);
+    max-height: 88vh;
+    padding: clamp(18px, 2.6vw, 28px);
+}
+
+.holiday-home-modal .holiday-home-modal-head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    margin-bottom: 18px;
+}
+
+.holiday-home-modal .holiday-home-modal-head h2 {
+    font-size: clamp(28px, 3.2vw, 40px);
+}
+
+.holiday-home-slider {
+    margin-bottom: 18px;
+}
+
+.holiday-home-slider-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #eef7f4;
+}
+
+.holiday-home-slider-frame > img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: none;
+}
+
+.holiday-home-slider-frame > img.is-active {
+    display: block;
+}
+
+.holiday-home-slider-arrow {
+    position: absolute;
+    top: 50%;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--front-teal-dark, #073b35);
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(7, 22, 20, 0.18);
+    transform: translateY(-50%);
+}
+
+.holiday-home-slider-arrow.is-prev {
+    left: 14px;
+}
+
+.holiday-home-slider-arrow.is-next {
+    right: 14px;
+}
+
+.holiday-home-slider-meta {
+    display: flex;
+    justify-content: flex-end;
+    margin: 8px 0;
+    color: var(--front-muted, #66706d);
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.holiday-home-slider-thumbs {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(70px, 92px);
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.holiday-home-slider-thumbs button {
+    overflow: hidden;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background: #eef7f4;
+    cursor: pointer;
+}
+
+.holiday-home-slider-thumbs button.is-active {
+    border-color: var(--front-teal, #087b6e);
+}
+
+.holiday-home-slider-thumbs img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.holiday-home-modal-summary {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.holiday-home-modal .holiday-home-modal-facts {
+    grid-template-columns: 1fr;
+    margin: 0;
+}
+
+.holiday-home-modal .prime-open-copy,
+.page-home-rental .holiday-home-modal .prime-open-copy {
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--front-ink, #14201f);
+    font-size: clamp(16px, 1.4vw, 19px);
+    line-height: 1.55;
+}
+
+.holiday-home-modal .prime-button-row {
+    grid-column: 2;
+    margin-top: 16px;
+}
+
+body.has-holiday-home-modal {
+    overflow: hidden;
+}
+
+@media (max-width: 720px) {
+    .holiday-home-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 1200;
+        padding: 0;
+    }
+
+    .holiday-home-modal .holiday-home-modal-panel {
+        width: 100%;
+        height: 100dvh;
+        max-height: none;
+        overflow-y: auto;
+        border-radius: 0;
+    }
+
+    .holiday-home-modal .holiday-home-modal-head,
+    .holiday-home-modal-summary,
+    .holiday-home-modal .holiday-home-modal-facts {
+        grid-template-columns: 1fr;
+    }
+
+    .holiday-home-modal .prime-button-row {
+        grid-column: auto;
+    }
+
+    .holiday-home-modal .holiday-home-modal-head button {
+        width: 100%;
+    }
 }
