@@ -15,6 +15,8 @@ use App\Http\Controllers\Owner\AuthController as OwnerAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
 use App\Http\Controllers\PublicPageController;
+use App\Models\Language;
+use App\Models\Page as PageModel;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -29,6 +31,29 @@ Route::get('/clear-cache', function () {
 
 Route::get('/', [PublicPageController::class, 'home'])->name('home');
 Route::get('/faq', [PublicPageController::class, 'faq'])->name('faq');
+Route::get('/sitemap.xml', function () {
+    $locales = array_keys(Language::activeOptions());
+    $pages = PageModel::query()
+        ->where('status', 'published')
+        ->orderBy('slug')
+        ->get();
+
+    $urls = [];
+
+    foreach ($pages as $page) {
+        foreach ($locales as $locale) {
+            $urls[] = [
+                'loc' => route('pages.show', ['locale' => $locale, 'slug' => $page->slug]),
+                'lastmod' => optional($page->updated_at)->toAtomString(),
+                'priority' => $page->slug === 'home' ? '1.0' : '0.8',
+            ];
+        }
+    }
+
+    $xml = view('public.sitemap', ['urls' => $urls])->render();
+
+    return response($xml, 200)->header('Content-Type', 'application/xml');
+})->name('sitemap');
 Route::post('/service-enquiries', [PublicPageController::class, 'storeServiceEnquiry'])->name('service-enquiries.store');
 Route::post('/submit-query', [PublicPageController::class, 'storeSubmitQuery'])->name('submit-query.store');
 

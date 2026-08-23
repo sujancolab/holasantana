@@ -13,9 +13,9 @@
             <label>Holiday Home Name *<input name="name" value="{{ old('name', $holidayHome->name) }}" required></label>
             <label>Card Photo<input type="file" name="image" accept="image/*"></label>
             <label>Photo URL<input name="image_url" value="{{ old('image_url', $holidayHome->image_url) }}" placeholder="https://..."></label>
-            @if ($holidayHome->image_url)
+            @if ($holidayHome->image_src)
                 <div class="wide holiday-home-preview">
-                    <img src="{{ $holidayHome->image_url }}" alt="{{ $holidayHome->name }}">
+                    <img src="{{ $holidayHome->image_src }}" alt="{{ $holidayHome->name }}">
                 </div>
             @endif
             <label class="wide">Description<textarea name="description" rows="5">{{ old('description', $holidayHome->description) }}</textarea></label>

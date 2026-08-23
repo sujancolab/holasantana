@@ -23,8 +23,8 @@
                     ]));
                 @endphp
                 <article class="holiday-home-card" data-holiday-home-card data-holiday-home-open="holiday-home-modal-{{ $holidayHome->id }}" data-search-text="{{ $searchText }}" tabindex="0">
-                    @if ($holidayHome->image_url)
-                        <img src="{{ $holidayHome->image_url }}" alt="{{ $holidayHome->name }}" loading="lazy" decoding="async">
+                    @if ($holidayHome->image_src)
+                        <img src="{{ $holidayHome->image_src }}" alt="{{ $holidayHome->name }}" loading="lazy" decoding="async">
                     @else
                         <div class="holiday-home-placeholder" aria-hidden="true">{{ strtoupper(substr($holidayHome->name, 0, 1)) }}</div>
                     @endif
@@ -67,8 +67,8 @@
                 $detailDescription = data_get($detailBlock, "body.$locale", data_get($detailBlock, 'body.en', $holidayHome->description));
                 $detailImageItems = array_values(array_filter(data_get($detailBlock, 'images', [])));
 
-                if ($holidayHome->image_url) {
-                    array_unshift($detailImageItems, $holidayHome->image_url);
+                if ($holidayHome->image_src) {
+                    array_unshift($detailImageItems, $holidayHome->image_src);
                 }
 
                 $detailImages = collect($detailImageItems)->unique()->values();

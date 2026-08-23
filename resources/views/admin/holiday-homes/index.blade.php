@@ -16,8 +16,8 @@
                     <tr>
                         <td>{{ $holidayHome->sort_order }}</td>
                         <td>
-                            @if ($holidayHome->image_url)
-                                <img class="admin-table-thumb" src="{{ $holidayHome->image_url }}" alt="{{ $holidayHome->name }}">
+                            @if ($holidayHome->image_src)
+                                <img class="admin-table-thumb" src="{{ $holidayHome->image_src }}" alt="{{ $holidayHome->name }}">
                             @endif
                         </td>
                         <td>{{ $holidayHome->area_name }}</td>

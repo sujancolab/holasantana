@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\HolidayHome;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class HolidayHomeController extends Controller
@@ -65,9 +64,7 @@ class HolidayHomeController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image_url'] = Storage::disk('public')->url(
-                $validated['image']->store('holiday-homes', 'public')
-            );
+            $validated['image_url'] = '/storage/' . $validated['image']->store('holiday-homes', 'public');
         }
 
         unset($validated['image']);

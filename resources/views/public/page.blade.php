@@ -1,10 +1,63 @@
 <!doctype html>
 <html lang="{{ $locale }}">
 <head>
+    @php
+        $pageTitle = trim($page->localized('title', $locale) ?: $page->localized('hero_title', $locale) ?: 'Santana Prime');
+        $siteName = 'Santana Prime';
+        $fullTitle = $pageTitle === $siteName ? $siteName : $pageTitle . ' - ' . $siteName;
+        $metaDescription = trim($page->localized('meta_description', $locale) ?: $page->localized('hero_subtitle', $locale) ?: 'Santana Prime offers holiday rental management, private home services, cleaning, laundry, maintenance and holiday homes in Torrevieja.');
+        $canonicalUrl = route('pages.show', ['locale' => $locale, 'slug' => $page->slug]);
+        $defaultLocale = \App\Models\Language::defaultCode();
+        $homeUrl = route('pages.show', ['locale' => $locale, 'slug' => 'home']);
+        $localeMap = ['en' => 'en_US', 'es' => 'es_ES', 'de' => 'de_DE', 'sv' => 'sv_SE', 'fi' => 'fi_FI'];
+        $firstImage = collect($page->content_blocks ?? [])
+            ->map(function ($block) {
+                return data_get($block, 'image') ?: collect(data_get($block, 'images', []))->first();
+            })
+            ->first(fn ($image) => filled($image));
+        $seoImage = $firstImage ? url($firstImage) : asset('favicon.ico');
+        $businessSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'LocalBusiness',
+            'name' => $siteName,
+            'url' => $homeUrl,
+            'description' => $metaDescription,
+            'email' => $footerSettings['email'] ?? 'info@santanaprime.es',
+            'telephone' => $footerSettings['phone'] ?? '+34 624 229 511',
+            'areaServed' => [
+                'Torrevieja',
+                'Costa Blanca',
+                'Orihuela Costa',
+            ],
+        ];
+    @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $page->localized('title', $locale) }} - Hola Santana</title>
-    <meta name="description" content="{{ $page->localized('meta_description', $locale) }}">
+    <title>{{ $fullTitle }}</title>
+    <meta name="description" content="{{ $metaDescription }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ $canonicalUrl }}">
+    @foreach (($availableLocales ?? [$locale]) as $availableLocale)
+        <link rel="alternate" hreflang="{{ $availableLocale }}" href="{{ route('pages.show', ['locale' => $availableLocale, 'slug' => $page->slug]) }}">
+    @endforeach
+    <link rel="alternate" hreflang="x-default" href="{{ route('pages.show', ['locale' => $defaultLocale, 'slug' => $page->slug]) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:title" content="{{ $fullTitle }}">
+    <meta property="og:description" content="{{ $metaDescription }}">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    <meta property="og:image" content="{{ $seoImage }}">
+    <meta property="og:locale" content="{{ $localeMap[$locale] ?? str_replace('-', '_', $locale) }}">
+    @foreach (($availableLocales ?? []) as $availableLocale)
+        @if ($availableLocale !== $locale)
+            <meta property="og:locale:alternate" content="{{ $localeMap[$availableLocale] ?? str_replace('-', '_', $availableLocale) }}">
+        @endif
+    @endforeach
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $fullTitle }}">
+    <meta name="twitter:description" content="{{ $metaDescription }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
+    <script type="application/ld+json">{!! json_encode($businessSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 @php
