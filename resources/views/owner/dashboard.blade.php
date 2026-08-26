@@ -52,7 +52,9 @@
                             <td>{{ $property->address }}</td>
                             <td>
                                 @if (filled($property->google_photo_link))
-                                    <a href="{{ $property->google_photo_link }}" target="_blank" rel="noopener">Photo link</a>
+                                    <a class="button ghost" href="{{ $property->google_photo_link }}" target="_blank" rel="noopener">Open photos</a>
+                                @else
+                                    -
                                 @endif
                             </td>
                             <td>
