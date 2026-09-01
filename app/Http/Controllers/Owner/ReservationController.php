@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Owner;
 use App\Models\Property;
 use App\Models\PropertyReservation;
+use App\Support\OwnerReservationNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -24,11 +25,18 @@ class ReservationController extends Controller
     {
         $owner = $this->owner($request);
 
-        PropertyReservation::create($this->payload($request, $owner));
+        $reservation = PropertyReservation::create($this->payload($request, $owner));
+        $whatsappUrl = app(OwnerReservationNotification::class)->send($reservation);
 
-        return redirect()
+        $redirect = redirect()
             ->to(route('owner.dashboard') . '#reservations')
             ->with('status', 'Reservation created.');
+
+        if ($whatsappUrl) {
+            $redirect->with('whatsapp_reservation_url', $whatsappUrl);
+        }
+
+        return $redirect;
     }
 
     public function edit(Request $request, PropertyReservation $reservation): View

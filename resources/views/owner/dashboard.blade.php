@@ -30,6 +30,12 @@
         @if (session('status'))
             <div class="notice">{{ session('status') }}</div>
         @endif
+        @if (session('whatsapp_reservation_url'))
+            <div class="notice">
+                WhatsApp notification is ready.
+                <a href="{{ session('whatsapp_reservation_url') }}" target="_blank" rel="noopener">Open WhatsApp</a>
+            </div>
+        @endif
         @if (filled($owner->google_activity_list_link))
             <section class="panel owner-link-panel">
                 <div class="panel-head"><h2>Owner Links</h2></div>

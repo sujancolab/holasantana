@@ -125,7 +125,7 @@
         <header class="prime-header">
             <div class="prime-tools">
                 <a class="prime-mini-brand" href="{{ route('pages.show', ['locale' => $locale, 'slug' => 'home']) }}">Santana Prime</a>
-                <a href="{{ route('owner.login') }}">Clients Login</a>
+                <a href="{{ route('owner.login') }}">Partner's Login</a>
             </div>
             <div class="prime-brand-row">
                 <img src="/assets/wix-assets/42e1ed561864a25f-prime-logo-pdf-1-pdf-1.png" alt="Santana Prime logo" decoding="async">

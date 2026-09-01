@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'owner_reservations' => [
+        'email' => env('OWNER_RESERVATION_EMAIL', 'spm3182@gmail.com'),
+        'whatsapp_to' => env('OWNER_RESERVATION_WHATSAPP_TO', '491795973910'),
+        'callmebot_api_key' => env('OWNER_RESERVATION_CALLMEBOT_API_KEY'),
+    ],
+
 ];
