@@ -9,8 +9,10 @@ use App\Models\PropertyReservation;
 use App\Support\OwnerReservationNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Throwable;
 
 class ReservationController extends Controller
 {
@@ -26,7 +28,16 @@ class ReservationController extends Controller
         $owner = $this->owner($request);
 
         $reservation = PropertyReservation::create($this->payload($request, $owner));
-        $whatsappUrl = app(OwnerReservationNotification::class)->send($reservation);
+        $whatsappUrl = null;
+
+        try {
+            $whatsappUrl = app(OwnerReservationNotification::class)->send($reservation);
+        } catch (Throwable $exception) {
+            Log::warning('Owner reservation notification failed after reservation was saved.', [
+                'reservation_id' => $reservation->id,
+                'message' => $exception->getMessage(),
+            ]);
+        }
 
         $redirect = redirect()
             ->to(route('owner.dashboard') . '#reservations')

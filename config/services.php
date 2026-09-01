@@ -38,7 +38,9 @@ return [
     'owner_reservations' => [
         'email' => env('OWNER_RESERVATION_EMAIL', 'spm3182@gmail.com'),
         'whatsapp_to' => env('OWNER_RESERVATION_WHATSAPP_TO', '491795973910'),
-        'callmebot_api_key' => env('OWNER_RESERVATION_CALLMEBOT_API_KEY'),
+        'meta_phone_number_id' => env('OWNER_RESERVATION_META_PHONE_NUMBER_ID'),
+        'meta_access_token' => env('OWNER_RESERVATION_META_ACCESS_TOKEN'),
+        'meta_api_version' => env('OWNER_RESERVATION_META_API_VERSION', 'v21.0'),
     ],
 
 ];

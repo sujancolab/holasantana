@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Models\PropertyReservation;
+use Throwable;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -15,12 +16,17 @@ class OwnerReservationNotification
 
         $message = $this->message($reservation);
 
-        Mail::raw($message, function ($mail): void {
-            $mail->to(config('services.owner_reservations.email'))
-                ->subject('New Owner Reservation');
-        });
+        $this->sendEmail($message);
 
-        return $this->sendCallMeBotWhatsapp($message);
+        try {
+            return $this->sendMetaWhatsapp($message);
+        } catch (Throwable $exception) {
+            Log::warning('Owner reservation WhatsApp notification could not be sent.', [
+                'message' => $exception->getMessage(),
+            ]);
+
+            return $this->whatsappClickToChatUrl($message);
+        }
     }
 
     public function whatsappUrl(PropertyReservation $reservation): string
@@ -55,25 +61,52 @@ class OwnerReservationNotification
         );
     }
 
-    private function sendCallMeBotWhatsapp(string $message): ?string
+    private function sendEmail(string $message): void
+    {
+        try {
+            Mail::raw($message, function ($mail): void {
+                $mail->to(config('services.owner_reservations.email'))
+                    ->subject('New Owner Reservation');
+            });
+        } catch (Throwable $exception) {
+            Log::warning('Owner reservation email notification could not be sent.', [
+                'message' => $exception->getMessage(),
+            ]);
+        }
+    }
+
+    private function sendMetaWhatsapp(string $message): ?string
     {
         $to = $this->whatsappPhoneNumber();
-        $apiKey = config('services.owner_reservations.callmebot_api_key');
+        $phoneNumberId = config('services.owner_reservations.meta_phone_number_id');
+        $accessToken = config('services.owner_reservations.meta_access_token');
 
-        if (blank($to) || blank($apiKey)) {
-            Log::info('Owner reservation CallMeBot WhatsApp notification skipped because CallMeBot is not configured.');
+        if (blank($to) || blank($phoneNumberId) || blank($accessToken)) {
+            Log::info('Owner reservation Meta WhatsApp notification skipped because Meta Cloud API is not configured.');
 
             return $this->whatsappClickToChatUrl($message);
         }
 
-        $response = Http::timeout(10)->get('https://api.callmebot.com/whatsapp.php', [
-            'phone' => $to,
-            'apikey' => $apiKey,
-            'text' => $message,
-        ]);
+        $response = Http::withToken($accessToken)
+            ->acceptJson()
+            ->timeout(10)
+            ->post(sprintf(
+                'https://graph.facebook.com/%s/%s/messages',
+                config('services.owner_reservations.meta_api_version'),
+                $phoneNumberId
+            ), [
+                'messaging_product' => 'whatsapp',
+                'recipient_type' => 'individual',
+                'to' => $to,
+                'type' => 'text',
+                'text' => [
+                    'preview_url' => false,
+                    'body' => $message,
+                ],
+            ]);
 
         if ($response->failed() || str_contains(strtolower($response->body()), 'error')) {
-            Log::warning('Owner reservation CallMeBot WhatsApp notification failed.', [
+            Log::warning('Owner reservation Meta WhatsApp notification failed.', [
                 'status' => $response->status(),
                 'body' => $response->body(),
             ]);
@@ -86,12 +119,6 @@ class OwnerReservationNotification
 
     private function whatsappPhoneNumber(): string
     {
-        $phone = preg_replace('/[^\d+]/', '', (string) config('services.owner_reservations.whatsapp_to'));
-
-        if ($phone !== '' && ! str_starts_with($phone, '+')) {
-            return '+' . $phone;
-        }
-
-        return $phone;
+        return preg_replace('/\D/', '', (string) config('services.owner_reservations.whatsapp_to'));
     }
 }
